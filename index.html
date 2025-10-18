@@ -99,7 +99,7 @@
                 </div>
 
                 <!-- Course List -->
-                <div id="course-list-container" class="max-h-60 overflow-y-auto pr-2">
+                <div id="course-list-container" class="max-h-60 overflow-y-auto pr-2 space-y-2">
                     <!-- Courses will be dynamically added here -->
                 </div>
                 
@@ -206,6 +206,21 @@
                 renderCourses();
                 hideResults();
             });
+
+            function getGradeLetter(grade) {
+                if (grade === 4.00) return 'A';
+                if (grade === 3.67) return 'A-';
+                if (grade === 3.33) return 'B+';
+                if (grade === 3.00) return 'B';
+                if (grade === 2.67) return 'B-';
+                if (grade === 2.33) return 'C+';
+                if (grade === 2.00) return 'C';
+                if (grade === 1.67) return 'C-';
+                if (grade === 1.33) return 'D+';
+                if (grade === 1.00) return 'D';
+                if (grade === 0.00) return 'F';
+                return '';
+            }
             
             function renderCourses() {
                 courseListContainer.innerHTML = '';
@@ -213,15 +228,30 @@
                     courseListContainer.innerHTML = `<p class="text-center text-gray-400 p-4">No new courses added yet.</p>`;
                     return;
                 }
+
+                // Add header
+                const headerEl = document.createElement('div');
+                headerEl.className = 'flex justify-between items-center text-sm font-semibold text-gray-500 px-3 pb-2 border-b';
+                headerEl.innerHTML = `
+                    <span class="w-1/3">Course</span>
+                    <span class="w-1/3 text-center">Grade</span>
+                    <span class="w-1/3 text-right">Action</span>
+                `;
+                courseListContainer.appendChild(headerEl);
+
+                // Add course items
                 courses.forEach((course, index) => {
                     const courseEl = document.createElement('div');
-                    courseEl.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg mb-2 border border-gray-200';
+                    courseEl.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg mt-2 border border-gray-200';
                     courseEl.innerHTML = `
-                        <div>
-                            <span class="font-semibold text-gray-700">Course ${index + 1}</span>
-                            <span class="text-sm text-gray-500 ml-2">${course.credit.toFixed(1)} Credits - Grade: ${course.grade.toFixed(2)}</span>
+                        <span class="w-1/3 font-semibold text-gray-700">${course.credit} Credits</span>
+                        <div class="w-1/3 text-center">
+                            <span class="font-bold text-blue-600">${getGradeLetter(course.grade)}</span>
+                            <span class="block text-xs text-gray-500">(${course.grade.toFixed(2)})</span>
                         </div>
-                        <button class="remove-btn text-red-500 hover:text-red-700 font-bold" data-index="${index}">&times;</button>
+                        <div class="w-1/3 text-right">
+                            <button class="remove-btn text-red-500 hover:text-red-700 font-semibold" data-index="${index}">Remove</button>
+                        </div>
                     `;
                     courseListContainer.appendChild(courseEl);
                 });
