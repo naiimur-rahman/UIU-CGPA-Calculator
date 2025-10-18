@@ -306,11 +306,11 @@
                     targetResultCard = resultGood;
                     const titleEl = document.getElementById('good-standing-title');
                     if (cgpa >= 3.8) {
-                        titleEl.textContent = "🎓 তুখোড় ইশটুডেন্ট!";
+                        titleEl.textContent = "তুখোড় ইশটুডেন্ট!🎓";
                     } else if (cgpa >= 3.5) {
-                        titleEl.textContent = "💸 ওয়েভারওয়ালা!";
+                        titleEl.textContent = "ওয়েভারওয়ালা!💸";
                     } else {
-                        titleEl.textContent = "😅 ৩.০০ টা ধরে রাখেন!";
+                        titleEl.textContent = "৩.০০ ধরে রাখেন!😅";
                     }
                     document.getElementById('cgpa-good').textContent = cgpa.toFixed(3);
                     document.getElementById('total-credits-good').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
@@ -318,17 +318,17 @@
                     targetResultCard = resultMid;
                     const titleEl = document.getElementById('mid-standing-title');
                      if (cgpa >= 2.6) {
-                        titleEl.textContent = "💪 আরেকটু পরিশ্রম করুন!";
+                        titleEl.textContent = "আরেকটু পরিশ্রম করুন!💪";
                     } else if (cgpa >= 2.2) {
-                        titleEl.textContent = "🚨 রেড জোনে আছেন!";
+                        titleEl.textContent = "রেড জোনে আছেন!🚨";
                     } else { // 2.0 to 2.2
-                        titleEl.textContent = "📉 আরেকটু হলেই লেটার ধরিয়ে দেবে!";
+                        titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে!📉";
                     }
                     document.getElementById('cgpa-mid').textContent = cgpa.toFixed(3);
                     document.getElementById('total-credits-mid').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
                 } else { // Red Zone
                     targetResultCard = resultLow;
-                    document.getElementById('low-cgpa-title').textContent = "🤯 জঘন্য রকমের পরিশ্রমী হন!";
+                    document.getElementById('low-cgpa-title').textContent = "জঘন্য রকমের পরিশ্রমী হন!🤯";
                     document.getElementById('cgpa-low').textContent = cgpa.toFixed(3);
                     document.getElementById('total-credits-low').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
                     recoveryPlannerEl.style.display = 'block';
@@ -373,5 +373,6 @@
 
 </body>
 </html>
+
 
 
