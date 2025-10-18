@@ -5,160 +5,172 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UIU CGPA & Probation Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-        }
-        .result-card {
-            display: none; /* Hidden by default */
-            transition: all 0.3s ease-in-out;
+            font-family: 'Inter', 'Hind Siliguri', sans-serif;
+            background-color: #f8fafc;
         }
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        .result-card {
+            display: none;
+            transition: all 0.3s ease-in-out;
+        }
+        /* Custom scrollbar for course list */
+        #course-list-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        #course-list-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        #course-list-container::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+        #course-list-container::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
         }
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<body class="flex items-center justify-center min-h-screen p-4">
 
-    <main class="w-full max-w-4xl mx-auto">
-        <div class="bg-white rounded-2xl shadow-lg p-6 md:p-10">
-            <header class="text-center mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-800">UIU CGPA Calculator</h1>
-                <p class="text-gray-500 mt-2">Calculate your CGPA and plan for your next trimester if needed.</p>
-            </header>
+    <div class="w-full max-w-4xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-extrabold text-gray-800">UIU CGPA Calculator</h1>
+            <p class="text-gray-500 mt-2">Instantly calculate your CGPA and plan your recovery if needed.</p>
+        </header>
 
-            <!-- Current Standing Input -->
-            <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-6">
-                <h2 class="text-xl font-semibold text-gray-700 mb-1">Start with Current Standing <span class="text-sm font-normal text-gray-500">(Optional)</span></h2>
-                <p class="text-sm text-gray-500 mb-4">If you already know your CGPA, enter it here to save time.</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Side: Input -->
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-4">Academic Information</h2>
+
+                <!-- Current Standing -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
-                        <label for="current-cgpa" class="block text-sm font-medium text-gray-600 mb-1">Current CGPA</label>
-                        <input type="number" id="current-cgpa" step="0.01" min="0" max="4" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., 3.50">
-                    </div>
-                    <div>
-                        <label for="completed-credits" class="block text-sm font-medium text-gray-600 mb-1">Total Completed Credits</label>
-                        <input type="number" id="completed-credits" step="0.5" min="0" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., 90">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Course Input Form -->
-            <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-6">
-                <h2 class="text-xl font-semibold text-gray-700 mb-4">Add New Courses for Current Trimester</h2>
-                <form id="add-course-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
-                    <div class="md:col-span-2">
-                        <label for="course-credit" class="block text-sm font-medium text-gray-600 mb-1">Credit Hours</label>
-                        <select id="course-credit" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="3" selected>3 Credits</option>
-                            <option value="2">2 Credits</option>
-                            <option value="1">1 Credit</option>
-                        </select>
+                        <label for="current-cgpa" class="block text-sm font-medium text-gray-600 mb-1">Current CGPA (Optional)</label>
+                        <input type="number" id="current-cgpa" step="0.01" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., 3.50">
                     </div>
                     <div>
-                        <label for="course-grade" class="block text-sm font-medium text-gray-600 mb-1">Grade</label>
-                        <select id="course-grade" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <option value="4.00">A (4.00)</option>
-                            <option value="3.67">A- (3.67)</option>
-                            <option value="3.33">B+ (3.33)</option>
-                            <option value="3.00">B (3.00)</option>
-                            <option value="2.67">B- (2.67)</option>
-                            <option value="2.33">C+ (2.33)</option>
-                            <option value="2.00">C (2.00)</option>
-                            <option value="1.67">C- (1.67)</option>
-                            <option value="1.33">D+ (1.33)</option>
-                            <option value="1.00">D (1.00)</option>
-                            <option value="0.00">F (0.00)</option>
-                        </select>
+                        <label for="completed-credits" class="block text-sm font-medium text-gray-600 mb-1">Completed Credits (Optional)</label>
+                        <input type="number" id="completed-credits" step="0.5" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., 90">
                     </div>
-                    <button type="submit" class="w-full bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">Add Course</button>
-                </form>
-            </div>
-
-            <!-- Course List -->
-            <div id="course-list-container" class="mb-6">
-                <!-- Courses will be dynamically inserted here -->
-            </div>
-
-            <!-- Calculate Button -->
-            <div class="text-center mb-8">
-                <button id="calculate-cgpa" class="bg-green-600 text-white font-bold text-lg rounded-lg px-8 py-3 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-transform transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:scale-100" disabled>Calculate CGPA</button>
-            </div>
-            
-            <!-- --- RESULTS SECTION --- -->
-            <!-- Good Standing Result -->
-            <div id="result-good" class="result-card bg-green-50 border border-green-200 rounded-xl p-6 text-center">
-                 <div class="mx-auto bg-green-100 rounded-full h-16 w-16 flex items-center justify-center mb-4">
-                    <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
-                <h3 id="good-standing-title" class="text-2xl font-bold text-green-800">Excellent Standing!</h3>
-                <p class="text-green-600 text-lg mt-1">Your new CGPA is</p>
-                <p id="cgpa-good" class="text-5xl font-bold text-green-700 my-2">0.00</p>
-                <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-good">0</span></p>
-            </div>
 
-            <!-- Mid Standing Result -->
-            <div id="result-mid" class="result-card bg-orange-50 border border-orange-200 rounded-xl p-6 text-center">
-                 <div class="mx-auto bg-orange-100 rounded-full h-16 w-16 flex items-center justify-center mb-4">
-                    <svg class="h-8 w-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
+                <!-- Add New Course -->
+                <div class="mb-6">
+                     <h3 class="text-lg font-semibold text-gray-700 mb-3">Add New Courses</h3>
+                    <form id="add-course-form" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                        <div>
+                            <label for="course-credit" class="block text-sm font-medium text-gray-600 mb-1">Credit Hours</label>
+                            <select id="course-credit" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="3">3 Credits</option>
+                                <option value="2">2 Credits</option>
+                                <option value="1">1 Credit</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="course-grade" class="block text-sm font-medium text-gray-600 mb-1">Grade</label>
+                            <select id="course-grade" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="4.00">A (4.00)</option>
+                                <option value="3.67">A- (3.67)</option>
+                                <option value="3.33">B+ (3.33)</option>
+                                <option value="3.00">B (3.00)</option>
+                                <option value="2.67">B- (2.67)</option>
+                                <option value="2.33">C+ (2.33)</option>
+                                <option value="2.00">C (2.00)</option>
+                                <option value="1.67">C- (1.67)</option>
+                                <option value="1.33">D+ (1.33)</option>
+                                <option value="1.00">D (1.00)</option>
+                                <option value="0.00">F (0.00)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">Add Course</button>
+                    </form>
                 </div>
-                <h3 id="mid-standing-title" class="text-2xl font-bold text-orange-800">Keep Pushing!</h3>
-                <p class="text-orange-600 text-lg mt-1">Your new CGPA is</p>
-                <p id="cgpa-mid" class="text-5xl font-bold text-orange-700 my-2">0.00</p>
-                <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-mid">0</span></p>
-            </div>
 
-            <!-- Probation Result -->
-            <div id="result-probation" class="result-card bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center">
-                <div class="mx-auto bg-yellow-100 rounded-full h-16 w-16 flex items-center justify-center mb-4">
-                     <svg class="h-8 w-8 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                </div>
-                <h3 id="probation-title" class="text-2xl font-bold text-yellow-800">You are on Probation</h3>
-                <p class="text-yellow-600 text-lg mt-1">Your new CGPA is exactly</p>
-                <p id="cgpa-probation" class="text-5xl font-bold text-yellow-700 my-2">2.00</p>
-                <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-probation">0</span></p>
-                <p class="mt-4 text-yellow-700 max-w-md mx-auto">You must achieve a GPA above 2.0 in the next trimester to improve your standing.</p>
-            </div>
-
-            <!-- Below 2.0 Result & Recovery Planner -->
-            <div id="result-low" class="result-card bg-red-50 border border-red-200 rounded-xl p-6">
-                <div class="text-center">
-                    <div class="mx-auto bg-red-100 rounded-full h-16 w-16 flex items-center justify-center mb-4">
-                        <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
-                    </div>
-                    <h3 id="low-cgpa-title" class="text-2xl font-bold text-red-800">Warning: New CGPA is below 2.0</h3>
-                    <p class="text-red-600 text-lg mt-1">Your new CGPA is</p>
-                    <p id="cgpa-low" class="text-5xl font-bold text-red-700 my-2">0.00</p>
-                    <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-low">0</span></p>
+                <!-- Course List -->
+                <div id="course-list-container" class="max-h-60 overflow-y-auto pr-2">
+                    <!-- Courses will be dynamically added here -->
                 </div>
                 
-                <div class="mt-6 pt-6 border-t border-red-200">
-                    <h4 class="text-lg font-semibold text-gray-800 text-center">Recovery Plan</h4>
-                    <p class="text-center text-gray-600 mb-4">Let's find out what you need in your next trimester.</p>
-                    
-                    <div class="max-w-xs mx-auto">
-                        <label for="next-credits" class="block text-sm font-medium text-gray-700 mb-1">Enter next trimester's total credits:</label>
-                        <input type="number" id="next-credits" min="6" step="0.5" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="e.g., 9 (min 6)">
-                    </div>
+                <button id="calculate-cgpa" class="w-full mt-6 bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all transform hover:scale-105">Calculate CGPA</button>
+            </div>
 
-                    <div id="recovery-result" class="mt-4 text-center hidden">
-                        <p class="text-gray-700">To reach a 2.0 CGPA, you need a GPA of:</p>
-                        <p id="required-gpa" class="text-4xl font-bold text-blue-600 my-2">0.00</p>
-                        <p id="recovery-message" class="text-sm font-medium"></p>
+            <!-- Right Side: Result -->
+            <div id="result-container" class="flex items-center justify-center p-6 md:p-8 bg-gray-50 rounded-2xl border border-dashed border-gray-300">
+                <div id="placeholder" class="text-center text-gray-400">
+                    <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                    <p class="mt-2 text-lg">Your CGPA result will appear here.</p>
+                </div>
+
+                <!-- Good Standing Result -->
+                <div id="result-good" class="result-card w-full">
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-xl p-6 text-center">
+                        <div class="mx-auto bg-green-100 rounded-full h-16 w-16 flex items-center justify-center mb-4">
+                            <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h3 id="good-standing-title" class="text-2xl font-bold text-green-800">Tukhor Student!</h3>
+                        <p class="text-green-600 text-lg mt-1">Your new CGPA is</p>
+                        <p id="cgpa-good" class="text-5xl font-bold text-green-700 my-2">0.00</p>
+                        <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-good">0</span></p>
+                    </div>
+                </div>
+
+                <!-- Mid Standing Result -->
+                <div id="result-mid" class="result-card w-full">
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 border border-orange-200 rounded-xl p-6 text-center">
+                        <div class="mx-auto bg-orange-100 rounded-full h-16 w-16 flex items-center justify-center mb-4">
+                           <svg class="h-8 w-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h3 id="mid-standing-title" class="text-2xl font-bold text-orange-800">Keep Pushing!</h3>
+                        <p class="text-orange-600 text-lg mt-1">Your new CGPA is</p>
+                        <p id="cgpa-mid" class="text-5xl font-bold text-orange-700 my-2">0.00</p>
+                        <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-mid">0</span></p>
+                    </div>
+                </div>
+                
+                <!-- Low CGPA Result -->
+                <div id="result-low" class="result-card w-full">
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-xl p-6 text-center">
+                        <div class="mx-auto bg-red-100 rounded-full h-16 w-16 flex items-center justify-center mb-4">
+                            <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        </div>
+                        <h3 id="low-cgpa-title" class="text-2xl font-bold text-red-800">Probation!</h3>
+                        <p class="text-red-600 text-lg mt-1">Your new CGPA is</p>
+                        <p id="cgpa-low" class="text-5xl font-bold text-red-700 my-2">0.00</p>
+                        <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-low">0</span></p>
+                    </div>
+                     <!-- Recovery Planner -->
+                    <div id="recovery-planner" class="mt-6 w-full bg-red-50 p-4 rounded-lg border border-red-200">
+                        <h4 class="text-lg font-semibold text-gray-800 text-center">Recovery Plan</h4>
+                        <p class="text-center text-gray-600 mb-4">Let's find out what you need in your next trimester.</p>
+                        
+                        <div class="max-w-xs mx-auto">
+                            <label for="next-credits" class="block text-sm font-medium text-gray-700 mb-1">Enter next trimester's total credits:</label>
+                            <input type="number" id="next-credits" min="6" step="0.5" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-center text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="e.g., 9 (min 6)">
+                        </div>
+
+                        <div id="recovery-result" class="mt-4 text-center hidden">
+                            <p class="text-gray-700">To reach a 2.0 CGPA, you need a GPA of:</p>
+                            <p id="required-gpa" class="text-3xl font-bold text-red-600"></p>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
-    </main>
-        <script>
+    </div>
+
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const currentCgpaInput = document.getElementById('current-cgpa');
             const completedCreditsInput = document.getElementById('completed-credits');
@@ -169,76 +181,53 @@
             const calculateBtn = document.getElementById('calculate-cgpa');
 
             // Result containers
+            const placeholderEl = document.getElementById('placeholder');
             const resultGood = document.getElementById('result-good');
             const resultMid = document.getElementById('result-mid');
-            const resultProbation = document.getElementById('result-probation');
             const resultLow = document.getElementById('result-low');
             const allResultCards = document.querySelectorAll('.result-card');
 
             // Recovery planner elements
+            const recoveryPlannerEl = document.getElementById('recovery-planner');
             const nextCreditsInput = document.getElementById('next-credits');
             const recoveryResultEl = document.getElementById('recovery-result');
             const requiredGpaEl = document.getElementById('required-gpa');
-            const recoveryMessageEl = document.getElementById('recovery-message');
 
             let courses = [];
-            let currentTotalCredits = 0;
             let currentTotalPoints = 0;
-
-            const gradeMap = {
-                "4.00": "A (4.00)", "3.67": "A- (3.67)", "3.33": "B+ (3.33)", "3.00": "B (3.00)", "2.67": "B- (2.67)", "2.33": "C+ (2.33)",
-                "2.00": "C (2.00)", "1.67": "C- (1.67)", "1.33": "D+ (1.33)", "1.00": "D (1.00)", "0.00": "F (0.00)"
-            };
-
-            function checkCalculateButtonState() {
-                const initialCgpa = parseFloat(currentCgpaInput.value);
-                const initialCredits = parseFloat(completedCreditsInput.value);
-                const hasInitialValues = !isNaN(initialCgpa) && !isNaN(initialCredits) && initialCredits > 0 && initialCgpa >= 0;
-                
-                calculateBtn.disabled = !(courses.length > 0 || hasInitialValues);
-            }
-
-            function renderCourses() {
-                courseListContainer.innerHTML = '';
-                if (courses.length === 0) {
-                    courseListContainer.innerHTML = `<p class="text-center text-gray-500 italic">No new courses added yet.</p>`;
-                } else {
-                    const header = document.createElement('div');
-                    header.className = 'grid grid-cols-4 gap-4 px-4 py-2 font-semibold text-gray-600 border-b';
-                    header.innerHTML = `
-                        <div class="col-span-2">Course</div>
-                        <div class="text-center">Grade</div>
-                        <div class="text-right">Action</div>
-                    `;
-                    courseListContainer.appendChild(header);
-
-                    courses.forEach((course, index) => {
-                        const courseEl = document.createElement('div');
-                        courseEl.className = 'grid grid-cols-4 gap-4 items-center bg-white p-4 rounded-lg shadow-sm mb-2 border';
-                        courseEl.innerHTML = `
-                            <div class="col-span-2 font-medium text-gray-800">${course.credit} Credits</div>
-                            <div class="text-center text-blue-600 font-semibold">${gradeMap[course.grade]}</div>
-                            <div class="text-right">
-                                <button data-index="${index}" class="remove-btn text-red-500 hover:text-red-700 font-semibold text-sm">Remove</button>
-                            </div>
-                        `;
-                        courseListContainer.appendChild(courseEl);
-                    });
-                }
-                checkCalculateButtonState();
-            }
+            let currentTotalCredits = 0;
 
             addCourseForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const credit = parseFloat(courseCreditEl.value);
                 const grade = parseFloat(courseGradeEl.value);
-
-                courses.push({ credit, grade: grade.toFixed(2) });
+                
+                courses.push({ credit, grade });
                 renderCourses();
-                addCourseForm.reset();
-                courseCreditEl.value = "3"; // Reset to default
                 hideResults();
             });
+            
+            function renderCourses() {
+                courseListContainer.innerHTML = '';
+                if (courses.length === 0) {
+                    courseListContainer.innerHTML = `<p class="text-center text-gray-400 p-4">No new courses added yet.</p>`;
+                    return;
+                }
+                courses.forEach((course, index) => {
+                    const courseEl = document.createElement('div');
+                    courseEl.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg mb-2 border border-gray-200';
+                    courseEl.innerHTML = `
+                        <div>
+                            <span class="font-semibold text-gray-700">Course ${index + 1}</span>
+                            <span class="text-sm text-gray-500 ml-2">${course.credit.toFixed(1)} Credits - Grade: ${course.grade.toFixed(2)}</span>
+                        </div>
+                        <button class="remove-btn text-red-500 hover:text-red-700 font-bold" data-index="${index}">&times;</button>
+                    `;
+                    courseListContainer.appendChild(courseEl);
+                });
+            }
+
+            renderCourses();
 
             courseListContainer.addEventListener('click', (e) => {
                 if (e.target.classList.contains('remove-btn')) {
@@ -250,79 +239,74 @@
             });
 
             function hideResults() {
-                allResultCards.forEach(card => {
-                    card.style.display = 'none';
-                    card.classList.remove('fade-in');
-                    card.classList.remove('bg-gradient-to-br', 'from-green-50', 'to-green-100', 'from-orange-50', 'to-orange-100', 'from-red-50', 'to-red-100');
-                });
+                placeholderEl.style.display = 'block';
+                allResultCards.forEach(card => card.style.display = 'none');
+                allResultCards.forEach(card => card.classList.remove('fade-in'));
+                recoveryPlannerEl.style.display = 'none';
                 recoveryResultEl.classList.add('hidden');
                 nextCreditsInput.value = '';
             }
 
             calculateBtn.addEventListener('click', () => {
-                hideResults();
+                let initialPoints = 0;
+                let initialCredits = 0;
 
-                const initialCgpa = parseFloat(currentCgpaInput.value);
-                const initialCredits = parseFloat(completedCreditsInput.value);
+                const currentCgpa = parseFloat(currentCgpaInput.value);
+                const completedCredits = parseFloat(completedCreditsInput.value);
 
-                let basePoints = 0;
-                let baseCredits = 0;
-
-                if (!isNaN(initialCgpa) && !isNaN(initialCredits) && initialCredits > 0 && initialCgpa >= 0) {
-                    basePoints = initialCgpa * initialCredits;
-                    baseCredits = initialCredits;
+                if (!isNaN(currentCgpa) && !isNaN(completedCredits) && currentCgpa > 0 && completedCredits > 0) {
+                    initialPoints = currentCgpa * completedCredits;
+                    initialCredits = completedCredits;
                 }
 
-                const newCoursesPoints = courses.reduce((sum, course) => sum + (course.credit * course.grade), 0);
-                const newCoursesCredits = courses.reduce((sum, course) => sum + course.credit, 0);
+                const newPoints = courses.reduce((sum, course) => sum + (course.credit * course.grade), 0);
+                const newCredits = courses.reduce((sum, course) => sum + course.credit, 0);
 
-                currentTotalPoints = basePoints + newCoursesPoints;
-                currentTotalCredits = baseCredits + newCoursesCredits;
-
-                if (currentTotalCredits === 0) return;
+                currentTotalCredits = initialCredits + newCredits;
+                currentTotalPoints = initialPoints + newPoints;
+                
+                if (currentTotalCredits === 0) {
+                    alert("Please add at least one course or your current academic info.");
+                    return;
+                }
 
                 const cgpa = currentTotalPoints / currentTotalCredits;
                 
+                placeholderEl.style.display = 'none';
+                allResultCards.forEach(card => card.style.display = 'none');
+                
                 let targetResultCard;
-
+                
                 if (cgpa >= 3.0) { // Green Zone
                     targetResultCard = resultGood;
-                    targetResultCard.classList.add('bg-gradient-to-br', 'from-green-50', 'to-green-100');
                     const titleEl = document.getElementById('good-standing-title');
                     if (cgpa >= 3.8) {
-                        titleEl.textContent = "Tukhor Student 🔥";
+                        titleEl.textContent = "🎓 তুখোড় ইশটুডেন্ট!";
                     } else if (cgpa >= 3.5) {
-                        titleEl.textContent = "Waiver wala 🤑";
+                        titleEl.textContent = "💸 ওয়েভারওয়ালা!";
                     } else {
-                        titleEl.textContent = "3 dhore rakhen :)";
+                        titleEl.textContent = "😅 ৩.০০ টা ধরে রাখেন!";
                     }
                     document.getElementById('cgpa-good').textContent = cgpa.toFixed(3);
                     document.getElementById('total-credits-good').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
-                } else if (cgpa > 2.0 && cgpa < 3.0) { // Orange Zone
+                } else if (cgpa >= 2.0 && cgpa < 3.0) { // Orange Zone
                     targetResultCard = resultMid;
-                    targetResultCard.classList.add('bg-gradient-to-br', 'from-orange-50', 'to-orange-100');
                     const titleEl = document.getElementById('mid-standing-title');
-                    if (cgpa >= 2.6) {
-                        titleEl.textContent = "Arektu hard try koren";
+                     if (cgpa >= 2.6) {
+                        titleEl.textContent = "💪 আরেকটু পরিশ্রম করুন!";
                     } else if (cgpa >= 2.2) {
-                        titleEl.textContent = "Red Zone e achen 🚦";
-                    } else {
-                        titleEl.textContent = "Arektu holei Letter dhoraye dibe 📮";
+                        titleEl.textContent = "🚨 রেড জোনে আছেন!";
+                    } else { // 2.0 to 2.2
+                        titleEl.textContent = "📉 আরেকটু হলেই লেটার ধরিয়ে দেবে!";
                     }
                     document.getElementById('cgpa-mid').textContent = cgpa.toFixed(3);
                     document.getElementById('total-credits-mid').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
-                } else if (cgpa === 2.0) { // Probation (also Orange)
-                    targetResultCard = resultProbation;
-                    targetResultCard.classList.add('bg-gradient-to-br', 'from-orange-50', 'to-orange-100');
-                    document.getElementById('probation-title').textContent = "On Probation. Time for a comeback story!";
-                    document.getElementById('cgpa-probation').textContent = cgpa.toFixed(2);
-                    document.getElementById('total-credits-probation').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
                 } else { // Red Zone
                     targetResultCard = resultLow;
-                    targetResultCard.classList.add('bg-gradient-to-br', 'from-red-50', 'to-red-100');
-                    document.getElementById('low-cgpa-title').textContent = "Joghonnorokomer Porisromi Hon 💪";
+                    document.getElementById('low-cgpa-title').textContent = "🤯 জঘন্য রকমের পরিশ্রমী হন!";
                     document.getElementById('cgpa-low').textContent = cgpa.toFixed(3);
                     document.getElementById('total-credits-low').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
+                    recoveryPlannerEl.style.display = 'block';
                 }
                 
                 if (targetResultCard) {
@@ -344,40 +328,24 @@
                 const requiredGpa = requiredNextPoints / nextCredits;
 
                 recoveryResultEl.classList.remove('hidden');
-                requiredGpaEl.textContent = requiredGpa.toFixed(3);
 
                 if (requiredGpa > 4.0) {
-                    recoveryMessageEl.textContent = "This is mathematically impossible. Consider retaking courses or consulting an advisor.";
-                    recoveryMessageEl.className = "text-sm font-semibold text-red-600";
+                    requiredGpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)}). Try with more credits.`;
+                    requiredGpaEl.classList.add('text-red-700');
+                    requiredGpaEl.classList.remove('text-green-600', 'text-red-600');
                 } else if (requiredGpa <= 0) {
-                    recoveryMessageEl.textContent = "Good news! Any passing grade will bring your CGPA above 2.0.";
-                    recoveryMessageEl.className = "text-sm font-semibold text-green-600";
+                    requiredGpaEl.textContent = 'Any passing grade will work!';
+                    requiredGpaEl.classList.add('text-green-600');
+                    requiredGpaEl.classList.remove('text-red-700', 'text-red-600');
                 } else {
-                    recoveryMessageEl.textContent = "This GPA is challenging but achievable. Plan your studies well!";
-                    recoveryMessageEl.className = "text-sm font-semibold text-blue-600";
+                    requiredGpaEl.textContent = requiredGpa.toFixed(3);
+                    requiredGpaEl.classList.add('text-red-600');
+                    requiredGpaEl.classList.remove('text-green-600', 'text-red-700');
                 }
             });
-
-            // Event listeners for initial inputs
-            currentCgpaInput.addEventListener('input', () => {
-                checkCalculateButtonState();
-                hideResults();
-            });
-            completedCreditsInput.addEventListener('input', () => {
-                checkCalculateButtonState();
-                hideResults();
-            });
-
-
-            // Initial render
-            renderCourses();
         });
     </script>
+
 </body>
 </html>
-
-
-
-
-
 
