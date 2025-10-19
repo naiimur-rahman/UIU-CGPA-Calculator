@@ -195,16 +195,26 @@
 
             <!-- Calculate Button -->
             <button id="calculate-cgpa" class="w-full btn btn-main-calc"><i data-lucide="calculator" class="w-6 h-6"></i>Calculate CGPA</button>
+            <p id="calc-error" class="text-red-500 text-sm mt-2 text-center hidden"></p>
             
             <!-- Result Section -->
             <div id="result-section" class="mt-8">
                  <!-- Good Standing Result -->
                 <div id="result-good" class="result-card w-full">
                     <div class="bg-gradient-to-br from-emerald-50 to-green-100 border border-green-200 rounded-xl p-6 text-center">
-                        <h3 id="good-standing-title" class="text-2xl font-bold text-green-800">Tukhor Student!</h3>
-                        <p class="text-green-600 text-lg mt-1">Your new CGPA is</p>
-                        <p id="cgpa-good" class="text-6xl font-bold text-green-700 my-2">0.00</p>
-                        <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-good">0</span></p>
+                        <h3 id="good-standing-title" class="text-2xl font-bold text-green-800 mb-4">Tukhor Student!</h3>
+                        <div class="flex divide-x-2 divide-green-200">
+                            <div class="flex-1 px-4">
+                                <p class="text-green-600 text-lg">Your new CGPA is</p>
+                                <p id="cgpa-good" class="text-6xl font-bold text-green-700 my-2">0.00</p>
+                                <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-good">0</span></p>
+                            </div>
+                            <div class="flex-1 px-4">
+                                <p class="text-green-600 text-lg">Trimester GPA</p>
+                                <p id="tgpa-good" class="text-6xl font-bold text-green-700 my-2">0.00</p>
+                                <p class="text-sm text-gray-500">This Trimester</p>
+                            </div>
+                        </div>
                     </div>
                      <!-- Target CGPA Planner -->
                     <div id="target-planner-good" class="mt-6 w-full bg-green-50/50 p-4 rounded-lg border border-green-200">
@@ -229,10 +239,19 @@
                 <!-- Mid Standing Result -->
                 <div id="result-mid" class="result-card w-full">
                     <div class="bg-gradient-to-br from-amber-50 to-orange-100 border border-orange-200 rounded-xl p-6 text-center">
-                        <h3 id="mid-standing-title" class="text-2xl font-bold text-orange-800">Keep Pushing!</h3>
-                        <p class="text-orange-600 text-lg mt-1">Your new CGPA is</p>
-                        <p id="cgpa-mid" class="text-6xl font-bold text-orange-700 my-2">0.00</p>
-                        <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-mid">0</span></p>
+                        <h3 id="mid-standing-title" class="text-2xl font-bold text-orange-800 mb-4">Keep Pushing!</h3>
+                        <div class="flex divide-x-2 divide-orange-200">
+                            <div class="flex-1 px-4">
+                                <p class="text-orange-600 text-lg">Your new CGPA is</p>
+                                <p id="cgpa-mid" class="text-6xl font-bold text-orange-700 my-2">0.00</p>
+                                <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-mid">0</span></p>
+                            </div>
+                            <div class="flex-1 px-4">
+                                <p class="text-orange-600 text-lg">Trimester GPA</p>
+                                <p id="tgpa-mid" class="text-6xl font-bold text-orange-700 my-2">0.00</p>
+                                <p class="text-sm text-gray-500">This Trimester</p>
+                            </div>
+                        </div>
                     </div>
                      <!-- Target CGPA Planner -->
                     <div id="target-planner-mid" class="mt-6 w-full bg-orange-50/50 p-4 rounded-lg border border-orange-200">
@@ -257,10 +276,19 @@
                 <!-- Low CGPA Result -->
                 <div id="result-low" class="result-card w-full">
                     <div class="bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-xl p-6 text-center">
-                        <h3 id="low-cgpa-title" class="text-2xl font-bold text-red-800">Probation!</h3>
-                        <p class="text-red-600 text-lg mt-1">Your new CGPA is</p>
-                        <p id="cgpa-low" class="text-6xl font-bold text-red-700 my-2">0.00</p>
-                        <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-low">0</span></p>
+                         <h3 id="low-cgpa-title" class="text-2xl font-bold text-red-800 mb-4">Probation!</h3>
+                        <div class="flex divide-x-2 divide-red-200">
+                            <div class="flex-1 px-4">
+                                <p class="text-red-600 text-lg">Your new CGPA is</p>
+                                <p id="cgpa-low" class="text-6xl font-bold text-red-700 my-2">0.00</p>
+                                <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-low">0</span></p>
+                            </div>
+                            <div class="flex-1 px-4">
+                                <p class="text-red-600 text-lg">Trimester GPA</p>
+                                <p id="tgpa-low" class="text-6xl font-bold text-red-700 my-2">0.00</p>
+                                <p class="text-sm text-gray-500">This Trimester</p>
+                            </div>
+                        </div>
                     </div>
                      <!-- Recovery Planner -->
                     <div id="recovery-planner" class="mt-6 w-full bg-red-50/50 p-4 rounded-lg border border-red-200">
@@ -292,6 +320,7 @@
             const currentCgpaInput = document.getElementById('current-cgpa');
             const completedCreditsInput = document.getElementById('completed-credits');
             const cgpaErrorEl = document.getElementById('cgpa-error');
+            const calcErrorEl = document.getElementById('calc-error');
             
             const addCourseForm = document.getElementById('add-course-form');
             const courseCreditEl = document.getElementById('course-credit');
@@ -329,9 +358,8 @@
             const requiredGpaMidEl = document.getElementById('required-gpa-mid');
 
             let courses = [];
+            let totalGpaCredits = 0; 
             let currentTotalPoints = 0;
-            let totalGpaCredits = 0; // Renamed for clarity
-            let totalEarnedCredits = 0; // For display
             let finalCgpa = 0;
 
             addCourseForm.addEventListener('submit', (e) => {
@@ -428,12 +456,13 @@
                 targetPlannerGoodEl.style.display = 'none';
                 targetPlannerMidEl.style.display = 'none';
                 cgpaErrorEl.classList.add('hidden');
+                calcErrorEl.classList.add('hidden');
             }
 
             calculateBtn.addEventListener('click', () => {
                 hideResults();
                 let initialPoints = 0;
-                let initialCredits = 0; // This is initial EARNED credits
+                let initialEarnedCredits = 0; 
                 const currentCgpa = parseFloat(currentCgpaInput.value);
                 const completedCredits = parseFloat(completedCreditsInput.value);
 
@@ -442,67 +471,68 @@
                     cgpaErrorEl.classList.remove('hidden');
                     return;
                 }
+                
+                let trimesterCreditsForValidation = courses.reduce((sum, course) => sum + course.credit, 0);
+                if (courses.length > 0 && trimesterCreditsForValidation < 6) {
+                    calcErrorEl.textContent = "Current trimester courses must be at least 6 credits to calculate.";
+                    calcErrorEl.classList.remove('hidden');
+                    return;
+                }
 
                 if (!isNaN(currentCgpa) && !isNaN(completedCredits) && currentCgpa >= 0 && completedCredits >= 0) {
                     initialPoints = currentCgpa * completedCredits;
-                    initialCredits = completedCredits;
+                    initialEarnedCredits = completedCredits;
                 }
 
                 let newPoints = 0;
-                let newGpaCredits = 0;      // Credits attempted this trimester for GPA calculation
-                let newEarnedCredits = 0;   // Credits earned this trimester for display
+                let newGpaCredits = 0;
+                let newEarnedCredits = 0;
                 let retakePointDifference = 0;
-                let retakeEarnedCredits = 0;  // Credits earned from retaking an F
+                let retakeEarnedCredits = 0;
+                
+                let trimesterPoints = 0;
+                let trimesterGpaCredits = 0;
 
                 courses.forEach(course => {
                     if (course.type === 'new') {
-                        newGpaCredits += course.credit; // Always add to attempted credits for the divisor
+                        newGpaCredits += course.credit;
                         if (course.grade > 0.00) {
-                            newEarnedCredits += course.credit; // Only add to EARNED credits if passed
+                            newEarnedCredits += course.credit;
                         }
                         newPoints += course.credit * course.grade;
+                        trimesterPoints += course.credit * course.grade;
+                        trimesterGpaCredits += course.credit;
                     } else if (course.type === 'retake') {
-                        // Credits for retakes are already in the initial GPA credits, so we don't add to newGpaCredits.
-                        // We only adjust points and potentially add to EARNED credits.
                         if (course.oldGrade === 0.00) {
-                            retakeEarnedCredits += course.credit; // We earn these credits now
+                            newGpaCredits += course.credit; // It's a new attempt for GPA credit
+                            retakeEarnedCredits += course.credit;
                         }
-                        // The point difference is always adjusted.
                         retakePointDifference += (course.newGrade - course.oldGrade) * course.credit;
                     }
                 });
 
-                // Total credits for the CGPA calculation's DIVISOR
-                totalGpaCredits = initialCredits + newGpaCredits; 
-                // Total credits for DISPLAY (what the student has successfully passed)
-                totalEarnedCredits = initialCredits + newEarnedCredits + retakeEarnedCredits;
-
+                totalGpaCredits = initialEarnedCredits + newGpaCredits; 
+                let totalEarnedCreditsForDisplay = initialEarnedCredits + newEarnedCredits + retakeEarnedCredits;
                 currentTotalPoints = initialPoints + newPoints + retakePointDifference;
                 
-                if (totalGpaCredits === 0) {
-                    finalCgpa = 0;
-                } else {
-                    finalCgpa = currentTotalPoints / totalGpaCredits;
-                }
-                
+                finalCgpa = (totalGpaCredits === 0) ? 0 : currentTotalPoints / totalGpaCredits;
+                const trimesterGpa = (trimesterGpaCredits === 0) ? 0 : trimesterPoints / trimesterGpaCredits;
+
                 let targetResultCard;
                 
                 if (finalCgpa >= 3.0) {
                     targetResultCard = resultGood;
-                    
-                    if (finalCgpa.toFixed(2) === '4.00') {
-                        targetPlannerGoodEl.style.display = 'none';
-                    } else {
+                    if (finalCgpa.toFixed(2) !== '4.00') {
                         targetPlannerGoodEl.style.display = 'block';
                     }
-
                     const titleEl = document.getElementById('good-standing-title');
                     if (finalCgpa >= 3.8) titleEl.textContent = "তুখোড় ইশটুডেন্ট! 🎓";
                     else if (finalCgpa >= 3.5) titleEl.textContent = "ওয়েভারওয়ালা! 💸";
                     else if (finalCgpa >= 3.2) titleEl.textContent = "সেইফ জোনে আছেন 😌";
                     else titleEl.textContent = "৩.০০ টা ধরে রাখেন! 😅";
                     document.getElementById('cgpa-good').textContent = finalCgpa.toFixed(2);
-                    document.getElementById('total-credits-good').textContent = totalEarnedCredits.toFixed(2).replace(/\.00$/, '');
+                    document.getElementById('total-credits-good').textContent = totalEarnedCreditsForDisplay.toFixed(2).replace(/\.00$/, '');
+                    document.getElementById('tgpa-good').textContent = trimesterGpa.toFixed(2);
                 } else if (finalCgpa >= 2.0) {
                     targetResultCard = resultMid;
                     targetPlannerMidEl.style.display = 'block';
@@ -511,18 +541,17 @@
                     else if (finalCgpa >= 2.2) titleEl.textContent = "রেড জোনে আছেন! 🚨";
                     else titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে! 📉";
                     document.getElementById('cgpa-mid').textContent = finalCgpa.toFixed(2);
-                    document.getElementById('total-credits-mid').textContent = totalEarnedCredits.toFixed(2).replace(/\.00$/, '');
+                    document.getElementById('total-credits-mid').textContent = totalEarnedCreditsForDisplay.toFixed(2).replace(/\.00$/, '');
+                    document.getElementById('tgpa-mid').textContent = trimesterGpa.toFixed(2);
                 } else {
                     targetResultCard = resultLow;
                     recoveryPlannerEl.style.display = 'block';
                     const lowTitleEl = document.getElementById('low-cgpa-title');
-                    if (finalCgpa < 1.5) {
-                        lowTitleEl.textContent = "RIP 💀";
-                    } else {
-                        lowTitleEl.textContent = "জঘন্য রকমের পরিশ্রমী হন! 🤯";
-                    }
+                    if (finalCgpa < 1.5) lowTitleEl.textContent = "RIP 💀";
+                    else lowTitleEl.textContent = "জঘন্য রকমের পরিশ্রমী হন! 🤯";
                     document.getElementById('cgpa-low').textContent = finalCgpa.toFixed(2);
-                    document.getElementById('total-credits-low').textContent = totalEarnedCredits.toFixed(2).replace(/\.00$/, '');
+                    document.getElementById('total-credits-low').textContent = totalEarnedCreditsForDisplay.toFixed(2).replace(/\.00$/, '');
+                    document.getElementById('tgpa-low').textContent = trimesterGpa.toFixed(2);
                 }
                 
                 if (targetResultCard) {
