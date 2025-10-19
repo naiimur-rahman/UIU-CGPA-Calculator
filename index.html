@@ -494,17 +494,24 @@
                 let trimesterGpaCredits = 0;
 
                 courses.forEach(course => {
+                    // --- TGPA Calculation ---
+                    trimesterGpaCredits += course.credit;
+                    if (course.type === 'new') {
+                        trimesterPoints += course.credit * course.grade;
+                    } else { // retake
+                        trimesterPoints += course.credit * course.newGrade;
+                    }
+                    
+                    // --- CGPA Calculation ---
                     if (course.type === 'new') {
                         newGpaCredits += course.credit;
                         if (course.grade > 0.00) {
                             newEarnedCredits += course.credit;
                         }
                         newPoints += course.credit * course.grade;
-                        trimesterPoints += course.credit * course.grade;
-                        trimesterGpaCredits += course.credit;
                     } else if (course.type === 'retake') {
                         if (course.oldGrade === 0.00) {
-                            newGpaCredits += course.credit; // It's a new attempt for GPA credit
+                            newGpaCredits += course.credit; 
                             retakeEarnedCredits += course.credit;
                         }
                         retakePointDifference += (course.newGrade - course.oldGrade) * course.credit;
