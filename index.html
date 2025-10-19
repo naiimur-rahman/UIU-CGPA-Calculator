@@ -439,15 +439,24 @@
                 }
 
                 let newPoints = 0, newCredits = 0, retakePointDifference = 0;
+                
                 courses.forEach(course => {
                     if (course.type === 'new') {
-                        newPoints += course.credit * course.grade;
-                        newCredits += course.credit;
-                    } else if (course.type === 'retake') {
-                        if (initialCredits > 0) retakePointDifference += (course.newGrade - course.oldGrade) * course.credit;
-                        else {
-                            newPoints += course.credit * course.newGrade;
+                        // For a new course, only add credits if it was passed (grade > F).
+                        if (course.grade > 0.00) {
                             newCredits += course.credit;
+                        }
+                        // The points are always added (will be 0 for F grade).
+                        newPoints += course.credit * course.grade;
+                    } else if (course.type === 'retake') {
+                        // If the old grade was F (0.00), it means we are earning credits for the first time.
+                        if (course.oldGrade === 0.00) {
+                            newCredits += course.credit; // Add the credits to this trimester's total
+                            newPoints += course.credit * course.newGrade; // Add the full points for the new grade
+                        } else {
+                            // If it was just an improvement (e.g., D to B), only adjust the point difference.
+                            // The credits were already earned.
+                           retakePointDifference += (course.newGrade - course.oldGrade) * course.credit;
                         }
                     }
                 });
@@ -456,11 +465,11 @@
                 currentTotalPoints = initialPoints + newPoints + retakePointDifference;
                 
                 if (currentTotalCredits === 0) {
-                    alert("Please add at least one course or your current academic info.");
-                    return;
+                    // Handle division by zero if no credits are earned
+                    finalCgpa = 0;
+                } else {
+                    finalCgpa = currentTotalPoints / currentTotalCredits;
                 }
-
-                finalCgpa = currentTotalPoints / currentTotalCredits;
                 
                 let targetResultCard;
                 
@@ -472,7 +481,7 @@
                     else if (finalCgpa >= 3.5) titleEl.textContent = "ওয়েভারওয়ালা! 💸";
                     else if (finalCgpa >= 3.2) titleEl.textContent = "সেইফ জোনে আছেন 😌";
                     else titleEl.textContent = "৩.০০ ধরে রাখেন! 😅";
-                    document.getElementById('cgpa-good').textContent = finalCgpa.toFixed(3);
+                    document.getElementById('cgpa-good').textContent = finalCgpa.toFixed(2);
                     document.getElementById('total-credits-good').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
                 } else if (finalCgpa >= 2.0) {
                     targetResultCard = resultMid;
@@ -481,7 +490,7 @@
                     if (finalCgpa >= 2.6) titleEl.textContent = "আরেকটু পরিশ্রম করুন! 💪";
                     else if (finalCgpa >= 2.2) titleEl.textContent = "রেড জোনে আছেন! 🚨";
                     else titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে! 📉";
-                    document.getElementById('cgpa-mid').textContent = finalCgpa.toFixed(3);
+                    document.getElementById('cgpa-mid').textContent = finalCgpa.toFixed(2);
                     document.getElementById('total-credits-mid').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
                 } else {
                     targetResultCard = resultLow;
@@ -492,7 +501,7 @@
                     } else {
                         lowTitleEl.textContent = "জঘন্য রকমের পরিশ্রমী হন! 🤯";
                     }
-                    document.getElementById('cgpa-low').textContent = finalCgpa.toFixed(3);
+                    document.getElementById('cgpa-low').textContent = finalCgpa.toFixed(2);
                     document.getElementById('total-credits-low').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
                 }
                 
@@ -515,7 +524,7 @@
                 recoveryResultEl.classList.remove('hidden');
                 if (requiredGpa > 4.0) requiredGpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)}).`;
                 else if (requiredGpa <= 0) requiredGpaEl.textContent = 'Any passing grade will work!';
-                else requiredGpaEl.textContent = requiredGpa.toFixed(3);
+                else requiredGpaEl.textContent = requiredGpa.toFixed(2);
             });
 
             function handleTargetCalculation(targetCgpaInput, targetCreditsInput, resultEl, gpaEl) {
@@ -533,7 +542,7 @@
                  resultEl.classList.remove('hidden');
                  if (requiredGpa > 4.0) gpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)}).`;
                  else if (requiredGpa < 0) gpaEl.textContent = `Already achieved!`;
-                 else gpaEl.textContent = requiredGpa.toFixed(3);
+                 else gpaEl.textContent = requiredGpa.toFixed(2);
             }
 
             [targetCgpaGoodInput, targetCreditsGoodInput].forEach(el => el.addEventListener('input', () => handleTargetCalculation(targetCgpaGoodInput, targetCreditsGoodInput, targetResultGoodEl, requiredGpaGoodEl)));
