@@ -43,7 +43,9 @@
 <body class="bg-gray-100">
 
     <header class="bg-gray-800 shadow-md w-full p-4">
-        <!-- Header content can go here if needed -->
+        <div class="container mx-auto text-center text-white font-semibold text-lg">
+            United International University
+        </div>
     </header>
 
     <main class="container mx-auto p-4 sm:p-6 lg:p-8 flex flex-col items-center">
@@ -102,8 +104,54 @@
                 </form>
             </div>
 
+            <!-- Add Retake Courses Section -->
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Add Retake Courses</h2>
+                <form id="add-retake-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label for="retake-credit" class="block text-sm font-medium text-gray-700 mb-1">Credits</label>
+                        <select id="retake-credit" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="retake-old-grade" class="block text-sm font-medium text-gray-700 mb-1">Old Grade</label>
+                        <select id="retake-old-grade" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="3.67">A- (3.67)</option>
+                            <option value="3.33">B+ (3.33)</option>
+                            <option value="3.00">B (3.00)</option>
+                            <option value="2.67">B- (2.67)</option>
+                            <option value="2.33">C+ (2.33)</option>
+                            <option value="2.00">C (2.00)</option>
+                            <option value="1.67">C- (1.67)</option>
+                            <option value="1.33">D+ (1.33)</option>
+                            <option value="1.00">D (1.00)</option>
+                            <option value="0.00" selected>F (0.00)</option>
+                        </select>
+                    </div>
+                     <div>
+                        <label for="retake-new-grade" class="block text-sm font-medium text-gray-700 mb-1">New Grade</label>
+                        <select id="retake-new-grade" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="4.00">A (4.00)</option>
+                            <option value="3.67">A- (3.67)</option>
+                            <option value="3.33">B+ (3.33)</option>
+                            <option value="3.00">B (3.00)</option>
+                            <option value="2.67">B- (2.67)</option>
+                            <option value="2.33">C+ (2.33)</option>
+                            <option value="2.00">C (2.00)</option>
+                            <option value="1.67">C- (1.67)</option>
+                            <option value="1.33">D+ (1.33)</option>
+                            <option value="1.00">D (1.00)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors">Add Retake</button>
+                </form>
+            </div>
+
             <!-- Course List -->
-            <div id="course-list-container" class="max-h-60 overflow-y-auto pr-2 space-y-2 mb-8">
+            <div id="course-list-container" class="max-h-80 overflow-y-auto pr-2 space-y-2 mb-8">
                 <!-- Courses will be dynamically added here -->
             </div>
 
@@ -174,19 +222,26 @@
         document.addEventListener('DOMContentLoaded', () => {
             const currentCgpaInput = document.getElementById('current-cgpa');
             const completedCreditsInput = document.getElementById('completed-credits');
+            
+            // New course form
             const addCourseForm = document.getElementById('add-course-form');
             const courseCreditEl = document.getElementById('course-credit');
             const courseGradeEl = document.getElementById('course-grade');
+
+            // Retake course form
+            const addRetakeForm = document.getElementById('add-retake-form');
+            const retakeCreditEl = document.getElementById('retake-credit');
+            const retakeOldGradeEl = document.getElementById('retake-old-grade');
+            const retakeNewGradeEl = document.getElementById('retake-new-grade');
+            
             const courseListContainer = document.getElementById('course-list-container');
             const calculateBtn = document.getElementById('calculate-cgpa');
             
-            // Result containers
             const resultGood = document.getElementById('result-good');
             const resultMid = document.getElementById('result-mid');
             const resultLow = document.getElementById('result-low');
             const allResultCards = document.querySelectorAll('.result-card');
 
-            // Recovery planner elements
             const recoveryPlannerEl = document.getElementById('recovery-planner');
             const nextCreditsInput = document.getElementById('next-credits');
             const recoveryResultEl = document.getElementById('recovery-result');
@@ -201,30 +256,39 @@
                 const credit = parseFloat(courseCreditEl.value);
                 const grade = parseFloat(courseGradeEl.value);
                 
-                courses.push({ credit, grade });
+                courses.push({ type: 'new', credit, grade });
+                renderCourses();
+                hideResults();
+            });
+
+            addRetakeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const credit = parseFloat(retakeCreditEl.value);
+                const oldGrade = parseFloat(retakeOldGradeEl.value);
+                const newGrade = parseFloat(retakeNewGradeEl.value);
+
+                if (oldGrade >= newGrade) {
+                    alert("New grade must be higher than the old grade for a retake improvement.");
+                    return;
+                }
+                
+                courses.push({ type: 'retake', credit, oldGrade, newGrade });
                 renderCourses();
                 hideResults();
             });
 
             function getGradeLetter(grade) {
-                if (grade === 4.00) return 'A';
-                if (grade === 3.67) return 'A-';
-                if (grade === 3.33) return 'B+';
-                if (grade === 3.00) return 'B';
-                if (grade === 2.67) return 'B-';
-                if (grade === 2.33) return 'C+';
-                if (grade === 2.00) return 'C';
-                if (grade === 1.67) return 'C-';
-                if (grade === 1.33) return 'D+';
-                if (grade === 1.00) return 'D';
-                if (grade === 0.00) return 'F';
-                return '';
+                const gradeMap = {
+                    4.00: 'A', 3.67: 'A-', 3.33: 'B+', 3.00: 'B', 2.67: 'B-',
+                    2.33: 'C+', 2.00: 'C', 1.67: 'C-', 1.33: 'D+', 1.00: 'D', 0.00: 'F'
+                };
+                return gradeMap[grade] || '';
             }
             
             function renderCourses() {
                 courseListContainer.innerHTML = '';
                 if (courses.length === 0) {
-                    courseListContainer.innerHTML = `<p class="text-center text-gray-400 p-4">No new courses added yet.</p>`;
+                    courseListContainer.innerHTML = `<p class="text-center text-gray-400 p-4">No new or retake courses added yet.</p>`;
                     return;
                 }
 
@@ -239,17 +303,34 @@
 
                 courses.forEach((course, index) => {
                     const courseEl = document.createElement('div');
-                    courseEl.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg mt-2 border border-gray-200';
-                    courseEl.innerHTML = `
-                        <span class="w-1/3 font-semibold text-gray-700">${course.credit} Credits</span>
-                        <div class="w-1/3 text-center">
-                            <span class="font-bold text-blue-600">${getGradeLetter(course.grade)}</span>
-                            <span class="block text-xs text-gray-500">(${course.grade.toFixed(2)})</span>
-                        </div>
+                    let courseHTML = '';
+
+                    if (course.type === 'new') {
+                        courseEl.className = 'flex justify-between items-center bg-gray-50 p-3 rounded-lg mt-2 border border-gray-200';
+                        courseHTML = `
+                            <span class="w-1/3 font-semibold text-gray-700">${course.credit} Credits</span>
+                            <div class="w-1/3 text-center">
+                                <span class="font-bold text-blue-600">${getGradeLetter(course.grade)}</span>
+                                <span class="block text-xs text-gray-500">(${course.grade.toFixed(2)})</span>
+                            </div>
+                        `;
+                    } else { // Retake course
+                        courseEl.className = 'flex justify-between items-center bg-blue-50 p-3 rounded-lg mt-2 border border-blue-200';
+                        courseHTML = `
+                            <span class="w-1/3 font-semibold text-gray-700">${course.credit} Credits <span class="text-indigo-600 font-bold">(Retake)</span></span>
+                            <div class="w-1/3 text-center">
+                                <span class="font-bold text-gray-500 line-through">${getGradeLetter(course.oldGrade)}</span>
+                                <span class="font-bold mx-1 text-gray-600">→</span>
+                                <span class="font-bold text-green-600">${getGradeLetter(course.newGrade)}</span>
+                            </div>
+                        `;
+                    }
+
+                    courseEl.innerHTML = courseHTML + `
                         <div class="w-1/3 text-right">
                             <button class="remove-btn text-red-500 hover:text-red-700 font-semibold" data-index="${index}">Remove</button>
-                        </div>
-                    `;
+                        </div>`;
+                    
                     courseListContainer.appendChild(courseEl);
                 });
             }
@@ -285,11 +366,28 @@
                     initialCredits = completedCredits;
                 }
 
-                const newPoints = courses.reduce((sum, course) => sum + (course.credit * course.grade), 0);
-                const newCredits = courses.reduce((sum, course) => sum + course.credit, 0);
+                let newPoints = 0;
+                let newCredits = 0;
+                let retakePointDifference = 0;
+
+                courses.forEach(course => {
+                    if (course.type === 'new') {
+                        newPoints += course.credit * course.grade;
+                        newCredits += course.credit;
+                    } else if (course.type === 'retake') {
+                        // Check if initial credits were provided, as retakes modify existing history.
+                        if (initialCredits > 0) {
+                             retakePointDifference += (course.newGrade - course.oldGrade) * course.credit;
+                        } else {
+                            // If no history, treat retake as a new course
+                            newPoints += course.credit * course.newGrade;
+                            newCredits += course.credit;
+                        }
+                    }
+                });
 
                 currentTotalCredits = initialCredits + newCredits;
-                currentTotalPoints = initialPoints + newPoints;
+                currentTotalPoints = initialPoints + newPoints + retakePointDifference;
                 
                 if (currentTotalCredits === 0) {
                     alert("Please add at least one course or your current academic info.");
@@ -302,31 +400,31 @@
                 
                 let targetResultCard;
                 
-                if (cgpa >= 3.0) { // Green Zone
+                if (cgpa >= 3.0) {
                     targetResultCard = resultGood;
                     const titleEl = document.getElementById('good-standing-title');
                     if (cgpa >= 3.8) {
-                        titleEl.textContent = "তুখোড় ইশটুডেন্ট!🎓";
+                        titleEl.textContent = "তুখোড় ইশটুডেন্ট!🎓";
                     } else if (cgpa >= 3.5) {
-                        titleEl.textContent = "ওয়েভারওয়ালা!💸";
+                        titleEl.textContent = "ওয়েভারওয়ালা!💸";
                     } else {
                         titleEl.textContent = "৩.০০ ধরে রাখেন!😅";
                     }
                     document.getElementById('cgpa-good').textContent = cgpa.toFixed(3);
                     document.getElementById('total-credits-good').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
-                } else if (cgpa >= 2.0 && cgpa < 3.0) { // Orange Zone
+                } else if (cgpa >= 2.0 && cgpa < 3.0) {
                     targetResultCard = resultMid;
                     const titleEl = document.getElementById('mid-standing-title');
                      if (cgpa >= 2.6) {
                         titleEl.textContent = "আরেকটু পরিশ্রম করুন!💪";
                     } else if (cgpa >= 2.2) {
                         titleEl.textContent = "রেড জোনে আছেন!🚨";
-                    } else { // 2.0 to 2.2
-                        titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে!📉";
+                    } else {
+                        titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে!📉";
                     }
                     document.getElementById('cgpa-mid').textContent = cgpa.toFixed(3);
                     document.getElementById('total-credits-mid').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
-                } else { // Red Zone
+                } else {
                     targetResultCard = resultLow;
                     document.getElementById('low-cgpa-title').textContent = "জঘন্য রকমের পরিশ্রমী হন!🤯";
                     document.getElementById('cgpa-low').textContent = cgpa.toFixed(3);
@@ -373,6 +471,5 @@
 
 </body>
 </html>
-
 
 
