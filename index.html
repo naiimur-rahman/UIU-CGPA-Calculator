@@ -171,6 +171,24 @@
                         <p id="cgpa-good" class="text-5xl font-bold text-green-700 my-2">0.00</p>
                         <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-good">0</span></p>
                     </div>
+                     <!-- Target CGPA Planner -->
+                    <div id="target-planner-good" class="mt-6 w-full bg-green-50 p-4 rounded-lg border border-green-200">
+                        <h4 class="text-lg font-semibold text-gray-800 text-center">Target CGPA Planner</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                            <div>
+                                <label for="target-cgpa-good" class="block text-sm font-medium text-gray-700 mb-1">Target CGPA</label>
+                                <input type="number" id="target-cgpa-good" step="0.01" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="e.g., 3.75">
+                            </div>
+                            <div>
+                                <label for="target-credits-good" class="block text-sm font-medium text-gray-700 mb-1">Next Trimester Credits</label>
+                                <input type="number" id="target-credits-good" min="6" step="0.5" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="e.g., 9 (min 6)">
+                            </div>
+                        </div>
+                        <div id="target-result-good" class="mt-4 text-center hidden">
+                            <p class="text-gray-700">To reach your target, you need a GPA of:</p>
+                            <p id="required-gpa-good" class="text-3xl font-bold text-green-600"></p>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Mid Standing Result -->
@@ -183,6 +201,24 @@
                         <p class="text-orange-600 text-lg mt-1">Your new CGPA is</p>
                         <p id="cgpa-mid" class="text-5xl font-bold text-orange-700 my-2">0.00</p>
                         <p class="text-sm text-gray-500">Total Credits: <span id="total-credits-mid">0</span></p>
+                    </div>
+                     <!-- Target CGPA Planner -->
+                    <div id="target-planner-mid" class="mt-6 w-full bg-orange-50 p-4 rounded-lg border border-orange-200">
+                        <h4 class="text-lg font-semibold text-gray-800 text-center">Target CGPA Planner</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                            <div>
+                                <label for="target-cgpa-mid" class="block text-sm font-medium text-gray-700 mb-1">Target CGPA</label>
+                                <input type="number" id="target-cgpa-mid" step="0.01" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="e.g., 3.00">
+                            </div>
+                            <div>
+                                <label for="target-credits-mid" class="block text-sm font-medium text-gray-700 mb-1">Next Trimester Credits</label>
+                                <input type="number" id="target-credits-mid" min="6" step="0.5" class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-center font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="e.g., 12 (min 6)">
+                            </div>
+                        </div>
+                        <div id="target-result-mid" class="mt-4 text-center hidden">
+                            <p class="text-gray-700">To reach your target, you need a GPA of:</p>
+                            <p id="required-gpa-mid" class="text-3xl font-bold text-orange-600"></p>
+                        </div>
                     </div>
                 </div>
                 
@@ -242,14 +278,31 @@
             const resultLow = document.getElementById('result-low');
             const allResultCards = document.querySelectorAll('.result-card');
 
+            // Planners
             const recoveryPlannerEl = document.getElementById('recovery-planner');
+            const targetPlannerGoodEl = document.getElementById('target-planner-good');
+            const targetPlannerMidEl = document.getElementById('target-planner-mid');
+            
+            // Recovery inputs
             const nextCreditsInput = document.getElementById('next-credits');
             const recoveryResultEl = document.getElementById('recovery-result');
             const requiredGpaEl = document.getElementById('required-gpa');
 
+            // Target inputs
+            const targetCgpaGoodInput = document.getElementById('target-cgpa-good');
+            const targetCreditsGoodInput = document.getElementById('target-credits-good');
+            const targetResultGoodEl = document.getElementById('target-result-good');
+            const requiredGpaGoodEl = document.getElementById('required-gpa-good');
+            
+            const targetCgpaMidInput = document.getElementById('target-cgpa-mid');
+            const targetCreditsMidInput = document.getElementById('target-credits-mid');
+            const targetResultMidEl = document.getElementById('target-result-mid');
+            const requiredGpaMidEl = document.getElementById('required-gpa-mid');
+
             let courses = [];
             let currentTotalPoints = 0;
             let currentTotalCredits = 0;
+            let finalCgpa = 0;
 
             addCourseForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -350,11 +403,23 @@
                 allResultCards.forEach(card => card.style.display = 'none');
                 allResultCards.forEach(card => card.classList.remove('fade-in'));
                 recoveryPlannerEl.style.display = 'none';
+                targetPlannerGoodEl.style.display = 'none';
+                targetPlannerMidEl.style.display = 'none';
+
                 recoveryResultEl.classList.add('hidden');
+                targetResultGoodEl.classList.add('hidden');
+                targetResultMidEl.classList.add('hidden');
+                
                 nextCreditsInput.value = '';
+                targetCgpaGoodInput.value = '';
+                targetCreditsGoodInput.value = '';
+                targetCgpaMidInput.value = '';
+                targetCreditsMidInput.value = '';
+
             }
 
             calculateBtn.addEventListener('click', () => {
+                hideResults();
                 let initialPoints = 0;
                 let initialCredits = 0;
 
@@ -375,11 +440,9 @@
                         newPoints += course.credit * course.grade;
                         newCredits += course.credit;
                     } else if (course.type === 'retake') {
-                        // Check if initial credits were provided, as retakes modify existing history.
                         if (initialCredits > 0) {
                              retakePointDifference += (course.newGrade - course.oldGrade) * course.credit;
                         } else {
-                            // If no history, treat retake as a new course
                             newPoints += course.credit * course.newGrade;
                             newCredits += course.credit;
                         }
@@ -394,42 +457,42 @@
                     return;
                 }
 
-                const cgpa = currentTotalPoints / currentTotalCredits;
-                
-                allResultCards.forEach(card => card.style.display = 'none');
+                finalCgpa = currentTotalPoints / currentTotalCredits;
                 
                 let targetResultCard;
                 
-                if (cgpa >= 3.0) {
+                if (finalCgpa >= 3.0) {
                     targetResultCard = resultGood;
+                    targetPlannerGoodEl.style.display = 'block';
                     const titleEl = document.getElementById('good-standing-title');
-                    if (cgpa >= 3.8) {
+                    if (finalCgpa >= 3.8) {
                         titleEl.textContent = "তুখোড় ইশটুডেন্ট!🎓";
-                    } else if (cgpa >= 3.5) {
+                    } else if (finalCgpa >= 3.5) {
                         titleEl.textContent = "ওয়েভারওয়ালা!💸";
                     } else {
                         titleEl.textContent = "৩.০০ ধরে রাখেন!😅";
                     }
-                    document.getElementById('cgpa-good').textContent = cgpa.toFixed(3);
+                    document.getElementById('cgpa-good').textContent = finalCgpa.toFixed(3);
                     document.getElementById('total-credits-good').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
-                } else if (cgpa >= 2.0 && cgpa < 3.0) {
+                } else if (finalCgpa >= 2.0 && finalCgpa < 3.0) {
                     targetResultCard = resultMid;
+                    targetPlannerMidEl.style.display = 'block';
                     const titleEl = document.getElementById('mid-standing-title');
-                     if (cgpa >= 2.6) {
+                     if (finalCgpa >= 2.6) {
                         titleEl.textContent = "আরেকটু পরিশ্রম করুন!💪";
-                    } else if (cgpa >= 2.2) {
+                    } else if (finalCgpa >= 2.2) {
                         titleEl.textContent = "রেড জোনে আছেন!🚨";
                     } else {
                         titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে!📉";
                     }
-                    document.getElementById('cgpa-mid').textContent = cgpa.toFixed(3);
+                    document.getElementById('cgpa-mid').textContent = finalCgpa.toFixed(3);
                     document.getElementById('total-credits-mid').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
                 } else {
                     targetResultCard = resultLow;
-                    document.getElementById('low-cgpa-title').textContent = "জঘন্য রকমের পরিশ্রমী হন!🤯";
-                    document.getElementById('cgpa-low').textContent = cgpa.toFixed(3);
-                    document.getElementById('total-credits-low').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
                     recoveryPlannerEl.style.display = 'block';
+                    document.getElementById('low-cgpa-title').textContent = "জঘন্য রকমের পরিশ্রমী হন!🤯";
+                    document.getElementById('cgpa-low').textContent = finalCgpa.toFixed(3);
+                    document.getElementById('total-credits-low').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
                 }
                 
                 if (targetResultCard) {
@@ -438,9 +501,9 @@
                 }
             });
             
+            // Recovery planner listener
             nextCreditsInput.addEventListener('input', () => {
                 const nextCredits = parseFloat(nextCreditsInput.value);
-
                 if (isNaN(nextCredits) || nextCredits < 6) {
                     recoveryResultEl.classList.add('hidden');
                     return;
@@ -453,19 +516,43 @@
                 recoveryResultEl.classList.remove('hidden');
 
                 if (requiredGpa > 4.0) {
-                    requiredGpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)}). Try with more credits.`;
-                    requiredGpaEl.classList.add('text-red-700');
-                    requiredGpaEl.classList.remove('text-green-600', 'text-red-600');
+                    requiredGpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)}).`;
                 } else if (requiredGpa <= 0) {
                     requiredGpaEl.textContent = 'Any passing grade will work!';
-                    requiredGpaEl.classList.add('text-green-600');
-                    requiredGpaEl.classList.remove('text-red-700', 'text-red-600');
                 } else {
                     requiredGpaEl.textContent = requiredGpa.toFixed(3);
-                    requiredGpaEl.classList.add('text-red-600');
-                    requiredGpaEl.classList.remove('text-green-600', 'text-red-700');
                 }
             });
+
+            // Target planner listener function
+            function handleTargetCalculation(targetCgpaInput, targetCreditsInput, resultEl, gpaEl) {
+                 const targetCgpa = parseFloat(targetCgpaInput.value);
+                 const nextCredits = parseFloat(targetCreditsInput.value);
+                
+                 if (isNaN(targetCgpa) || isNaN(nextCredits) || nextCredits < 6 || targetCgpa <= finalCgpa) {
+                    resultEl.classList.add('hidden');
+                    return;
+                 }
+
+                 const targetTotalPoints = targetCgpa * (currentTotalCredits + nextCredits);
+                 const requiredNextPoints = targetTotalPoints - currentTotalPoints;
+                 const requiredGpa = requiredNextPoints / nextCredits;
+                 
+                 resultEl.classList.remove('hidden');
+
+                 if (requiredGpa > 4.0) {
+                    gpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)}).`;
+                 } else if (requiredGpa < 0) {
+                    gpaEl.textContent = `Already achieved!`;
+                 } else {
+                    gpaEl.textContent = requiredGpa.toFixed(3);
+                 }
+            }
+
+            // Listeners for both target planners
+            [targetCgpaGoodInput, targetCreditsGoodInput].forEach(el => el.addEventListener('input', () => handleTargetCalculation(targetCgpaGoodInput, targetCreditsGoodInput, targetResultGoodEl, requiredGpaGoodEl)));
+            [targetCgpaMidInput, targetCreditsMidInput].forEach(el => el.addEventListener('input', () => handleTargetCalculation(targetCgpaMidInput, targetCreditsMidInput, targetResultMidEl, requiredGpaMidEl)));
+
         });
     </script>
 
