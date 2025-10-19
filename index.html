@@ -100,11 +100,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label for="current-cgpa" class="block text-sm font-medium text-gray-700 mb-2">Current CGPA</label>
-                        <input type="number" id="current-cgpa" step="0.01" class="w-full form-input" placeholder="e.g., 3.50">
+                        <input type="number" id="current-cgpa" step="0.01" min="0.00" max="4.00" class="w-full form-input" placeholder="e.g., 3.50">
+                        <p id="cgpa-error" class="text-red-500 text-sm mt-2 hidden"></p>
                     </div>
                     <div>
                         <label for="completed-credits" class="block text-sm font-medium text-gray-700 mb-2">Completed Credits</label>
-                        <input type="number" id="completed-credits" step="0.5" class="w-full form-input" placeholder="e.g., 90">
+                        <input type="number" id="completed-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 90">
                     </div>
                 </div>
             </div>
@@ -211,7 +212,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                             <div>
                                 <label for="target-cgpa-good" class="block text-sm font-medium text-gray-700 mb-1">Target CGPA</label>
-                                <input type="number" id="target-cgpa-good" step="0.01" class="w-full form-input" placeholder="e.g., 3.75">
+                                <input type="number" id="target-cgpa-good" step="0.01" min="0.00" max="4.00" class="w-full form-input" placeholder="e.g., 3.75">
                             </div>
                             <div>
                                 <label for="target-credits-good" class="block text-sm font-medium text-gray-700 mb-1">Next Trimester Credits</label>
@@ -239,7 +240,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                             <div>
                                 <label for="target-cgpa-mid" class="block text-sm font-medium text-gray-700 mb-1">Target CGPA</label>
-                                <input type="number" id="target-cgpa-mid" step="0.01" class="w-full form-input" placeholder="e.g., 3.00">
+                                <input type="number" id="target-cgpa-mid" step="0.01" min="0.00" max="4.00" class="w-full form-input" placeholder="e.g., 3.00">
                             </div>
                             <div>
                                 <label for="target-credits-mid" class="block text-sm font-medium text-gray-700 mb-1">Next Trimester Credits</label>
@@ -290,6 +291,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const currentCgpaInput = document.getElementById('current-cgpa');
             const completedCreditsInput = document.getElementById('completed-credits');
+            const cgpaErrorEl = document.getElementById('cgpa-error');
             
             const addCourseForm = document.getElementById('add-course-form');
             const courseCreditEl = document.getElementById('course-credit');
@@ -328,7 +330,8 @@
 
             let courses = [];
             let currentTotalPoints = 0;
-            let currentTotalCredits = 0;
+            let totalGpaCredits = 0; // Renamed for clarity
+            let totalEarnedCredits = 0; // For display
             let finalCgpa = 0;
 
             addCourseForm.addEventListener('submit', (e) => {
@@ -424,65 +427,82 @@
                 recoveryPlannerEl.style.display = 'none';
                 targetPlannerGoodEl.style.display = 'none';
                 targetPlannerMidEl.style.display = 'none';
+                cgpaErrorEl.classList.add('hidden');
             }
 
             calculateBtn.addEventListener('click', () => {
                 hideResults();
                 let initialPoints = 0;
-                let initialCredits = 0;
+                let initialCredits = 0; // This is initial EARNED credits
                 const currentCgpa = parseFloat(currentCgpaInput.value);
                 const completedCredits = parseFloat(completedCreditsInput.value);
 
-                if (!isNaN(currentCgpa) && !isNaN(completedCredits) && currentCgpa > 0 && completedCredits > 0) {
+                if (currentCgpaInput.value && (currentCgpa > 4.00 || currentCgpa < 0)) {
+                    cgpaErrorEl.textContent = "সিজি ৪ এর বেশি হয় না ভাই";
+                    cgpaErrorEl.classList.remove('hidden');
+                    return;
+                }
+
+                if (!isNaN(currentCgpa) && !isNaN(completedCredits) && currentCgpa >= 0 && completedCredits >= 0) {
                     initialPoints = currentCgpa * completedCredits;
                     initialCredits = completedCredits;
                 }
 
-                let newPoints = 0, newCredits = 0, retakePointDifference = 0;
-                
+                let newPoints = 0;
+                let newGpaCredits = 0;      // Credits attempted this trimester for GPA calculation
+                let newEarnedCredits = 0;   // Credits earned this trimester for display
+                let retakePointDifference = 0;
+                let retakeEarnedCredits = 0;  // Credits earned from retaking an F
+
                 courses.forEach(course => {
                     if (course.type === 'new') {
-                        // For a new course, only add credits if it was passed (grade > F).
+                        newGpaCredits += course.credit; // Always add to attempted credits for the divisor
                         if (course.grade > 0.00) {
-                            newCredits += course.credit;
+                            newEarnedCredits += course.credit; // Only add to EARNED credits if passed
                         }
-                        // The points are always added (will be 0 for F grade).
                         newPoints += course.credit * course.grade;
                     } else if (course.type === 'retake') {
-                        // If the old grade was F (0.00), it means we are earning credits for the first time.
+                        // Credits for retakes are already in the initial GPA credits, so we don't add to newGpaCredits.
+                        // We only adjust points and potentially add to EARNED credits.
                         if (course.oldGrade === 0.00) {
-                            newCredits += course.credit; // Add the credits to this trimester's total
-                            newPoints += course.credit * course.newGrade; // Add the full points for the new grade
-                        } else {
-                            // If it was just an improvement (e.g., D to B), only adjust the point difference.
-                            // The credits were already earned.
-                           retakePointDifference += (course.newGrade - course.oldGrade) * course.credit;
+                            retakeEarnedCredits += course.credit; // We earn these credits now
                         }
+                        // The point difference is always adjusted.
+                        retakePointDifference += (course.newGrade - course.oldGrade) * course.credit;
                     }
                 });
 
-                currentTotalCredits = initialCredits + newCredits;
+                // Total credits for the CGPA calculation's DIVISOR
+                totalGpaCredits = initialCredits + newGpaCredits; 
+                // Total credits for DISPLAY (what the student has successfully passed)
+                totalEarnedCredits = initialCredits + newEarnedCredits + retakeEarnedCredits;
+
                 currentTotalPoints = initialPoints + newPoints + retakePointDifference;
                 
-                if (currentTotalCredits === 0) {
-                    // Handle division by zero if no credits are earned
+                if (totalGpaCredits === 0) {
                     finalCgpa = 0;
                 } else {
-                    finalCgpa = currentTotalPoints / currentTotalCredits;
+                    finalCgpa = currentTotalPoints / totalGpaCredits;
                 }
                 
                 let targetResultCard;
                 
                 if (finalCgpa >= 3.0) {
                     targetResultCard = resultGood;
-                    targetPlannerGoodEl.style.display = 'block';
+                    
+                    if (finalCgpa.toFixed(2) === '4.00') {
+                        targetPlannerGoodEl.style.display = 'none';
+                    } else {
+                        targetPlannerGoodEl.style.display = 'block';
+                    }
+
                     const titleEl = document.getElementById('good-standing-title');
                     if (finalCgpa >= 3.8) titleEl.textContent = "তুখোড় ইশটুডেন্ট! 🎓";
                     else if (finalCgpa >= 3.5) titleEl.textContent = "ওয়েভারওয়ালা! 💸";
                     else if (finalCgpa >= 3.2) titleEl.textContent = "সেইফ জোনে আছেন 😌";
-                    else titleEl.textContent = "৩.০০ ধরে রাখেন! 😅";
+                    else titleEl.textContent = "৩.০০ টা ধরে রাখেন! 😅";
                     document.getElementById('cgpa-good').textContent = finalCgpa.toFixed(2);
-                    document.getElementById('total-credits-good').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
+                    document.getElementById('total-credits-good').textContent = totalEarnedCredits.toFixed(2).replace(/\.00$/, '');
                 } else if (finalCgpa >= 2.0) {
                     targetResultCard = resultMid;
                     targetPlannerMidEl.style.display = 'block';
@@ -491,7 +511,7 @@
                     else if (finalCgpa >= 2.2) titleEl.textContent = "রেড জোনে আছেন! 🚨";
                     else titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে! 📉";
                     document.getElementById('cgpa-mid').textContent = finalCgpa.toFixed(2);
-                    document.getElementById('total-credits-mid').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
+                    document.getElementById('total-credits-mid').textContent = totalEarnedCredits.toFixed(2).replace(/\.00$/, '');
                 } else {
                     targetResultCard = resultLow;
                     recoveryPlannerEl.style.display = 'block';
@@ -502,7 +522,7 @@
                         lowTitleEl.textContent = "জঘন্য রকমের পরিশ্রমী হন! 🤯";
                     }
                     document.getElementById('cgpa-low').textContent = finalCgpa.toFixed(2);
-                    document.getElementById('total-credits-low').textContent = currentTotalCredits.toFixed(2).replace(/\.00$/, '');
+                    document.getElementById('total-credits-low').textContent = totalEarnedCredits.toFixed(2).replace(/\.00$/, '');
                 }
                 
                 if (targetResultCard) {
@@ -518,7 +538,7 @@
                     recoveryResultEl.classList.add('hidden');
                     return;
                 }
-                const targetTotalPoints = 2.0 * (currentTotalCredits + nextCredits);
+                const targetTotalPoints = 2.0 * (totalGpaCredits + nextCredits);
                 const requiredNextPoints = targetTotalPoints - currentTotalPoints;
                 const requiredGpa = requiredNextPoints / nextCredits;
                 recoveryResultEl.classList.remove('hidden');
@@ -531,12 +551,12 @@
                  const targetCgpa = parseFloat(targetCgpaInput.value);
                  const nextCredits = parseFloat(targetCreditsInput.value);
                 
-                 if (isNaN(targetCgpa) || isNaN(nextCredits) || nextCredits < 6 || targetCgpa <= finalCgpa) {
+                 if (isNaN(targetCgpa) || isNaN(nextCredits) || nextCredits < 6 || targetCgpa <= finalCgpa || targetCgpa > 4.00) {
                     resultEl.classList.add('hidden');
                     return;
                  }
 
-                 const targetTotalPoints = targetCgpa * (currentTotalCredits + nextCredits);
+                 const targetTotalPoints = targetCgpa * (totalGpaCredits + nextCredits);
                  const requiredNextPoints = targetTotalPoints - currentTotalPoints;
                  const requiredGpa = requiredNextPoints / nextCredits;
                  resultEl.classList.remove('hidden');
@@ -553,5 +573,4 @@
 
 </body>
 </html>
-
 
