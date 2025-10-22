@@ -103,7 +103,7 @@
              padding: 24px;
              margin-bottom: 24px;
              transition: background-color 0.3s, border-color 0.3s;
-        }
+         }
         .form-input, .form-select {
             border-radius: 12px;
             border: 1px solid var(--input-border);
@@ -317,7 +317,7 @@
 
         @media (max-width: 360px) {
              .ttt-cell {
-                font-size: 2rem; /* Smaller font on very small screens */
+                 font-size: 2rem; /* Smaller font on very small screens */
              }
         }
         .ttt-cell:nth-child(3n) { border-right: none; }
@@ -632,7 +632,7 @@
         }
         @media (min-width: 640px) { /* Restore padding on larger screens */
              #game-modal-content {
-                padding: 1.5rem;
+                 padding: 1.5rem;
              }
         }
         #close-game-modal {
@@ -697,7 +697,7 @@
                     <div>
                         <!--FIXED: Label changed for clarity-->
                         <!-- MODIFIED: Label text changed -->
-                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Completed Credit</label>
+                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Enter All Credits You Have Taken (Completed + Incomplete)</label>
                         <input type="number" id="completed-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 90 (Includes F grades)">
                     </div>
                 </div>
@@ -804,13 +804,16 @@
                                 <p id="cgpa-good" class="text-4xl sm:text-5xl md:text-6xl font-bold text-green-700 my-2">0.00</p>
                                 <!--FIXED: Label changed for clarity-->
                                 <!-- MODIFIED: Label text changed -->
-                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-credits-good">0</span></p>
+                                <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-good">0</span></p>
+                                <!-- ADDED: Total Completed Credit Display -->
+                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-good">0</span></p>
                             </div>
                             <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-green-200/50">
                                 <p class="text-green-600 text-lg">Trimester GPA</p>
                                 <p id="tgpa-good" class="text-4xl sm:text-5xl md:text-6xl font-bold text-green-700 my-2">0.00</p>
                                 <!-- ADDED: Trimester completed credits -->
-                                <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-credits-good">0</span></p> 
+                                <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-good">0</span></p> 
+                                <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-good">0</span></p>
                             </div>
                         </div>
                     </div>
@@ -843,13 +846,16 @@
                                 <p id="cgpa-mid" class="text-4xl sm:text-5xl md:text-6xl font-bold text-orange-700 my-2">0.00</p>
                                 <!--FIXED: Label changed for clarity-->
                                 <!-- MODIFIED: Label text changed -->
-                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-credits-mid">0</span></p>
+                                <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-mid">0</span></p>
+                                <!-- ADDED: Total Completed Credit Display -->
+                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-mid">0</span></p>
                             </div>
                             <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-orange-200/50">
                                 <p class="text-orange-600 text-lg">Trimester GPA</p>
                                 <p id="tgpa-mid" class="text-4xl sm:text-5xl md:text-6xl font-bold text-orange-700 my-2">0.00</p>
                                 <!-- ADDED: Trimester completed credits -->
-                                <p class="text-sm text-secondary-color">This Trimester Completed Credit: <span id="trimester-credits-mid">0</span></p> 
+                                <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-mid">0</span></p> 
+                                <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-mid">0</span></p>
                             </div>
                         </div>
                     </div>
@@ -882,13 +888,16 @@
                                  <p id="cgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
                                  <!--FIXED: Label changed for clarity-->
                                  <!-- MODIFIED: Label text changed -->
-                                 <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-credits-low">0</span></p>
+                                 <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-low">0</span></p>
+                                 <!-- ADDED: Total Completed Credit Display -->
+                                 <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-low">0</span></p>
                              </div>
                              <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-red-200/50">
                                  <p class="text-red-600 text-lg">Trimester GPA</p>
                                  <p id="tgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
                                  <!-- ADDED: Trimester completed credits -->
-                                 <p class="text-sm text-secondary-color">This Trimester Completed Credit: <span id="trimester-credits-low">0</span></p> 
+                                 <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-low">0</span></p> 
+                                 <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-low">0</span></p>
                              </div>
                          </div>
                      </div>
@@ -905,7 +914,7 @@
                              <p id="required-gpa" class="text-3xl font-bold text-red-600"></p>
                          </div>
                      </div>
-                 </div>
+                </div>
             </div>
         </div>
         <footer class="text-center mt-8 text-sm text-secondary-color font-semibold">
@@ -1073,7 +1082,7 @@
 
                     <div id="breakout-game-container">
                         <canvas id="breakout-canvas" width="480" height="400"></canvas>
-                         <!-- Mobile Controls for Breakout -->
+                          <!-- Mobile Controls for Breakout -->
                         <div id="breakout-controls">
                             <button id="breakout-left" class="breakout-control-btn"><i data-lucide="arrow-left"></i></button>
                             <button id="breakout-right" class="breakout-control-btn"><i data-lucide="arrow-right"></i></button>
@@ -1258,28 +1267,28 @@
             };
             
              const triggerConfetti = () => {
-                  const parent = document.querySelector('.card');
-                  for (let i = 0; i < 50; i++) {
-                       const confetti = document.createElement('div');
-                       confetti.className = 'confetti-piece';
-                       const colors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#6366f1'];
-                       confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                       confetti.style.left = `${Math.random() * 100}%`;
-                       confetti.style.animation = `fall ${1.5 + Math.random() * 2}s ${Math.random() * 1}s linear forwards`;
-                       parent.appendChild(confetti);
-                  }
-                  const keyframes = `
-                  @keyframes fall {
-                       to {
-                            transform: translateY(100vh) rotate(${Math.random() * 720}deg);
-                            opacity: 0;
-                       }
-                  }`;
-                  const styleSheet = document.createElement("style");
-                  styleSheet.type = "text/css";
-                  styleSheet.innerText = keyframes;
-                  document.head.appendChild(styleSheet);
-                  setTimeout(() => document.querySelectorAll('.confetti-piece').forEach(e => e.remove()), 4000);
+                 const parent = document.querySelector('.card');
+                 for (let i = 0; i < 50; i++) {
+                     const confetti = document.createElement('div');
+                     confetti.className = 'confetti-piece';
+                     const colors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#6366f1'];
+                     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                     confetti.style.left = `${Math.random() * 100}%`;
+                     confetti.style.animation = `fall ${1.5 + Math.random() * 2}s ${Math.random() * 1}s linear forwards`;
+                     parent.appendChild(confetti);
+                 }
+                 const keyframes = `
+                 @keyframes fall {
+                     to {
+                         transform: translateY(100vh) rotate(${Math.random() * 720}deg);
+                         opacity: 0;
+                     }
+                 }`;
+                 const styleSheet = document.createElement("style");
+                 styleSheet.type = "text/css";
+                 styleSheet.innerText = keyframes;
+                 document.head.appendChild(styleSheet);
+                 setTimeout(() => document.querySelectorAll('.confetti-piece').forEach(e => e.remove()), 4000);
              };
 
             // --- Core Logic (Calculator) --- //
@@ -1391,9 +1400,12 @@
                 const initialPoints = currentCgpa * completedCredits;
                 let totalPoints = initialPoints;
                 let totalGpaCredits = completedCredits; // All attempted credits (including F's)
+                // Initialize total completed credits based on initial input, assuming initial CGPA > 0 means those credits were completed
+                let totalCompletedCredits = (currentCgpa > 0 && completedCredits > 0) ? completedCredits : 0; 
                 
                 let trimesterPoints = 0;
                 let trimesterGpaCredits = 0; // Renamed to clarify it's for this trimester
+                let trimesterCompletedCredits = 0;
 
                 courses.forEach(course => {
                     const credit = course.credit;
@@ -1405,6 +1417,10 @@
                         trimesterPoints += credit * grade;
                         totalPoints += credit * grade;
                         totalGpaCredits += credit;
+                        if (grade > 0) {
+                            trimesterCompletedCredits += credit;
+                            totalCompletedCredits += credit; // Increment total completed if grade > 0
+                        }
                         
                     } else {
                         // Retake course calculation - FIXED
@@ -1412,6 +1428,20 @@
                         const newGrade = course.newGrade;
                         
                         trimesterPoints += credit * newGrade;
+                        if (newGrade > 0) {
+                            trimesterCompletedCredits += credit;
+                            // If the old grade was F (0) and the new one isn't, add to total completed
+                            if (oldGrade === 0) {
+                                totalCompletedCredits += credit;
+                            }
+                            // If the old grade was > 0, total completed doesn't change
+                        } else { 
+                            // If the new grade is F (0) and the old one wasn't, decrement total completed
+                            if (oldGrade > 0) {
+                                totalCompletedCredits -= credit; 
+                            }
+                            // If both old and new are F, total completed doesn't change
+                        }
                         
                         if (hasInitialStanding) {
                             // Remove old grade points and add new grade points
@@ -1422,6 +1452,10 @@
                             // No initial standing - treat as new course
                             totalPoints += credit * newGrade;
                             totalGpaCredits += credit;
+                            // If no initial standing, treat retake's completion like a new course
+                            if (newGrade > 0) {
+                                totalCompletedCredits += credit;
+                            }
                         }
                     }
                 });
@@ -1433,12 +1467,12 @@
 
                 // We return totalGpaCredits (attempted) as we cannot accurately know "earned" credits
                 // MODIFIED: Return trimesterGpaCredits as well
-                return { finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits };
+                return { finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits, trimesterCompletedCredits, totalCompletedCredits }; // Added totalCompletedCredits
             };
             
             // --- displayResults function (no changes needed from previous version) --- //
-            const displayResults = ({ finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits }) => { 
-                let card, cgpaEl, tgpaEl, creditsEl, triCreditsEl, titleEl, standing; // Added triCreditsEl
+            const displayResults = ({ finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits, trimesterCompletedCredits, totalCompletedCredits }) => { // Added totalCompletedCredits
+                let card, cgpaEl, tgpaEl, creditsEl, triCreditsEl, triEarnedCreditsEl, totalEarnedCreditsEl, titleEl, standing; // Added totalEarnedCreditsEl
                 
                 if (finalCgpa >= 3.0) {
                     standing = 'good';
@@ -1478,6 +1512,8 @@
                 tgpaEl = getEl(`tgpa-${standing}`);
                 creditsEl = getEl(`total-credits-${standing}`);
                 triCreditsEl = getEl(`trimester-credits-${standing}`); // Get new element
+                triEarnedCreditsEl = getEl(`trimester-earned-credits-${standing}`);
+                totalEarnedCreditsEl = getEl(`total-earned-credits-${standing}`); // Get new element for total completed
                 
                 animateCountUp(cgpaEl, finalCgpa > 4 ? 4 : finalCgpa); // Cap CGPA at 4.00
                 animateCountUp(tgpaEl, trimesterGpa > 4 ? 4 : trimesterGpa); // Cap TGPA at 4.00
@@ -1486,6 +1522,8 @@
                 creditsEl.textContent = totalGpaCredits.toFixed(2).replace(/\.00$/, '');
                 // ADDED: Display trimester credits
                 triCreditsEl.textContent = trimesterGpaCredits.toFixed(2).replace(/\.00$/, ''); 
+                triEarnedCreditsEl.textContent = trimesterCompletedCredits.toFixed(2).replace(/\.00$/, '');
+                totalEarnedCreditsEl.textContent = totalCompletedCredits.toFixed(2).replace(/\.00$/, ''); // Display total completed
 
                 card.style.display = 'block';
                 setTimeout(() => card.classList.add('fade-in-up'), 10);
@@ -1648,10 +1686,10 @@
 
              openGameModalBtn.addEventListener('click', () => {
                  gameModal.classList.add('show');
-                  // Show info notification only if not on a large screen (assuming PC)
-                  if (window.innerWidth < 1024) { // Example breakpoint for large screens
+                 // Show info notification only if not on a large screen (assuming PC)
+                 if (window.innerWidth < 1024) { // Example breakpoint for large screens
                      showNotification("Enjoy the games! (Best experience on PC)", "info"); // Updated message here
-                  }
+                 }
                  // Re-render icons *after* modal is shown
                  lucide.createIcons();
              });
@@ -1738,7 +1776,7 @@
             const disableTTTBoard = (all = true) => {
                  tttCells.forEach(cell => {
                      if (all || !cell.classList.contains('occupied')) {
-                          cell.classList.add('disabled');
+                         cell.classList.add('disabled');
                      }
                  });
             };
@@ -1746,7 +1784,7 @@
             const enableTTTBoard = () => {
                  tttCells.forEach(cell => {
                      if (!cell.classList.contains('occupied')) {
-                          cell.classList.remove('disabled');
+                         cell.classList.remove('disabled');
                      }
                  });
             };
@@ -1817,7 +1855,7 @@
                  const availableCells = [];
                  for (let i = 0; i < 9; i++) {
                      if (tttBoardState[i] === null) {
-                          availableCells.push(i);
+                         availableCells.push(i);
                      }
                  }
                 if (availableCells.length > 0) {
@@ -2432,7 +2470,7 @@
                          bricks[c][r] = { x: 0, y: 0, status: 1, bonus: isBonus }; // Add bonus property
                      }
                  }
-                  // If not all bonus bricks were placed due to chance, force placement
+                 // If not all bonus bricks were placed due to chance, force placement
                  while (bonusBricksPlaced < BONUS_BRICK_COUNT) {
                      let c = Math.floor(Math.random() * brickColumnCount);
                      let r = Math.floor(Math.random() * brickRowCount);
@@ -2496,7 +2534,7 @@
                  isBreakoutGameActive = false;
                  if (breakoutGameLoop) cancelAnimationFrame(breakoutGameLoop);
                  breakoutGameLoop = null;
-                  if (paddleMoveInterval) clearInterval(paddleMoveInterval); // Clear button move interval
+                 if (paddleMoveInterval) clearInterval(paddleMoveInterval); // Clear button move interval
                  paddleMoveInterval = null;
                  isMovingLeft = false;
                  isMovingRight = false;
@@ -2574,8 +2612,8 @@
                                  breakoutScoreEl.textContent = `Score: ${breakoutScore}`;
 
                                  if (b.bonus) {
-                                      // Optional: Add a visual effect or sound for bonus
-                                      showNotification(`+${BONUS_POINTS} Bonus!`, 'success');
+                                     // Optional: Add a visual effect or sound for bonus
+                                     showNotification(`+${BONUS_POINTS} Bonus!`, 'success');
                                  }
 
                                  // Check for win condition (all bricks cleared)
@@ -2629,8 +2667,8 @@
                          lives--;
                          breakoutLivesEl.textContent = `Lives: ${lives}`;
                          if (lives <= 0) {
-                              breakoutScoreEl.textContent = `GAME OVER! Score: ${breakoutScore}`;
-                              stopBreakoutGame();
+                             breakoutScoreEl.textContent = `GAME OVER! Score: ${breakoutScore}`;
+                             stopBreakoutGame();
                              // Consider adding a game over screen or restarting
                          } else {
                              // Reset ball and paddle position
@@ -2653,13 +2691,13 @@
             function handleBreakoutMouseMove(e) {
                  // No need for active check, listener removed when inactive
                  let relativeX = e.clientX - breakoutCanvas.getBoundingClientRect().left;
-                  if (relativeX > paddleWidth / 2 && relativeX < breakoutCanvas.width - paddleWidth / 2) {
-                       paddleX = relativeX - paddleWidth / 2;
-                  } else if (relativeX <= paddleWidth / 2) {
-                       paddleX = 0; // Prevent moving off left edge
-                  } else {
-                       paddleX = breakoutCanvas.width - paddleWidth; // Prevent moving off right edge
-                  }
+                 if (relativeX > paddleWidth / 2 && relativeX < breakoutCanvas.width - paddleWidth / 2) {
+                     paddleX = relativeX - paddleWidth / 2;
+                 } else if (relativeX <= paddleWidth / 2) {
+                     paddleX = 0; // Prevent moving off left edge
+                 } else {
+                     paddleX = breakoutCanvas.width - paddleWidth; // Prevent moving off right edge
+                 }
             }
 
             function handleBreakoutTouchMove(e) {
