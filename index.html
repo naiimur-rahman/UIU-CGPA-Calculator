@@ -68,7 +68,7 @@
             --notification-error-bg: #dc2626;
             --notification-info-bg: #2563eb; /* Darker blue for info */
             --notification-warning-bg: #d97706; /* Added darker yellow warning color for dark mode */
-        } /* Added missing closing brace */
+        } 
 
         body {
             font-family: 'Inter', sans-serif;
@@ -103,7 +103,7 @@
              padding: 24px;
              margin-bottom: 24px;
              transition: background-color 0.3s, border-color 0.3s;
-         }
+          }
         .form-input, .form-select {
             border-radius: 12px;
             border: 1px solid var(--input-border);
@@ -695,10 +695,9 @@
                         <p id="cgpa-error" class="text-red-500 text-sm mt-2 hidden"></p>
                     </div>
                     <div>
-                        <!--FIXED: Label changed for clarity-->
-                        <!-- MODIFIED: Label text changed -->
-                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Enter All Credits You Have Taken (Completed + Incomplete)</label>
-                        <input type="number" id="completed-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 90 (Includes F grades)">
+                        <!-- FIXED: Label clarified -->
+                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Credits Attempted (Incl. F grades)</label>
+                        <input type="number" id="completed-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 90">
                     </div>
                 </div>
             </div>
@@ -802,16 +801,13 @@
                             <div class="flex-1 px-4">
                                 <p class="text-green-600 text-lg">New CGPA</p>
                                 <p id="cgpa-good" class="text-4xl sm:text-5xl md:text-6xl font-bold text-green-700 my-2">0.00</p>
-                                <!--FIXED: Label changed for clarity-->
-                                <!-- MODIFIED: Label text changed -->
                                 <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-good">0</span></p>
                                 <!-- ADDED: Total Completed Credit Display -->
-                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-good">0</span></p>
+                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-good">0</span></p> 
                             </div>
                             <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-green-200/50">
                                 <p class="text-green-600 text-lg">Trimester GPA</p>
                                 <p id="tgpa-good" class="text-4xl sm:text-5xl md:text-6xl font-bold text-green-700 my-2">0.00</p>
-                                <!-- ADDED: Trimester completed credits -->
                                 <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-good">0</span></p> 
                                 <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-good">0</span></p>
                             </div>
@@ -844,8 +840,6 @@
                             <div class="flex-1 px-4">
                                 <p class="text-orange-600 text-lg">New CGPA</p>
                                 <p id="cgpa-mid" class="text-4xl sm:text-5xl md:text-6xl font-bold text-orange-700 my-2">0.00</p>
-                                <!--FIXED: Label changed for clarity-->
-                                <!-- MODIFIED: Label text changed -->
                                 <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-mid">0</span></p>
                                 <!-- ADDED: Total Completed Credit Display -->
                                 <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-mid">0</span></p>
@@ -853,8 +847,7 @@
                             <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-orange-200/50">
                                 <p class="text-orange-600 text-lg">Trimester GPA</p>
                                 <p id="tgpa-mid" class="text-4xl sm:text-5xl md:text-6xl font-bold text-orange-700 my-2">0.00</p>
-                                <!-- ADDED: Trimester completed credits -->
-                                <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-mid">0</span></p> 
+                                <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-mid">0</span></p>
                                 <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-mid">0</span></p>
                             </div>
                         </div>
@@ -881,39 +874,36 @@
                 <!-- Low CGPA Result -->
                 <div id="result-low" class="result-card w-full">
                      <div class="result-low border rounded-xl p-6 text-center">
-                         <h3 id="low-cgpa-title" class="text-2xl font-bold text-red-800 mb-4">Probation!</h3>
-                         <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:divide-x-2 divide-red-200/50">
-                             <div class="flex-1 px-4">
-                                 <p class="text-red-600 text-lg">New CGPA</p>
-                                 <p id="cgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
-                                 <!--FIXED: Label changed for clarity-->
-                                 <!-- MODIFIED: Label text changed -->
-                                 <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-low">0</span></p>
-                                 <!-- ADDED: Total Completed Credit Display -->
-                                 <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-low">0</span></p>
-                             </div>
-                             <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-red-200/50">
-                                 <p class="text-red-600 text-lg">Trimester GPA</p>
-                                 <p id="tgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
-                                 <!-- ADDED: Trimester completed credits -->
-                                 <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-low">0</span></p> 
-                                 <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-low">0</span></p>
-                             </div>
-                         </div>
+                        <h3 id="low-cgpa-title" class="text-2xl font-bold text-red-800 mb-4">Probation!</h3>
+                        <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:divide-x-2 divide-red-200/50">
+                            <div class="flex-1 px-4">
+                                <p class="text-red-600 text-lg">New CGPA</p>
+                                <p id="cgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
+                                <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-low">0</span></p>
+                                <!-- ADDED: Total Completed Credit Display -->
+                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-low">0</span></p> 
+                            </div>
+                            <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-red-200/50">
+                                <p class="text-red-600 text-lg">Trimester GPA</p>
+                                <p id="tgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
+                                <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-low">0</span></p>
+                                <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-low">0</span></p>
+                            </div>
+                       </div>
                      </div>
                      <div class="mt-6 w-full planner-low p-4 rounded-lg border">
-                         <h4 class="text-lg font-semibold text-primary-color text-center">Recovery Plan</h4>
-                         <p class="text-center text-secondary-color mb-4">Let's find out what you need in your next trimester to reach a 2.0 CGPA.</p>
-                         <div class="max-w-xs mx-auto">
-                             <label for="next-credits" class="block text-sm font-medium text-tertiary-color mb-1">Next trimester's credits:</label>
-                             <input type="number" id="next-credits" min="6" step="0.5" class="w-full form-input" placeholder="e.g., 9">
-                         </div>
+                        <h4 class="text-lg font-semibold text-primary-color text-center">Recovery Plan</h4>
+                        <p class="text-center text-secondary-color mb-4">Let's find out what you need in your next trimester to reach a 2.0 CGPA.</p>
+                        <div class="max-w-xs mx-auto">
+                            <label for="next-credits" class="block text-sm font-medium text-tertiary-color mb-1">Next trimester's credits:</label>
+                            <input type="number" id="next-credits" min="6" step="0.5" class="w-full form-input" placeholder="e.g., 9">
+                        </div>
 
-                         <div id="recovery-result" class="mt-4 text-center hidden">
-                             <p class="text-tertiary-color">To get out of probation, you need a GPA of:</p>
-                             <p id="required-gpa" class="text-3xl font-bold text-red-600"></p>
-                         </div>
-                     </div>
+                        <div id="recovery-result" class="mt-4 text-center hidden">
+                            <p class="text-tertiary-color">To get out of probation, you need a GPA of:</p>
+                            <p id="required-gpa" class="text-3xl font-bold text-red-600"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -954,7 +944,7 @@
                      <button id="select-game-snake" data-game="snake" class="game-select-btn btn btn-neutral flex-1 min-w-[150px]"><i data-lucide="rat" class="w-5 h-5"></i>Snake</button>
                      <button id="select-game-wam" data-game="whac-a-mole" class="game-select-btn btn btn-neutral flex-1 min-w-[150px]"><i data-lucide="hammer" class="w-5 h-5"></i>Whac-A-Mole</button>
                      <button id="select-game-word-guess" data-game="word-guess" class="game-select-btn btn btn-neutral flex-1 min-w-[150px]"><i data-lucide="spell-check" class="w-5 h-5"></i>Word Guess</button>
-                      <button id="select-game-breakout" data-game="breakout" class="game-select-btn btn btn-neutral flex-1 min-w-[150px]"><i data-lucide="tablets" class="w-5 h-5"></i>Breakout</button>
+                     <button id="select-game-breakout" data-game="breakout" class="game-select-btn btn btn-neutral flex-1 min-w-[150px]"><i data-lucide="tablets" class="w-5 h-5"></i>Breakout</button>
                  </div>
             </div>
 
@@ -1015,9 +1005,9 @@
                         <div id="snake-controls">
                             <button id="snake-up" class="snake-control-btn"><i data-lucide="arrow-up"></i></button>
                             <button id="snake-left" class="snake-control-btn"><i data-lucide="arrow-left"></i></button>
-                            <button id="snake-down" class="snake-control-btn"><i data-lucide="arrow-down"></i></button>
+                             <button id="snake-down" class="snake-control-btn"><i data-lucide="arrow-down"></i></button>
                             <button id="snake-right" class="snake-control-btn"><i data-lucide="arrow-right"></i></button>
-                        </div>
+                         </div>
                     </div>
 
                     <button id="snake-reset-btn" class="w-full sm:w-auto mx-auto btn btn-primary mt-6 flex">
@@ -1029,14 +1019,14 @@
             <!-- Whac-A-Mole Game -->
             <div id="game-whac-a-mole" class="game-container">
                 <div class="form-section !mb-0 text-center">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-xl font-bold text-primary-color text-left">Whac-A-Mole</h3>
-                        <div class="text-right">
-                            <span class="block text-sm text-tertiary-color">SCORE</span>
-                            <span id="game-status-wam" class="text-2xl font-bold text-primary-color">0</span>
-                        </div>
-                    </div>
-                    <div id="game-status-timer-wam" class="game-status text-center mb-4">Time: 30s</div>
+                     <div class="flex justify-between items-center mb-4">
+                         <h3 class="text-xl font-bold text-primary-color text-left">Whac-A-Mole</h3>
+                         <div class="text-right">
+                             <span class="block text-sm text-tertiary-color">SCORE</span>
+                             <span id="game-status-wam" class="text-2xl font-bold text-primary-color">0</span>
+                         </div>
+                     </div>
+                     <div id="game-status-timer-wam" class="game-status text-center mb-4">Time: 30s</div>
 
                     <div id="wam-board">
                         <!-- 9 holes will be generated by JS -->
@@ -1048,7 +1038,7 @@
                 </div>
             </div>
 
-            <!-- Word Guess Game -->
+            <!-- Word Guess Game --> <!-- FIXED: Removed stray 's' -->
             <div id="game-word-guess" class="game-container">
                 <div class="form-section !mb-0 text-center">
                     <h3 class="text-xl font-bold text-primary-color mb-4 text-center">Word Guess</h3>
@@ -1068,10 +1058,10 @@
                     <button id="wg-reset-btn" class="w-full sm:w-auto mx-auto btn btn-primary mt-6 flex">
                         <i data-lucide="rotate-ccw" class="w-5 h-5"></i>New Word
                     </button>
-                </div>
+                 </div>
             </div>
 
-            <!-- Breakout Game -->
+            <!-- Breakout Game --> <!-- FIXED: Removed stray 's' -->
             <div id="game-breakout" class="game-container">
                 <div class="form-section !mb-0 text-center">
                     <h3 class="text-xl font-bold text-primary-color mb-4 text-center">Breakout</h3>
@@ -1083,7 +1073,7 @@
                     <div id="breakout-game-container">
                         <canvas id="breakout-canvas" width="480" height="400"></canvas>
                           <!-- Mobile Controls for Breakout -->
-                        <div id="breakout-controls">
+                         <div id="breakout-controls">
                             <button id="breakout-left" class="breakout-control-btn"><i data-lucide="arrow-left"></i></button>
                             <button id="breakout-right" class="breakout-control-btn"><i data-lucide="arrow-right"></i></button>
                         </div>
@@ -1094,14 +1084,14 @@
                     </button>
                 </div>
             </div>
-            <!-- End Relax Zone Content -->
+             <!-- End Relax Zone Content -->
 
         </div>
     </div>
     <!-- --- End Game Modal HTML --- -->
 
 
-    <script>
+     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- Elements --- //
             const getEl = (id) => document.getElementById(id);
@@ -1110,82 +1100,84 @@
             const themeIcon = getEl('theme-icon');
             
             // Forms & Inputs
-            const currentCgpaInput = getEl('current-cgpa');
+             const currentCgpaInput = getEl('current-cgpa');
             const completedCreditsInput = getEl('completed-credits'); // This is Total ATTEMPTED Credits
-            const addCourseForm = getEl('add-course-form');
+             const addCourseForm = getEl('add-course-form');
             const courseCreditEl = getEl('course-credit');
-            const courseGradeEl = getEl('course-grade');
+             const courseGradeEl = getEl('course-grade');
             const addRetakeForm = getEl('add-retake-form');
-            const retakeCreditEl = getEl('retake-credit');
+             const retakeCreditEl = getEl('retake-credit');
             const retakeOldGradeEl = getEl('retake-old-grade');
-            const retakeNewGradeEl = getEl('retake-new-grade');
+             const retakeNewGradeEl = getEl('retake-new-grade');
             
-            // Containers & Buttons
+             // Containers & Buttons
             const courseListContainer = getEl('course-list-container');
             const calculateBtn = getEl('calculate-cgpa');
             const resetBtn = getEl('reset-all');
             
-            // Error Messages
+             // Error Messages
             const cgpaErrorEl = getEl('cgpa-error');
-            const calcErrorEl = getEl('calc-error');
+             const calcErrorEl = getEl('calc-error');
             
-            // Result Cards
+             // Result Cards
             const resultCards = {
-                good: getEl('result-good'),
-                mid: getEl('result-mid'),
-                low: getEl('result-low'),
+                 good: getEl('result-good'),
+                 mid: getEl('result-mid'),
+                     low: getEl('result-low'),
             };
             const allResultCards = document.querySelectorAll('.result-card');
 
             // --- State --- //
-            let courses = [];
+                 let courses = [];
             let calculationCache = {
-                finalCgpa: 0,
-                totalGpaCredits: 0, // Total Attempted Credits
-                currentTotalPoints: 0,
+                 finalCgpa: 0,
+                 totalGpaCredits: 0, // Total Attempted Credits
+                 currentTotalPoints: 0,
+                 // Add totalCompletedCredits to cache if needed elsewhere
+                 totalCompletedCredits: 0 
             };
 
             // --- Merged Theme Management --- //
             const updateTheme = (isDark) => {
-                body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+                     body.setAttribute('data-theme', isDark ? 'dark' : 'light');
                 
-                // Update main page toggle
-                if (themeToggle) themeToggle.checked = isDark; 
+                     // Update main page toggle
+                 if (themeToggle) themeToggle.checked = isDark; 
                 
-                // Update modal toggle
-                const themeToggleModal = getEl('theme-toggle-checkbox-modal'); // Get it
-                if (themeToggleModal) themeToggleModal.checked = isDark;
+                 // Update modal toggle
+                 const themeToggleModal = getEl('theme-toggle-checkbox-modal'); // Get it
+                     if (themeToggleModal) themeToggleModal.checked = isDark;
 
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
                 
-                const iconHtml = isDark ? 
-                    '<i data-lucide="moon" class="w-5 h-5 text-blue-300"></i>' : 
-                    '<i data-lucide="sun" class="w-5 h-5 text-yellow-500"></i>';
+                     const iconHtml = isDark ? 
+                         '<i data-lucide="moon" class="w-5 h-5 text-blue-300"></i>' : 
+                         '<i data-lucide="sun" class="w-5 h-5 text-yellow-500"></i>';
                 
-                // Update main page icon
-                if (themeIcon) themeIcon.innerHTML = iconHtml; 
+                 // Update main page icon
+                 if (themeIcon) themeIcon.innerHTML = iconHtml; 
                 
-                // Update modal icon
-                const themeIconModal = getEl('theme-icon-modal'); // Get it
-                if (themeIconModal) themeIconModal.innerHTML = iconHtml;
+                 // Update modal icon
+                 const themeIconModal = getEl('theme-icon-modal'); // Get it
+                     if (themeIconModal) themeIconModal.innerHTML = iconHtml;
 
-                lucide.createIcons();
-            };
+                 lucide.createIcons();
+             };
 
             themeToggle.addEventListener('change', () => updateTheme(themeToggle.checked));
 
-            // --- ADDED FOR MODAL THEME TOGGLE ---
+             // --- ADDED FOR MODAL THEME TOGGLE ---
             const themeToggleModal = getEl('theme-toggle-checkbox-modal');
-            if (themeToggleModal) {
-                themeToggleModal.addEventListener('change', () => updateTheme(themeToggleModal.checked));
-            }
+                 if (themeToggleModal) {
+                 themeToggleModal.addEventListener('change', () => updateTheme(themeToggleModal.checked));
+             }
             // --- END ADDED ---
             
-            const initializeTheme = () => {
-                const savedTheme = localStorage.getItem('theme');
-                // Default to light theme unless 'dark' is explicitly saved.
-                updateTheme(savedTheme === 'dark');
-            };
+                 const initializeTheme = () => {
+                     const savedTheme = localStorage.getItem('theme');
+                 // Default to light theme unless 'dark' is explicitly saved.
+                     updateTheme(savedTheme === 'dark');
+             };
 
             // --- Local Storage Persistence --- //
             const saveState = () => {
@@ -1194,267 +1186,263 @@
                     currentCgpa: currentCgpaInput.value,
                     completedCredits: completedCreditsInput.value
                 };
-                localStorage.setItem('cgpaCalculatorState', JSON.stringify(state));
-            };
+                 localStorage.setItem('cgpaCalculatorState', JSON.stringify(state));
+             };
 
             const loadState = () => {
-                const savedState = localStorage.getItem('cgpaCalculatorState');
-                if (savedState) {
+                     const savedState = localStorage.getItem('cgpaCalculatorState');
+                     if (savedState) {
                     const { courses: savedCourses, currentCgpa, completedCredits } = JSON.parse(savedState);
-                    courses = savedCourses || [];
-                    currentCgpaInput.value = currentCgpa || '';
-                    completedCreditsInput.value = completedCredits || '';
-                    renderCourses();
+                     courses = savedCourses || [];
+                     currentCgpaInput.value = currentCgpa || '';
+                         completedCreditsInput.value = completedCredits || '';
+                     renderCourses();
                 }
             };
 
             // --- Merged UI & Animations --- //
             
             // --- Replaced with Games' showNotification --- //
-            const showNotification = (message, type = 'success') => {
-                 const container = getEl('notification-container');
-                 const notification = document.createElement('div');
-                 // Add base class and type-specific class
-                 notification.className = `notification ${type}`; // e.g., 'notification success'
+                 const showNotification = (message, type = 'success') => {
+                const container = getEl('notification-container');
+                         const notification = document.createElement('div');
+                // Add base class and type-specific class
+                notification.className = `notification ${type}`; // e.g., 'notification success'
 
-                 let icon;
-                 switch(type) {
-                     case 'error': icon = 'alert-circle'; break;
-                     case 'info': icon = 'info'; break;
-                     case 'warning': icon = 'alert-triangle'; break; // Added warning icon
-                     default: icon = 'check-circle'; // Success
-                 }
+                let icon;
+                     switch(type) {
+                         case 'error': icon = 'alert-circle'; break;
+                        case 'info': icon = 'info'; break;
+                         case 'warning': icon = 'alert-triangle'; break; // Added warning icon
+                        default: icon = 'check-circle'; // Success
+                     }
 
-                 notification.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5"></i><span>${message}</span>`;
+                notification.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5"></i><span>${message}</span>`;
 
-                 container.appendChild(notification);
-                 lucide.createIcons();
+                     container.appendChild(notification);
+                lucide.createIcons();
 
-                 setTimeout(() => notification.classList.add('show'), 10);
-                 setTimeout(() => {
-                     notification.classList.remove('show');
-                     notification.addEventListener('transitionend', () => notification.remove());
-                 }, 3000); // Notification stays for 3 seconds
-             };
+                     setTimeout(() => notification.classList.add('show'), 10);
+                setTimeout(() => {
+                         notification.classList.remove('show');
+                         notification.addEventListener('transitionend', () => notification.remove());
+                     }, 3000); // Notification stays for 3 seconds
+                 };
             // --- End Replaced --- //
             
-            const shuffle = (array) => array.sort(() => Math.random() - 0.5); // Added from Games
+                 const shuffle = (array) => array.sort(() => Math.random() - 0.5); // Added from Games
 
-            const animateCountUp = (el, endValue) => {
-                let startValue = 0;
+                 const animateCountUp = (el, endValue) => {
+                 let startValue = 0;
                 const duration = 1000;
-                const startTime = performance.now();
+                     const startTime = performance.now();
 
                 function step(currentTime) {
                     const elapsedTime = currentTime - startTime;
-                    const progress = Math.min(elapsedTime / duration, 1);
+                     const progress = Math.min(elapsedTime / duration, 1);
                     const currentValue = startValue + (endValue - startValue) * progress;
                     
-                    // Handle non-number values like 'Impossible'
-                    if (isNaN(currentValue)) {
-                        el.textContent = endValue;
+                    // Handle non-number values like 'Impossible' or NaN results
+                    if (isNaN(currentValue) || !isFinite(currentValue)) { // Check for NaN and Infinity
+                        // Display the raw value if not a number during animation
+                        el.textContent = (typeof endValue === 'number' && !isNaN(endValue)) ? endValue.toFixed(2) : endValue;
                         return;
                     }
 
+
                     el.textContent = currentValue.toFixed(2);
-                    if (progress < 1) {
+                     if (progress < 1) {
                         requestAnimationFrame(step);
-                    } else {
-                        el.textContent = endValue.toFixed(2);
+                     } else {
+                         // Ensure final value is accurate
+                         el.textContent = (typeof endValue === 'number' && !isNaN(endValue)) ? endValue.toFixed(2) : endValue;
                     }
-                }
+                 }
                 requestAnimationFrame(step);
-            };
+             };
             
              const triggerConfetti = () => {
-                 const parent = document.querySelector('.card');
-                 for (let i = 0; i < 50; i++) {
-                     const confetti = document.createElement('div');
-                     confetti.className = 'confetti-piece';
-                     const colors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#6366f1'];
-                     confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                     confetti.style.left = `${Math.random() * 100}%`;
+                const parent = document.querySelector('.card');
+                for (let i = 0; i < 50; i++) {
+                         const confetti = document.createElement('div');
+                         confetti.className = 'confetti-piece';
+                         const colors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#6366f1'];
+                         confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.left = `${Math.random() * 100}%`;
                      confetti.style.animation = `fall ${1.5 + Math.random() * 2}s ${Math.random() * 1}s linear forwards`;
-                     parent.appendChild(confetti);
-                 }
-                 const keyframes = `
-                 @keyframes fall {
-                     to {
-                         transform: translateY(100vh) rotate(${Math.random() * 720}deg);
-                         opacity: 0;
+                         parent.appendChild(confetti);
                      }
-                 }`;
-                 const styleSheet = document.createElement("style");
-                 styleSheet.type = "text/css";
-                 styleSheet.innerText = keyframes;
-                 document.head.appendChild(styleSheet);
-                 setTimeout(() => document.querySelectorAll('.confetti-piece').forEach(e => e.remove()), 4000);
-             };
+                     const keyframes = `
+                     @keyframes fall {
+                        to {
+                             transform: translateY(100vh) rotate(${Math.random() * 720}deg);
+                            opacity: 0;
+                         }
+                    }`;
+                const styleSheet = document.createElement("style");
+                         styleSheet.type = "text/css";
+                styleSheet.innerText = keyframes;
+                     document.head.appendChild(styleSheet);
+                     setTimeout(() => document.querySelectorAll('.confetti-piece').forEach(e => e.remove()), 4000);
+                 };
 
             // --- Core Logic (Calculator) --- //
-            const getGradeLetter = (grade) => {
+                 const getGradeLetter = (grade) => {
                 const gradeMap = {4.00:'A',3.67:'A-',3.33:'B+',3.00:'B',2.67:'B-',2.33:'C+',2.00:'C',1.67:'C-',1.33:'D+',1.00:'D',0.00:'F'};
-                return gradeMap[grade] || '';
-            };
+                     return gradeMap[grade] || '';
+             };
 
             const renderCourses = () => {
-                courseListContainer.innerHTML = '';
+                     courseListContainer.innerHTML = '';
                 if (courses.length === 0) {
-                    courseListContainer.innerHTML = `<div class="text-center text-secondary-color p-4 course-list-placeholder-bg rounded-lg fade-in"><p>No courses added yet.</p></div>`;
+                         courseListContainer.innerHTML = `<div class="text-center text-secondary-color p-4 course-list-placeholder-bg rounded-lg fade-in"><p>No courses added yet.</p></div>`;
+                     return;
+                 }
+
+                courses.forEach((course, index) => {
+                     const courseEl = document.createElement('div');
+                    courseEl.style.setProperty('--stagger-delay', `${index * 100}ms`);
+                     let courseHTML = '';
+                     let borderColor = course.type === 'new' ? 'border-l-4 border-blue-500' : 'border-l-4 border-indigo-500';
+
+                     if (course.type === 'new') {
+                        courseHTML = `
+                            <div class="flex-grow">
+                                 <p class="font-semibold text-tertiary-color">${course.credit} Credits</p>
+                             </div>
+                            <div class="text-center">
+                                 <span class="font-bold text-lg text-blue-400">${getGradeLetter(course.grade)}</span>
+                                 <span class="block text-xs text-secondary-color">(${course.grade.toFixed(2)})</span>
+                             </div>`;
+                     } else { // Retake
+                        courseHTML = `
+                                <div class="flex-grow">
+                                     <p class="font-semibold text-tertiary-color">${course.credit} Credits <span class="font-bold text-indigo-400">(Retake)</span></p>
+                                 </div>
+                                <div class="text-center">
+                                     <span class="font-bold text-secondary-color line-through">${getGradeLetter(course.oldGrade)}</span>
+                                     <i data-lucide="arrow-right" class="inline-block w-4 h-4 text-secondary-color mx-1"></i>
+                                     <span class="font-bold text-lg text-green-400">${getGradeLetter(course.newGrade)}</span>
+                                </div>`;
+                     }
+
+                    courseEl.className = `flex justify-between items-center p-4 rounded-lg shadow-sm border ${borderColor} course-item-bg fade-in-up`;
+                         courseEl.innerHTML = courseHTML + `
+                            <button class="remove-btn text-red-400 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 p-2 rounded-full transition-colors" data-index="${index}">
+                                 <i data-lucide="trash-2" class="w-5 h-5"></i>
+                             </button>`;
+                    
+                     courseListContainer.appendChild(courseEl);
+                 });
+
+                lucide.createIcons();
+             };
+            
+             const hideResults = () => {
+                allResultCards.forEach(card => card.style.display = 'none');
+                 allResultCards.forEach(card => card.classList.remove('fade-in-up'));
+                [cgpaErrorEl, calcErrorEl].forEach(el => el.classList.add('hidden'));
+             };
+
+            const handleCalculation = () => {
+                 hideResults();
+
+                const currentCgpaVal = currentCgpaInput.value.trim();
+                 if (currentCgpaVal) {
+                    const currentCgpa = parseFloat(currentCgpaVal);
+                         if (isNaN(currentCgpa) || currentCgpa > 4.0 || currentCgpa < 0) { // Added isNaN check
+                            cgpaErrorEl.textContent = "Aeh! 🙂";
+                             cgpaErrorEl.classList.remove('hidden');
+                             return; // Stop calculation
+                        }
+                 }
+                
+                 if (courses.length === 0) {
+                     calcErrorEl.textContent = "Please add at least one course to calculate.";
+                    calcErrorEl.classList.remove('hidden');
                     return;
                 }
 
-                courses.forEach((course, index) => {
-                    const courseEl = document.createElement('div');
-                    courseEl.style.setProperty('--stagger-delay', `${index * 100}ms`);
-                    let courseHTML = '';
-                    let borderColor = course.type === 'new' ? 'border-l-4 border-blue-500' : 'border-l-4 border-indigo-500';
-
-                    if (course.type === 'new') {
-                        courseHTML = `
-                            <div class="flex-grow">
-                                <p class="font-semibold text-tertiary-color">${course.credit} Credits</p>
-                            </div>
-                            <div class="text-center">
-                                <span class="font-bold text-lg text-blue-400">${getGradeLetter(course.grade)}</span>
-                                <span class="block text-xs text-secondary-color">(${course.grade.toFixed(2)})</span>
-                            </div>`;
-                    } else { // Retake
-                        courseHTML = `
-                             <div class="flex-grow">
-                                 <p class="font-semibold text-tertiary-color">${course.credit} Credits <span class="font-bold text-indigo-400">(Retake)</span></p>
-                             </div>
-                             <div class="text-center">
-                                 <span class="font-bold text-secondary-color line-through">${getGradeLetter(course.oldGrade)}</span>
-                                 <i data-lucide="arrow-right" class="inline-block w-4 h-4 text-secondary-color mx-1"></i>
-                                 <span class="font-bold text-lg text-green-400">${getGradeLetter(course.newGrade)}</span>
-                             </div>`;
-                    }
-
-                    courseEl.className = `flex justify-between items-center p-4 rounded-lg shadow-sm border ${borderColor} course-item-bg fade-in-up`;
-                    courseEl.innerHTML = courseHTML + `
-                        <button class="remove-btn text-red-400 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 p-2 rounded-full transition-colors" data-index="${index}">
-                            <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>`;
-                    
-                    courseListContainer.appendChild(courseEl);
-                });
-
-                lucide.createIcons();
-            };
-            
-            const hideResults = () => {
-                allResultCards.forEach(card => card.style.display = 'none');
-                allResultCards.forEach(card => card.classList.remove('fade-in-up'));
-                [cgpaErrorEl, calcErrorEl].forEach(el => el.classList.add('hidden'));
-            };
-
-            const handleCalculation = () => {
-                hideResults();
-
-                const currentCgpaVal = currentCgpaInput.value.trim();
-                if (currentCgpaVal) {
-                    const currentCgpa = parseFloat(currentCgpaVal);
-                    if (currentCgpa > 4.0 || currentCgpa < 0) {
-                        cgpaErrorEl.textContent = "Aeh! 🙂";
-                        cgpaErrorEl.classList.remove('hidden');
-                        return; // Stop calculation
-                    }
-                }
-                
-                if (courses.length === 0) {
-                   calcErrorEl.textContent = "Please add at least one course to calculate.";
-                   calcErrorEl.classList.remove('hidden');
-                   return;
-                }
-
-                const trimesterCredits = courses.reduce((total, course) => total + course.credit, 0);
+                 const trimesterCredits = courses.reduce((total, course) => total + course.credit, 0);
                 if (trimesterCredits < 6) {
                     calcErrorEl.textContent = "Minimum 6 credits are required for this trimester to calculate.";
                     calcErrorEl.classList.remove('hidden');
-                    return; // Stop calculation
+                     return; // Stop calculation
                 }
 
                 // Check for retakes without initial standing
-                const hasRetakes = courses.some(c => c.type === 'retake');
-                const hasInitialStanding = (parseFloat(completedCreditsInput.value) || 0) > 0 && currentCgpaInput.value.trim() !== '';
+                 const hasRetakes = courses.some(c => c.type === 'retake');
+                const initialAttemptedCredits = parseFloat(completedCreditsInput.value); // Keep initial value separate
+                const hasInitialStanding = !isNaN(initialAttemptedCredits) && initialAttemptedCredits >= 0 && currentCgpaInput.value.trim() !== ''; // Check if credits is a valid number >= 0
                 
-                if(hasRetakes && !hasInitialStanding) {
-                    calcErrorEl.textContent = "Please enter Current CGPA and Completed Credit for accurate retake calculation."; // Updated error message
+                 if(hasRetakes && !hasInitialStanding) {
+                    calcErrorEl.textContent = "Please enter valid Current CGPA and Total Credits Attempted for accurate retake calculation."; // Updated error message
                     calcErrorEl.classList.remove('hidden');
-                    return;
+                     return;
                 }
 
                 const results = calculateResults();
-                displayResults(results);
+                 displayResults(results);
             };
 
-            // --- calculateResults function (no changes needed from previous version) --- //
+            // --- calculateResults function (REVISED for Total Completed Credit) --- //
             const calculateResults = () => {
                 const currentCgpa = parseFloat(currentCgpaInput.value) || 0;
-                // This is Total ATTEMPTED Credits
-                const completedCredits = parseFloat(completedCreditsInput.value) || 0; 
-                const hasInitialStanding = completedCredits > 0 && currentCgpaInput.value.trim() !== '';
+                const initialAttemptedCredits = parseFloat(completedCreditsInput.value) || 0; 
+                const hasInitialStanding = initialAttemptedCredits > 0 && currentCgpaInput.value.trim() !== '';
 
-                // Start with initial points
-                const initialPoints = currentCgpa * completedCredits;
+                const initialPoints = currentCgpa * initialAttemptedCredits;
                 let totalPoints = initialPoints;
-                let totalGpaCredits = completedCredits; // All attempted credits (including F's)
-                // Initialize total completed credits based on initial input, assuming initial CGPA > 0 means those credits were completed
-                let totalCompletedCredits = (currentCgpa > 0 && completedCredits > 0) ? completedCredits : 0; 
+                let totalGpaCredits = initialAttemptedCredits; // Start with initial attempted
+
+                // Estimate initial completed credits - assumes non-F grades if CGPA > 0
+                let totalCompletedCredits = (hasInitialStanding && currentCgpa > 0) ? initialAttemptedCredits : 0; 
                 
                 let trimesterPoints = 0;
-                let trimesterGpaCredits = 0; // Renamed to clarify it's for this trimester
+                let trimesterGpaCredits = 0; 
                 let trimesterCompletedCredits = 0;
 
                 courses.forEach(course => {
                     const credit = course.credit;
-                    trimesterGpaCredits += credit; // Add credits for this trimester calculation
+                    trimesterGpaCredits += credit; 
 
                     if (course.type === 'new') {
-                        // New course calculation
                         const grade = course.grade;
                         trimesterPoints += credit * grade;
                         totalPoints += credit * grade;
-                        totalGpaCredits += credit;
+                        totalGpaCredits += credit; // Add new course credits to total attempted
                         if (grade > 0) {
                             trimesterCompletedCredits += credit;
-                            totalCompletedCredits += credit; // Increment total completed if grade > 0
+                            totalCompletedCredits += credit; // Add to total completed if passed
                         }
-                        
-                    } else {
-                        // Retake course calculation - FIXED
+                    } else { // Retake
                         const oldGrade = course.oldGrade;
                         const newGrade = course.newGrade;
                         
                         trimesterPoints += credit * newGrade;
                         if (newGrade > 0) {
                             trimesterCompletedCredits += credit;
-                            // If the old grade was F (0) and the new one isn't, add to total completed
-                            if (oldGrade === 0) {
-                                totalCompletedCredits += credit;
-                            }
-                            // If the old grade was > 0, total completed doesn't change
-                        } else { 
-                            // If the new grade is F (0) and the old one wasn't, decrement total completed
-                            if (oldGrade > 0) {
-                                totalCompletedCredits -= credit; 
-                            }
-                            // If both old and new are F, total completed doesn't change
                         }
                         
+                        // Adjust total points and total completed credits based on retake
                         if (hasInitialStanding) {
-                            // Remove old grade points and add new grade points
+                            // Adjust total points: remove old contribution, add new
                             totalPoints = totalPoints - (oldGrade * credit) + (newGrade * credit);
-                            // totalGpaCredits remains same (credits already counted)
-                            
+                            // totalGpaCredits doesn't change for retakes as they were already attempted
+
+                            // Adjust total completed credits
+                            if (oldGrade === 0 && newGrade > 0) {
+                                totalCompletedCredits += credit; // Was F, now passed
+                            } else if (oldGrade > 0 && newGrade === 0) {
+                                totalCompletedCredits -= credit; // Was passed, now F
+                            }
+                            // If oldGrade > 0 and newGrade > 0, or oldGrade=0 and newGrade=0, no change needed
                         } else {
-                            // No initial standing - treat as new course
+                            // If no initial standing, treat retake like a new course for calculation
                             totalPoints += credit * newGrade;
-                            totalGpaCredits += credit;
-                            // If no initial standing, treat retake's completion like a new course
+                            totalGpaCredits += credit; // Credits weren't counted initially
                             if (newGrade > 0) {
-                                totalCompletedCredits += credit;
+                                totalCompletedCredits += credit; // Count as completed if passed
                             }
                         }
                     }
@@ -1463,188 +1451,192 @@
                 const finalCgpa = totalGpaCredits > 0 ? totalPoints / totalGpaCredits : 0;
                 const trimesterGpa = trimesterGpaCredits > 0 ? trimesterPoints / trimesterGpaCredits : 0;
                 
-                calculationCache = { finalCgpa, totalGpaCredits, currentTotalPoints: totalPoints };
+                // Ensure totalCompletedCredits doesn't go below zero
+                totalCompletedCredits = Math.max(0, totalCompletedCredits); 
 
-                // We return totalGpaCredits (attempted) as we cannot accurately know "earned" credits
-                // MODIFIED: Return trimesterGpaCredits as well
-                return { finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits, trimesterCompletedCredits, totalCompletedCredits }; // Added totalCompletedCredits
+                calculationCache = { finalCgpa, totalGpaCredits, currentTotalPoints: totalPoints, totalCompletedCredits }; // Store completed credits too
+
+                return { finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits, trimesterCompletedCredits, totalCompletedCredits }; // Added totalCompletedCredits back
             };
             
-            // --- displayResults function (no changes needed from previous version) --- //
+            // --- displayResults function (UPDATED to show total completed) --- //
             const displayResults = ({ finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits, trimesterCompletedCredits, totalCompletedCredits }) => { // Added totalCompletedCredits
-                let card, cgpaEl, tgpaEl, creditsEl, triCreditsEl, triEarnedCreditsEl, totalEarnedCreditsEl, titleEl, standing; // Added totalEarnedCreditsEl
+                 let card, cgpaEl, tgpaEl, creditsEl, triCreditsEl, triEarnedCreditsEl, totalEarnedCreditsEl, titleEl, standing; // Added totalEarnedCreditsEl back
                 
-                if (finalCgpa >= 3.0) {
-                    standing = 'good';
-                    titleEl = getEl('good-standing-title');
-                    if (finalCgpa >= 3.8) {
-                        titleEl.textContent = "তুখোড় ইশটুডেন্ট! 🎓";
-                        if(trimesterGpa >= 3.8) triggerConfetti();
+                 if (finalCgpa >= 3.0) {
+                     standing = 'good';
+                     titleEl = getEl('good-standing-title');
+                     if (finalCgpa >= 3.8) {
+                         titleEl.textContent = "তুখোড় ইশটুডেন্ট! 🎓";
+                         if(trimesterGpa >= 3.8) triggerConfetti();
                     } else if (finalCgpa >= 3.5) {
-                        titleEl.textContent = "ওয়েভারওয়ালা! 💸";
+                             titleEl.textContent = "ওয়েভারওয়ালা! 💸";
                     } else if (finalCgpa >= 3.2) {
-                        titleEl.textContent = "সেইফ জোনে আছেন 😌";
+                         titleEl.textContent = "সেইফ জোনে আছেন 😌";
                     } else {
-                        titleEl.textContent = "সিজি ৩.০০ ধরে রাখেন! 😅";
+                         titleEl.textContent = "সিজি ৩.০০ ধরে রাখেন! 😅";
                     }
-                } else if (finalCgpa >= 2.0) {
-                    standing = 'mid';
-                    titleEl = getEl('mid-standing-title');
-                    if (finalCgpa >= 2.6) {
-                        titleEl.textContent = "কামব্যাক মাস্ট! 💪";
-                    } else if (finalCgpa >= 2.2) {
-                        titleEl.textContent = "রেড জোনে আছেন! 🚨";
-                    } else {
-                        titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে! 📉";
+                 } else if (finalCgpa >= 2.0) {
+                     standing = 'mid';
+                     titleEl = getEl('mid-standing-title');
+                     if (finalCgpa >= 2.6) {
+                         titleEl.textContent = "কামব্যাক মাস্ট! 💪";
+                     } else if (finalCgpa >= 2.2) {
+                         titleEl.textContent = "রেড জোনে আছেন! 🚨";
+                     } else {
+                         titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে! 📉";
                     }
-                } else {
-                    standing = 'low';
-                    titleEl = getEl('low-cgpa-title');
-                    if(finalCgpa < 1.5) {
-                        titleEl.textContent = "RIP 💀";
-                    } else {
-                        titleEl.textContent = "জঘন্য রকমের পরিশ্রমী হন! 🤯";
+                 } else {
+                     standing = 'low';
+                     titleEl = getEl('low-cgpa-title');
+                     if(finalCgpa < 1.5) {
+                         titleEl.textContent = "RIP 💀";
+                     } else {
+                         titleEl.textContent = "জঘন্য রকমের পরিশ্রমী হন! 🤯";
                     }
-                }
+                 }
 
-                card = resultCards[standing];
-                cgpaEl = getEl(`cgpa-${standing}`);
-                tgpaEl = getEl(`tgpa-${standing}`);
-                creditsEl = getEl(`total-credits-${standing}`);
-                triCreditsEl = getEl(`trimester-credits-${standing}`); // Get new element
-                triEarnedCreditsEl = getEl(`trimester-earned-credits-${standing}`);
-                totalEarnedCreditsEl = getEl(`total-earned-credits-${standing}`); // Get new element for total completed
+                 card = resultCards[standing];
+                 cgpaEl = getEl(`cgpa-${standing}`);
+                 tgpaEl = getEl(`tgpa-${standing}`);
+                 creditsEl = getEl(`total-credits-${standing}`);
+                 triCreditsEl = getEl(`trimester-credits-${standing}`); 
+                 triEarnedCreditsEl = getEl(`trimester-earned-credits-${standing}`);
+                 totalEarnedCreditsEl = getEl(`total-earned-credits-${standing}`); // Get the element again
                 
-                animateCountUp(cgpaEl, finalCgpa > 4 ? 4 : finalCgpa); // Cap CGPA at 4.00
-                animateCountUp(tgpaEl, trimesterGpa > 4 ? 4 : trimesterGpa); // Cap TGPA at 4.00
+                 // Cap displayed CGPA/GPA at 4.00, even if calculation exceeds it
+                 animateCountUp(cgpaEl, Math.min(finalCgpa, 4.00)); 
+                 animateCountUp(tgpaEl, Math.min(trimesterGpa, 4.00)); 
                 
-                // Display the new total *attempted* credits
-                creditsEl.textContent = totalGpaCredits.toFixed(2).replace(/\.00$/, '');
-                // ADDED: Display trimester credits
-                triCreditsEl.textContent = trimesterGpaCredits.toFixed(2).replace(/\.00$/, ''); 
-                triEarnedCreditsEl.textContent = trimesterCompletedCredits.toFixed(2).replace(/\.00$/, '');
-                totalEarnedCreditsEl.textContent = totalCompletedCredits.toFixed(2).replace(/\.00$/, ''); // Display total completed
+                 // Display total attempted credits
+                 creditsEl.textContent = totalGpaCredits.toFixed(2).replace(/\.00$/, '');
+                 // Display trimester attempted credits
+                 triCreditsEl.textContent = trimesterGpaCredits.toFixed(2).replace(/\.00$/, ''); 
+                 // Display trimester completed credits
+                 triEarnedCreditsEl.textContent = trimesterCompletedCredits.toFixed(2).replace(/\.00$/, '');
+                 // Display total completed credits
+                 totalEarnedCreditsEl.textContent = totalCompletedCredits.toFixed(2).replace(/\.00$/, ''); // Populate the element
 
-                card.style.display = 'block';
-                setTimeout(() => card.classList.add('fade-in-up'), 10);
-                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                 card.style.display = 'block';
+                 setTimeout(() => card.classList.add('fade-in-up'), 10);
+                 card.scrollIntoView({ behavior: 'smooth', block: 'center' });
             };
 
             const handleTargetCalculation = (targetCgpaInput, targetCreditsInput, resultEl, gpaEl) => {
                 const targetCgpa = parseFloat(targetCgpaInput.value);
-                const nextCredits = parseFloat(targetCreditsInput.value);
+                 const nextCredits = parseFloat(targetCreditsInput.value);
                 
-                if (isNaN(targetCgpa) || isNaN(nextCredits) || nextCredits < 6 || targetCgpa > 4.00) {
-                    resultEl.classList.add('hidden');
+                 if (isNaN(targetCgpa) || isNaN(nextCredits) || nextCredits < 6 || targetCgpa > 4.00) {
+                     resultEl.classList.add('hidden');
                     return;
-                }
+                 }
                 
-                // Don't show if target is already met
-                if (targetCgpa <= calculationCache.finalCgpa) {
-                     resultEl.classList.remove('hidden');
-                     gpaEl.textContent = `Achieved!`;
-                     return;
-                }
+                 // Don't show if target is already met
+                 if (targetCgpa <= calculationCache.finalCgpa) {
+                         resultEl.classList.remove('hidden');
+                         gpaEl.textContent = `Achieved!`;
+                         return;
+                 }
 
                 const targetTotalPoints = targetCgpa * (calculationCache.totalGpaCredits + nextCredits);
-                const requiredNextPoints = targetTotalPoints - calculationCache.currentTotalPoints;
+                     const requiredNextPoints = targetTotalPoints - calculationCache.currentTotalPoints;
                 const requiredGpa = requiredNextPoints / nextCredits;
                 
-                resultEl.classList.remove('hidden');
+                     resultEl.classList.remove('hidden');
                 if (requiredGpa > 4.0) gpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)})`;
-                else if (requiredGpa < 0) gpaEl.textContent = `Achieved!`; // Should be caught by earlier check, but good failsafe
+                 else if (requiredGpa < 0) gpaEl.textContent = `Achieved!`; // Should be caught by earlier check, but good failsafe
                 else gpaEl.textContent = requiredGpa.toFixed(2);
-            };
+             };
 
             // --- Event Listeners (Calculator) --- //
-            [currentCgpaInput, completedCreditsInput].forEach(el => el.addEventListener('input', saveState));
+                 [currentCgpaInput, completedCreditsInput].forEach(el => el.addEventListener('input', saveState));
 
             addCourseForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                courses.push({ type: 'new', credit: parseFloat(courseCreditEl.value), grade: parseFloat(courseGradeEl.value) });
+                 e.preventDefault();
+                 courses.push({ type: 'new', credit: parseFloat(courseCreditEl.value), grade: parseFloat(courseGradeEl.value) });
                 renderCourses(); hideResults(); saveState();
-                showNotification('Course added!');
-            });
+                 showNotification('Course added!');
+             });
 
             // --- FIXED: Added warning for retakes w/o initial standing --- //
             addRetakeForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const credit = parseFloat(retakeCreditEl.value);
-                const oldGrade = parseFloat(retakeOldGradeEl.value);
+                 e.preventDefault();
+                 const credit = parseFloat(retakeCreditEl.value);
+                 const oldGrade = parseFloat(retakeOldGradeEl.value);
                 const newGrade = parseFloat(retakeNewGradeEl.value);
-                if (oldGrade >= newGrade) {
+                 if (oldGrade >= newGrade) {
                     showNotification("New grade must be higher.", 'error');
-                    return;
+                     return;
                 }
 
-                // New Warning
+                 // New Warning
                 const hasInitialStanding = (parseFloat(completedCreditsInput.value) || 0) > 0 && currentCgpaInput.value.trim() !== '';
-                if (!hasInitialStanding) {
-                    showNotification("Retake added. Enter Current Standing for best results.", 'warning'); // Use warning type
-                } else {
-                    showNotification('Retake course added!');
+                 if (!hasInitialStanding) {
+                     showNotification("Retake added. Enter Current Standing for best results.", 'warning'); // Use warning type
+                 } else {
+                     showNotification('Retake course added!');
                 }
 
-                courses.push({ type: 'retake', credit, oldGrade, newGrade });
-                renderCourses(); hideResults(); saveState();
-            });
+                 courses.push({ type: 'retake', credit, oldGrade, newGrade });
+                 renderCourses(); hideResults(); saveState();
+             });
             
-            courseListContainer.addEventListener('click', (e) => {
-                const removeBtn = e.target.closest('.remove-btn');
-                if (removeBtn) {
-                    courses.splice(parseInt(removeBtn.dataset.index), 1);
-                    renderCourses(); hideResults(); saveState();
-                }
-            });
+                 courseListContainer.addEventListener('click', (e) => {
+                 const removeBtn = e.target.closest('.remove-btn');
+                 if (removeBtn) {
+                     courses.splice(parseInt(removeBtn.dataset.index), 1);
+                     renderCourses(); hideResults(); saveState();
+                 }
+             });
 
             calculateBtn.addEventListener('click', handleCalculation);
             
-            resetBtn.addEventListener('click', () => {
-                courses = [];
-                currentCgpaInput.value = '';
-                completedCreditsInput.value = '';
-                renderCourses();
-                hideResults();
-                saveState();
-                showNotification('Calculator has been reset.', 'success');
-            });
+             resetBtn.addEventListener('click', () => {
+                 courses = [];
+                 currentCgpaInput.value = '';
+                 completedCreditsInput.value = '';
+                 renderCourses();
+                 hideResults();
+                 saveState();
+                 showNotification('Calculator has been reset.', 'success');
+             });
             
-            // Probation Planner
+             // Probation Planner
             getEl('next-credits').addEventListener('input', (e) => {
-                const nextCredits = parseFloat(e.target.value);
-                const resultEl = getEl('recovery-result');
-                const gpaEl = getEl('required-gpa');
-                if (isNaN(nextCredits) || nextCredits < 6) {
-                    resultEl.classList.add('hidden'); return;
-                }
-                const targetTotalPoints = 2.0 * (calculationCache.totalGpaCredits + nextCredits);
-                const requiredNextPoints = targetTotalPoints - calculationCache.currentTotalPoints;
-                const requiredGpa = requiredNextPoints / nextCredits;
-                resultEl.classList.remove('hidden');
-                if (requiredGpa > 4.0) gpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)})`;
-                else if (requiredGpa <= 0) gpaEl.textContent = 'Any passing grade!';
-                else gpaEl.textContent = requiredGpa.toFixed(2);
+                 const nextCredits = parseFloat(e.target.value);
+                 const resultEl = getEl('recovery-result');
+                 const gpaEl = getEl('required-gpa');
+                 if (isNaN(nextCredits) || nextCredits < 6) {
+                     resultEl.classList.add('hidden'); return;
+                 }
+                 const targetTotalPoints = 2.0 * (calculationCache.totalGpaCredits + nextCredits);
+                 const requiredNextPoints = targetTotalPoints - calculationCache.currentTotalPoints;
+                 const requiredGpa = requiredNextPoints / nextCredits;
+                 resultEl.classList.remove('hidden');
+                 if (requiredGpa > 4.0) gpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)})`;
+                 else if (requiredGpa <= 0) gpaEl.textContent = 'Any passing grade!';
+                 else gpaEl.textContent = requiredGpa.toFixed(2);
             });
 
             // Target Planners
-            ['good', 'mid'].forEach(standing => {
-                const targetCgpaInput = getEl(`target-cgpa-${standing}`);
-                const targetCreditsInput = getEl(`target-credits-${standing}`);
-                const resultEl = getEl(`target-result-${standing}`);
-                const gpaEl = getEl(`required-gpa-${standing}`);
-                [targetCgpaInput, targetCreditsInput].forEach(el => el.addEventListener('input', () => {
-                    handleTargetCalculation(targetCgpaInput, targetCreditsInput, resultEl, gpaEl);
-                }));
+             ['good', 'mid'].forEach(standing => {
+                 const targetCgpaInput = getEl(`target-cgpa-${standing}`);
+                 const targetCreditsInput = getEl(`target-credits-${standing}`);
+                 const resultEl = getEl(`target-result-${standing}`);
+                 const gpaEl = getEl(`required-gpa-${standing}`);
+                 [targetCgpaInput, targetCreditsInput].forEach(el => el.addEventListener('input', () => {
+                     handleTargetCalculation(targetCgpaInput, targetCreditsInput, resultEl, gpaEl);
+                 }));
             });
 
             // --- --- --- --- --- --- --- --- --- ---
             // --- --- --- GAMES LOGIC --- --- ---
             // --- --- --- --- --- --- --- --- --- ---
 
-            // --- Game Modal Logic --- //
+             // --- Game Modal Logic --- //
             const gameModal = getEl('game-modal');
             const openGameModalBtn = getEl('open-game-modal');
-            const closeGameModalBtn = getEl('close-game-modal');
+             const closeGameModalBtn = getEl('close-game-modal');
             const gameSelection = getEl('game-selection');
             const gameSelectBtns = document.querySelectorAll('.game-select-btn');
             const gameContainers = document.querySelectorAll('.game-container');
@@ -1667,95 +1659,95 @@
                 });
 
                 // Stop other active games and remove specific listeners
-                if (gameKey !== 'snake' && isSnakeGameActive) stopSnakeGame();
+                 if (gameKey !== 'snake' && isSnakeGameActive) stopSnakeGame();
                 if (gameKey !== 'whac-a-mole' && wamGameActive) stopWamGame();
-                if (gameKey !== 'breakout' && isBreakoutGameActive) stopBreakoutGame();
+                 if (gameKey !== 'breakout' && isBreakoutGameActive) stopBreakoutGame();
 
 
                 // Start selected game and add specific listeners
                 if (gameKey === 'snake') startSnakeGame();
-                else if (gameKey === 'breakout') startBreakoutGame();
+                 else if (gameKey === 'breakout') startBreakoutGame();
 
 
                 // Update button styles
                 gameSelectBtns.forEach(btn => {
-                    btn.classList.toggle('btn-primary', btn.dataset.game === gameKey);
-                    btn.classList.toggle('btn-neutral', btn.dataset.game !== gameKey);
+                     btn.classList.toggle('btn-primary', btn.dataset.game === gameKey);
+                     btn.classList.toggle('btn-neutral', btn.dataset.game !== gameKey);
                 });
             };
 
              openGameModalBtn.addEventListener('click', () => {
-                 gameModal.classList.add('show');
-                 // Show info notification only if not on a large screen (assuming PC)
-                 if (window.innerWidth < 1024) { // Example breakpoint for large screens
+                gameModal.classList.add('show');
+                // Show info notification only if not on a large screen (assuming PC)
+                if (window.innerWidth < 1024) { // Example breakpoint for large screens
                      showNotification("Enjoy the games! (Best experience on PC)", "info"); // Updated message here
-                 }
-                 // Re-render icons *after* modal is shown
-                 lucide.createIcons();
+                }
+                // Re-render icons *after* modal is shown
+                lucide.createIcons();
              });
             closeGameModalBtn.addEventListener('click', () => {
                 gameModal.classList.remove('show');
                 // Stop all potential games when modal closes
                 if (isSnakeGameActive) stopSnakeGame();
-                if (wamGameActive) stopWamGame();
+                 if (wamGameActive) stopWamGame();
                 if (isBreakoutGameActive) stopBreakoutGame();
             });
             gameSelection.addEventListener('click', (e) => {
-                const btn = e.target.closest('.game-select-btn');
-                if (btn && btn.dataset.game) {
-                    selectGame(btn.dataset.game);
-                }
+                 const btn = e.target.closest('.game-select-btn');
+                 if (btn && btn.dataset.game) {
+                     selectGame(btn.dataset.game);
+                 }
             });
 
             // --- Game Logic (Tic-Tac-Toe) --- //
             const tttBoard = getEl('tic-tac-toe-board');
             const tttCells = document.querySelectorAll('.ttt-cell');
-            const tttStatus = getEl('ttt-status');
+             const tttStatus = getEl('ttt-status');
             const tttResetBtn = getEl('ttt-reset-btn');
-            const TTT_PLAYER = 'X';
+             const TTT_PLAYER = 'X';
             const TTT_BOT = 'O';
             let currentTTTPlayer = TTT_PLAYER; // Human starts
             let tttBoardState = Array(9).fill(null);
             let tttGameActive = true;
             const tttWinningConditions = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-                [0, 4, 8], [2, 4, 6]  // Diagonals
+                 [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+                 [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+                 [0, 4, 8], [2, 4, 6]  // Diagonals
             ];
 
             const handleTTTCellClick = (e) => {
-                const cell = e.target.closest('.ttt-cell');
-                if (!cell || cell.classList.contains('disabled')) return; // Ignore clicks if disabled
+                 const cell = e.target.closest('.ttt-cell');
+                 if (!cell || cell.classList.contains('disabled')) return; // Ignore clicks if disabled
 
-                const index = parseInt(cell.dataset.index); // Ensure index is number
+                 const index = parseInt(cell.dataset.index); // Ensure index is number
 
-                if (tttBoardState[index] !== null || !tttGameActive || currentTTTPlayer !== TTT_PLAYER) {
-                     return; // Ignore clicks on occupied cells, inactive game, or bot's turn
-                }
+                 if (tttBoardState[index] !== null || !tttGameActive || currentTTTPlayer !== TTT_PLAYER) {
+                    return; // Ignore clicks on occupied cells, inactive game, or bot's turn
+                 }
 
-                 makeTTTMove(index, TTT_PLAYER);
+                makeTTTMove(index, TTT_PLAYER);
 
-                 // Check game status after player move
+                // Check game status after player move
                  if (checkTTTWin(TTT_PLAYER)) {
                      tttStatus.textContent = `You win! 🎉`;
                      tttGameActive = false;
                      disableTTTBoard();
                      return;
-                 } else if (isTTTDraw()) {
+                } else if (isTTTDraw()) {
                      tttStatus.textContent = "It's a draw! 🤝";
                      tttGameActive = false;
                      disableTTTBoard();
                      return;
-                 }
+                }
 
-                // If game continues, switch to bot's turn
-                switchTTTPlayer(TTT_BOT);
-                 // Delay bot move slightly for better UX
+                 // If game continues, switch to bot's turn
+                 switchTTTPlayer(TTT_BOT);
+                // Delay bot move slightly for better UX
                  setTimeout(botMove, 500);
             };
 
             const makeTTTMove = (index, player) => {
-                 tttBoardState[index] = player;
+                tttBoardState[index] = player;
                  const cell = tttCells[index];
                  cell.querySelector('span').textContent = player;
                  cell.classList.add('occupied', player);
@@ -1784,7 +1776,7 @@
             const enableTTTBoard = () => {
                  tttCells.forEach(cell => {
                      if (!cell.classList.contains('occupied')) {
-                         cell.classList.remove('disabled');
+                        cell.classList.remove('disabled');
                      }
                  });
             };
@@ -1803,95 +1795,95 @@
                          tttGameActive = false;
                          disableTTTBoard(); // Disable fully on game over
                          return;
-                     } else if (isTTTDraw()) {
+                    } else if (isTTTDraw()) {
                          tttStatus.textContent = "It's a draw! 🤝";
                          tttGameActive = false;
                          disableTTTBoard();
                          return;
-                     }
+                    }
                  }
                  // Switch back to player's turn
                  switchTTTPlayer(TTT_PLAYER);
             };
 
             const findBestMove = () => {
-                // 1. Check if bot can win
-                for (let i = 0; i < 9; i++) {
-                    if (tttBoardState[i] === null) {
-                        tttBoardState[i] = TTT_BOT; // Try the move
-                        if (checkTTTWin(TTT_BOT)) {
-                            tttBoardState[i] = null; // Undo
-                            return i; // Winning move
-                        }
-                        tttBoardState[i] = null; // Undo
-                    }
-                }
-
-                // 2. Check if player can win and block
-                for (let i = 0; i < 9; i++) {
-                    if (tttBoardState[i] === null) {
-                        tttBoardState[i] = TTT_PLAYER; // Try player's move
-                        if (checkTTTWin(TTT_PLAYER)) {
-                            tttBoardState[i] = null; // Undo
-                            return i; // Blocking move
-                        }
-                        tttBoardState[i] = null; // Undo
-                    }
-                }
-
-                // 3. Take center if available
-                if (tttBoardState[4] === null) {
-                    return 4;
-                }
-
-                // 4. Take a random corner if available
-                 const corners = [0, 2, 6, 8];
-                 const availableCorners = corners.filter(i => tttBoardState[i] === null);
-                 if (availableCorners.length > 0) {
-                      return availableCorners[Math.floor(Math.random() * availableCorners.length)];
-                 }
-
-                 // 5. Take any random available cell
-                 const availableCells = [];
+                 // 1. Check if bot can win
                  for (let i = 0; i < 9; i++) {
                      if (tttBoardState[i] === null) {
-                         availableCells.push(i);
+                        tttBoardState[i] = TTT_BOT; // Try the move
+                         if (checkTTTWin(TTT_BOT)) {
+                             tttBoardState[i] = null; // Undo
+                             return i; // Winning move
+                         }
+                         tttBoardState[i] = null; // Undo
                      }
                  }
-                if (availableCells.length > 0) {
-                     return availableCells[Math.floor(Math.random() * availableCells.length)];
+
+                 // 2. Check if player can win and block
+                 for (let i = 0; i < 9; i++) {
+                     if (tttBoardState[i] === null) {
+                        tttBoardState[i] = TTT_PLAYER; // Try player's move
+                         if (checkTTTWin(TTT_PLAYER)) {
+                             tttBoardState[i] = null; // Undo
+                             return i; // Blocking move
+                         }
+                         tttBoardState[i] = null; // Undo
+                     }
+                 }
+
+                 // 3. Take center if available
+                 if (tttBoardState[4] === null) {
+                     return 4;
+                 }
+
+                 // 4. Take a random corner if available
+                const corners = [0, 2, 6, 8];
+                const availableCorners = corners.filter(i => tttBoardState[i] === null);
+                if (availableCorners.length > 0) {
+                     return availableCorners[Math.floor(Math.random() * availableCorners.length)];
                 }
 
-                return -1; // Should not happen if game isn't draw
+                // 5. Take any random available cell
+                const availableCells = [];
+                for (let i = 0; i < 9; i++) {
+                    if (tttBoardState[i] === null) {
+                        availableCells.push(i);
+                    }
+                }
+               if (availableCells.length > 0) {
+                    return availableCells[Math.floor(Math.random() * availableCells.length)];
+               }
+
+                 return -1; // Should not happen if game isn't draw
             };
 
             const checkTTTWin = (player) => {
-                 return tttWinningConditions.some(condition => {
-                     return condition.every(index => tttBoardState[index] === player);
-                 });
+                return tttWinningConditions.some(condition => {
+                    return condition.every(index => tttBoardState[index] === player);
+                });
             };
 
              const isTTTDraw = () => {
-                 return tttBoardState.every(cellState => cellState !== null);
+                return tttBoardState.every(cellState => cellState !== null);
             };
 
 
             const resetTTTGame = () => {
-                tttBoardState = Array(9).fill(null);
-                tttGameActive = true;
-                currentTTTPlayer = TTT_PLAYER; // Human always starts
-                tttCells.forEach(cell => {
-                    cell.querySelector('span').textContent = 'X'; // Use 'X' for sizing, will be hidden by CSS
-                    cell.classList.remove('occupied', 'X', 'O', 'disabled'); // Remove disabled class
-                });
-                tttStatus.textContent = `Your Turn (X)`;
-                 enableTTTBoard(); // Make sure board is enabled on reset
+                 tttBoardState = Array(9).fill(null);
+                 tttGameActive = true;
+                 currentTTTPlayer = TTT_PLAYER; // Human always starts
+                 tttCells.forEach(cell => {
+                     cell.querySelector('span').textContent = 'X'; // Use 'X' for sizing, will be hidden by CSS
+                     cell.classList.remove('occupied', 'X', 'O', 'disabled'); // Remove disabled class
+                 });
+                 tttStatus.textContent = `Your Turn (X)`;
+                enableTTTBoard(); // Make sure board is enabled on reset
             };
 
             const initializeTTTGame = () => {
-                tttBoard.addEventListener('click', handleTTTCellClick);
-                tttResetBtn.addEventListener('click', resetTTTGame);
-                resetTTTGame(); // Initialize the board state
+                 tttBoard.addEventListener('click', handleTTTCellClick);
+                 tttResetBtn.addEventListener('click', resetTTTGame);
+                 resetTTTGame(); // Initialize the board state
             };
 
             // --- Game Logic (Memory Match) --- //
@@ -1902,9 +1894,9 @@
 
             const memoryAllEmojis = ['🎓', '💻', '📚', '💡', '🧪', '📈', '🚀', '🧠', '🧩', '🏆']; // 10 pairs
             const memoryDifficultySettings = {
-                easy: { pairs: 6, cols: 4, gridClass: 'grid-cols-4' },
-                medium: { pairs: 8, cols: 4, gridClass: 'grid-cols-4' },
-                hard: { pairs: 10, cols: 5, gridClass: 'grid-cols-5' }
+                 easy: { pairs: 6, cols: 4, gridClass: 'grid-cols-4' },
+                 medium: { pairs: 8, cols: 4, gridClass: 'grid-cols-4' },
+                 hard: { pairs: 10, cols: 5, gridClass: 'grid-cols-5' }
             };
             let currentMemoryDifficulty = 'easy';
             let memoryCards = [];
@@ -1914,103 +1906,103 @@
             let canFlip = true;
 
             const startMemoryGame = () => {
-                const settings = memoryDifficultySettings[currentMemoryDifficulty];
-                const emojisForGame = memoryAllEmojis.slice(0, settings.pairs);
-                memoryCards = shuffle([...emojisForGame, ...emojisForGame]);
+                 const settings = memoryDifficultySettings[currentMemoryDifficulty];
+                 const emojisForGame = memoryAllEmojis.slice(0, settings.pairs);
+                 memoryCards = shuffle([...emojisForGame, ...emojisForGame]);
 
-                flippedCards = [];
-                matchedPairs = 0;
-                memoryMoves = 0;
-                canFlip = true;
-                memoryStatus.textContent = "Moves: 0";
-                memoryBoard.innerHTML = '';
+                 flippedCards = [];
+                 matchedPairs = 0;
+                 memoryMoves = 0;
+                 canFlip = true;
+                 memoryStatus.textContent = "Moves: 0";
+                 memoryBoard.innerHTML = '';
 
-                // Apply grid styles
-                memoryBoard.style.gridTemplateColumns = `repeat(${settings.cols}, 1fr)`;
+                 // Apply grid styles
+                 memoryBoard.style.gridTemplateColumns = `repeat(${settings.cols}, 1fr)`;
 
-                memoryCards.forEach((emoji, index) => {
-                    const card = document.createElement('div');
-                    card.classList.add('memory-card');
-                    card.dataset.index = index;
-                    card.innerHTML = `
-                        <div class="memory-card-face memory-card-front">${emoji}</div>
-                        <div class="memory-card-face memory-card-back"><i data-lucide="help-circle"></i></div>
-                    `;
-                    card.addEventListener('click', () => flipMemoryCard(card, emoji));
-                    memoryBoard.appendChild(card);
-                });
-                lucide.createIcons(); // Create icons after adding them to the board
+                 memoryCards.forEach((emoji, index) => {
+                     const card = document.createElement('div');
+                     card.classList.add('memory-card');
+                     card.dataset.index = index;
+                     card.innerHTML = `
+                         <div class="memory-card-face memory-card-front">${emoji}</div>
+                         <div class="memory-card-face memory-card-back"><i data-lucide="help-circle"></i></div>
+                     `;
+                     card.addEventListener('click', () => flipMemoryCard(card, emoji));
+                     memoryBoard.appendChild(card);
+                 });
+                 lucide.createIcons(); // Create icons after adding them to the board
             };
 
             const flipMemoryCard = (card, emoji) => {
-                if (!canFlip || card.classList.contains('is-flipped') || card.classList.contains('is-matched')) {
-                    return;
-                }
+                 if (!canFlip || card.classList.contains('is-flipped') || card.classList.contains('is-matched')) {
+                     return;
+                 }
 
-                card.classList.add('is-flipped');
-                flippedCards.push({ card, emoji });
+                 card.classList.add('is-flipped');
+                 flippedCards.push({ card, emoji });
 
-                if (flippedCards.length === 2) {
-                    canFlip = false;
-                    memoryMoves++;
-                    memoryStatus.textContent = `Moves: ${memoryMoves}`;
-                    checkForMemoryMatch();
-                }
+                 if (flippedCards.length === 2) {
+                     canFlip = false;
+                     memoryMoves++;
+                     memoryStatus.textContent = `Moves: ${memoryMoves}`;
+                     checkForMemoryMatch();
+                 }
             };
 
             const checkForMemoryMatch = () => {
-                const [first, second] = flippedCards;
-                if (first.emoji === second.emoji) {
-                    disableMemoryCards(first.card, second.card);
-                } else {
-                    unflipMemoryCards(first.card, second.card);
-                }
+                 const [first, second] = flippedCards;
+                 if (first.emoji === second.emoji) {
+                     disableMemoryCards(first.card, second.card);
+                 } else {
+                     unflipMemoryCards(first.card, second.card);
+                 }
             };
 
             const disableMemoryCards = (cardOne, cardTwo) => {
-                cardOne.classList.add('is-matched');
-                cardTwo.classList.add('is-matched');
-                matchedPairs++;
-                flippedCards = [];
-                canFlip = true;
+                 cardOne.classList.add('is-matched');
+                 cardTwo.classList.add('is-matched');
+                 matchedPairs++;
+                 flippedCards = [];
+                 canFlip = true;
 
-                if (matchedPairs === memoryDifficultySettings[currentMemoryDifficulty].pairs) {
-                    setTimeout(() => {
-                        memoryStatus.textContent = `You won in ${memoryMoves} moves! 🎉`;
-                    }, 500);
-                }
+                 if (matchedPairs === memoryDifficultySettings[currentMemoryDifficulty].pairs) {
+                     setTimeout(() => {
+                         memoryStatus.textContent = `You won in ${memoryMoves} moves! 🎉`;
+                     }, 500);
+                 }
             };
 
             const unflipMemoryCards = (cardOne, cardTwo) => {
-                setTimeout(() => {
-                    cardOne.classList.remove('is-flipped');
-                    cardTwo.classList.remove('is-flipped');
-                    flippedCards = [];
-                    canFlip = true;
-                }, 1000);
+                 setTimeout(() => {
+                     cardOne.classList.remove('is-flipped');
+                     cardTwo.classList.remove('is-flipped');
+                     flippedCards = [];
+                     canFlip = true;
+                 }, 1000);
             };
 
             const initializeMemoryGame = () => {
-                memoryResetBtn.addEventListener('click', startMemoryGame);
+                 memoryResetBtn.addEventListener('click', startMemoryGame);
 
-                memoryDifficultySelect.addEventListener('click', (e) => {
-                    const btn = e.target.closest('button');
-                    if (!btn || !btn.dataset.difficulty) return;
+                 memoryDifficultySelect.addEventListener('click', (e) => {
+                     const btn = e.target.closest('button');
+                     if (!btn || !btn.dataset.difficulty) return;
 
-                    currentMemoryDifficulty = btn.dataset.difficulty;
+                     currentMemoryDifficulty = btn.dataset.difficulty;
 
-                    // Update button styles
-                    memoryDifficultySelect.querySelectorAll('button').forEach(b => {
-                        b.classList.remove('btn-primary');
-                        b.classList.add('btn-neutral');
-                    });
-                    btn.classList.add('btn-primary');
-                    btn.classList.remove('btn-neutral');
+                     // Update button styles
+                     memoryDifficultySelect.querySelectorAll('button').forEach(b => {
+                         b.classList.remove('btn-primary');
+                         b.classList.add('btn-neutral');
+                     });
+                     btn.classList.add('btn-primary');
+                     btn.classList.remove('btn-neutral');
 
-                    startMemoryGame();
-                });
+                     startMemoryGame();
+                 });
 
-                startMemoryGame();
+                 startMemoryGame();
             };
 
             // --- Game Logic (Snake) --- //
@@ -2024,77 +2016,77 @@
             // isSnakeGameActive and snakeGameLoop declared globally
 
             const resetSnakeGame = () => {
-                snake = [{ x: 10, y: 10 }]; // Start in middle
-                food = getRandomFoodPos();
-                score = 0;
-                direction = 'right';
-                gameSpeed = 150; // ms per frame
-                snakeStatus.textContent = `Score: 0`;
-                if (snakeGameLoop) clearInterval(snakeGameLoop);
-                snakeGameLoop = null; // Ensure it's null after clearing
-                 isSnakeGameActive = false; // Ensure it's false on reset
+                 snake = [{ x: 10, y: 10 }]; // Start in middle
+                 food = getRandomFoodPos();
+                 score = 0;
+                 direction = 'right';
+                 gameSpeed = 150; // ms per frame
+                 snakeStatus.textContent = `Score: 0`;
+                 if (snakeGameLoop) clearInterval(snakeGameLoop);
+                 snakeGameLoop = null; // Ensure it's null after clearing
+                isSnakeGameActive = false; // Ensure it's false on reset
             };
 
             const startSnakeGame = () => {
-                if (isSnakeGameActive && snakeGameLoop) return; // Don't start if already running
-                resetSnakeGame();
-                isSnakeGameActive = true;
-                document.addEventListener('keydown', handleSnakeKeyInput); // Add listener on start
-                snakeGameLoop = setInterval(snakeGameLoopFunction, gameSpeed); // Use snakeGameLoopFunction
+                 if (isSnakeGameActive && snakeGameLoop) return; // Don't start if already running
+                 resetSnakeGame();
+                 isSnakeGameActive = true;
+                 document.addEventListener('keydown', handleSnakeKeyInput); // Add listener on start
+                 snakeGameLoop = setInterval(snakeGameLoopFunction, gameSpeed); // Use snakeGameLoopFunction
             };
 
             const stopSnakeGame = () => {
-                isSnakeGameActive = false;
-                if (snakeGameLoop) clearInterval(snakeGameLoop);
-                snakeGameLoop = null;
-                document.removeEventListener('keydown', handleSnakeKeyInput); // Clean up listener
+                 isSnakeGameActive = false;
+                 if (snakeGameLoop) clearInterval(snakeGameLoop);
+                 snakeGameLoop = null;
+                 document.removeEventListener('keydown', handleSnakeKeyInput); // Clean up listener
             };
 
             const getRandomFoodPos = () => {
-                return {
-                    x: Math.floor(Math.random() * (snakeCanvas.width / snakeGridSize)),
-                    y: Math.floor(Math.random() * (snakeCanvas.height / snakeGridSize))
-                };
+                 return {
+                     x: Math.floor(Math.random() * (snakeCanvas.width / snakeGridSize)),
+                     y: Math.floor(Math.random() * (snakeCanvas.height / snakeGridSize))
+                 };
             };
 
             const drawSnake = () => { // Renamed from draw
-                if (!isSnakeGameActive) return;
-                // Clear canvas
-                snakeCtx.fillStyle = body.dataset.theme === 'dark' ? 'rgba(26, 26, 26, 0.7)' : '#fdfdff';
-                snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+                 if (!isSnakeGameActive) return;
+                 // Clear canvas
+                 snakeCtx.fillStyle = body.dataset.theme === 'dark' ? 'rgba(26, 26, 26, 0.7)' : '#fdfdff';
+                 snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
 
-                // Draw food
-                snakeCtx.fillStyle = '#e53e3e'; // Red
-                snakeCtx.fillRect(food.x * snakeGridSize, food.y * snakeGridSize, snakeGridSize, snakeGridSize);
+                 // Draw food
+                 snakeCtx.fillStyle = '#e53e3e'; // Red
+                 snakeCtx.fillRect(food.x * snakeGridSize, food.y * snakeGridSize, snakeGridSize, snakeGridSize);
 
-                // Draw snake
-                snake.forEach((segment, index) => {
-                    snakeCtx.fillStyle = index === 0 ? '#4f46e5' : '#6366f1'; // Head and body
-                    snakeCtx.fillRect(segment.x * snakeGridSize, segment.y * snakeGridSize, snakeGridSize, snakeGridSize);
-                    snakeCtx.strokeStyle = body.dataset.theme === 'dark' ? '#1a1a1a' : '#fff'; // Border
-                    snakeCtx.strokeRect(segment.x * snakeGridSize, segment.y * snakeGridSize, snakeGridSize, snakeGridSize);
-                });
+                 // Draw snake
+                 snake.forEach((segment, index) => {
+                     snakeCtx.fillStyle = index === 0 ? '#4f46e5' : '#6366f1'; // Head and body
+                     snakeCtx.fillRect(segment.x * snakeGridSize, segment.y * snakeGridSize, snakeGridSize, snakeGridSize);
+                     snakeCtx.strokeStyle = body.dataset.theme === 'dark' ? '#1a1a1a' : '#fff'; // Border
+                     snakeCtx.strokeRect(segment.x * snakeGridSize, segment.y * snakeGridSize, snakeGridSize, snakeGridSize);
+                 });
             };
 
             const updateSnake = () => { // Renamed from update
-                if (!isSnakeGameActive) return;
-                const head = { ...snake[0] };
-                switch (direction) {
-                    case 'up': head.y--; break;
-                    case 'down': head.y++; break;
-                    case 'left': head.x--; break;
-                    case 'right': head.x++; break;
-                }
+                 if (!isSnakeGameActive) return;
+                 const head = { ...snake[0] };
+                 switch (direction) {
+                     case 'up': head.y--; break;
+                     case 'down': head.y++; break;
+                     case 'left': head.x--; break;
+                     case 'right': head.x++; break;
+                 }
 
                 // Check for wall collision
-                if (head.x < 0 || head.x >= snakeCanvas.width / snakeGridSize || head.y < 0 || head.y >= snakeCanvas.height / snakeGridSize) {
+                 if (head.x < 0 || head.x >= snakeCanvas.width / snakeGridSize || head.y < 0 || head.y >= snakeCanvas.height / snakeGridSize) {
                     gameOverSnake(); // Renamed
                     return;
                 }
 
 
                 // Check for self-collision
-                for (let i = 1; i < snake.length; i++) {
+                 for (let i = 1; i < snake.length; i++) {
                     if (head.x === snake[i].x && head.y === snake[i].y) {
                         gameOverSnake(); // Renamed
                         return;
@@ -2104,7 +2096,7 @@
                 snake.unshift(head); // Add new head
 
                 // Check for food collision
-                if (head.x === food.x && head.y === food.y) {
+                 if (head.x === food.x && head.y === food.y) {
                     score++;
                     snakeStatus.textContent = `Score: ${score}`;
                     food = getRandomFoodPos();
@@ -2114,17 +2106,17 @@
             };
 
             const gameOverSnake = () => { // Renamed
-                stopSnakeGame(); // Use stop function to clean up interval and listener
-                snakeStatus.textContent = `Game Over! Score: ${score}`;
+                 stopSnakeGame(); // Use stop function to clean up interval and listener
+                 snakeStatus.textContent = `Game Over! Score: ${score}`;
             };
 
             const snakeGameLoopFunction = () => { // Renamed from gameLoop
-                if (!isSnakeGameActive) {
+                 if (!isSnakeGameActive) {
                    // This check is good, but the interval should already be cleared by stopSnakeGame
                    return;
-                }
-                updateSnake();
-                drawSnake();
+                 }
+                 updateSnake();
+                 drawSnake();
             };
 
             const handleSnakeKeyInput = (e) => {
@@ -2151,15 +2143,15 @@
             };
 
             const initializeSnakeGame = () => {
-                snakeResetBtn.addEventListener('click', startSnakeGame);
+                 snakeResetBtn.addEventListener('click', startSnakeGame);
 
                 // On-screen controls
-                getEl('snake-up').addEventListener('click', () => { if(direction !== 'down') direction = 'up'; });
-                getEl('snake-down').addEventListener('click', () => { if(direction !== 'up') direction = 'down'; });
-                getEl('snake-left').addEventListener('click', () => { if(direction !== 'right') direction = 'left'; });
-                getEl('snake-right').addEventListener('click', () => { if(direction !== 'left') direction = 'right'; });
+                 getEl('snake-up').addEventListener('click', () => { if(direction !== 'down') direction = 'up'; });
+                 getEl('snake-down').addEventListener('click', () => { if(direction !== 'up') direction = 'down'; });
+                 getEl('snake-left').addEventListener('click', () => { if(direction !== 'right') direction = 'left'; });
+                 getEl('snake-right').addEventListener('click', () => { if(direction !== 'left') direction = 'right'; });
                  // Ensure game is reset state initially
-                resetSnakeGame();
+                 resetSnakeGame();
             };
 
             // --- Game Logic (Whac-A-Mole) --- //
@@ -2174,111 +2166,111 @@
             let wamHoles = [];
 
             const initializeWamGame = () => {
-                wamBoard.innerHTML = ''; // Clear board
-                wamHoles = [];
-                for (let i = 0; i < 9; i++) {
-                    const hole = document.createElement('div');
-                    hole.classList.add('wam-hole');
-                    const mole = document.createElement('div');
-                    mole.classList.add('wam-mole');
-                    mole.textContent = '😵'; // Add a "dizzy" face to the mole
-                    hole.appendChild(mole);
-                    wamBoard.appendChild(hole);
-                    wamHoles.push(mole);
-                }
+                 wamBoard.innerHTML = ''; // Clear board
+                 wamHoles = [];
+                 for (let i = 0; i < 9; i++) {
+                     const hole = document.createElement('div');
+                     hole.classList.add('wam-hole');
+                     const mole = document.createElement('div');
+                     mole.classList.add('wam-mole');
+                     mole.textContent = '😵'; // Add a "dizzy" face to the mole
+                     hole.appendChild(mole);
+                     wamBoard.appendChild(hole);
+                     wamHoles.push(mole);
+                 }
 
-                wamStartBtn.addEventListener('click', startWamGame);
-                wamBoard.addEventListener('click', whackMole);
+                 wamStartBtn.addEventListener('click', startWamGame);
+                 wamBoard.addEventListener('click', whackMole);
                  // Reset display on init
-                wamStatus.textContent = '0';
-                wamTimer.textContent = 'Time: 30s';
-                wamStartBtn.disabled = false;
-                wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game';
-                lucide.createIcons();
+                 wamStatus.textContent = '0';
+                 wamTimer.textContent = 'Time: 30s';
+                 wamStartBtn.disabled = false;
+                 wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                 wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game';
+                 lucide.createIcons();
             };
 
             const startWamGame = () => {
-                if (wamGameActive) return;
+                 if (wamGameActive) return;
 
-                wamScore = 0;
-                wamTimeLeft = 30;
-                wamGameActive = true;
-                wamStatus.textContent = wamScore;
-                wamTimer.textContent = `Time: ${wamTimeLeft}s`;
-                wamStartBtn.disabled = true;
-                wamStartBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                wamStartBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Playing...';
-                lucide.createIcons();
+                 wamScore = 0;
+                 wamTimeLeft = 30;
+                 wamGameActive = true;
+                 wamStatus.textContent = wamScore;
+                 wamTimer.textContent = `Time: ${wamTimeLeft}s`;
+                 wamStartBtn.disabled = true;
+                 wamStartBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                 wamStartBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Playing...';
+                 lucide.createIcons();
 
 
-                // Game timer
-                wamGameTimer = setInterval(() => {
-                    wamTimeLeft--;
-                    wamTimer.textContent = `Time: ${wamTimeLeft}s`;
-                    if (wamTimeLeft <= 0) {
-                        stopWamGame();
-                    }
-                }, 1000);
+                 // Game timer
+                 wamGameTimer = setInterval(() => {
+                     wamTimeLeft--;
+                     wamTimer.textContent = `Time: ${wamTimeLeft}s`;
+                     if (wamTimeLeft <= 0) {
+                         stopWamGame();
+                     }
+                 }, 1000);
 
-                // Mole popping
-                popMole();
+                 // Mole popping
+                 popMole();
             };
 
             const stopWamGame = () => {
-                wamGameActive = false;
-                if (wamGameTimer) clearInterval(wamGameTimer);
-                if (wamMoleTimer) clearTimeout(wamMoleTimer);
-                wamGameTimer = null;
-                wamMoleTimer = null;
-                wamTimer.textContent = `Game Over! Final Score: ${wamScore}`;
-                wamStartBtn.disabled = false;
-                wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game';
-                lucide.createIcons();
+                 wamGameActive = false;
+                 if (wamGameTimer) clearInterval(wamGameTimer);
+                 if (wamMoleTimer) clearTimeout(wamMoleTimer);
+                 wamGameTimer = null;
+                 wamMoleTimer = null;
+                 wamTimer.textContent = `Game Over! Final Score: ${wamScore}`;
+                 wamStartBtn.disabled = false;
+                 wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                 wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game';
+                 lucide.createIcons();
 
-                // Hide any visible mole
-                wamHoles.forEach(mole => mole.classList.remove('up'));
+                 // Hide any visible mole
+                 wamHoles.forEach(mole => mole.classList.remove('up'));
             };
 
             const popMole = () => {
-                if (!wamGameActive) return;
+                 if (!wamGameActive) return;
 
-                // Clear previous timeout and hide moles
-                // clearTimeout(wamMoleTimer); // Don't clear here, allow multiple moles potentially
-                wamHoles.forEach(mole => mole.classList.remove('up'));
+                 // Clear previous timeout and hide moles
+                 // clearTimeout(wamMoleTimer); // Don't clear here, allow multiple moles potentially
+                 wamHoles.forEach(mole => mole.classList.remove('up'));
 
-                const randomHole = wamHoles[Math.floor(Math.random() * wamHoles.length)];
-                randomHole.classList.add('up');
+                 const randomHole = wamHoles[Math.floor(Math.random() * wamHoles.length)];
+                 randomHole.classList.add('up');
 
-                // Mole stays up for a random time
-                const upTime = Math.random() * (1000 - 400) + 400; // Time mole stays *up*
-                setTimeout(() => {
-                    if(wamGameActive) randomHole.classList.remove('up');
-                }, upTime);
+                 // Mole stays up for a random time
+                 const upTime = Math.random() * (1000 - 400) + 400; // Time mole stays *up*
+                 setTimeout(() => {
+                     if(wamGameActive) randomHole.classList.remove('up');
+                 }, upTime);
 
-                // Time until *next* mole pops up
-                const nextPopTime = Math.random() * (1000 - 300) + 300;
-                wamMoleTimer = setTimeout(() => {
-                    if (wamGameActive) popMole(); // Pop another one after a delay
-                }, nextPopTime);
+                 // Time until *next* mole pops up
+                 const nextPopTime = Math.random() * (1000 - 300) + 300;
+                 wamMoleTimer = setTimeout(() => {
+                     if (wamGameActive) popMole(); // Pop another one after a delay
+                 }, nextPopTime);
             };
 
 
             const whackMole = (e) => {
-                if (!wamGameActive) return;
+                 if (!wamGameActive) return;
 
                  // Target the hole, then check if the mole inside is 'up'
-                const hole = e.target.closest('.wam-hole');
-                if (!hole) return;
-                const mole = hole.querySelector('.wam-mole');
+                 const hole = e.target.closest('.wam-hole');
+                 if (!hole) return;
+                 const mole = hole.querySelector('.wam-mole');
 
-                if (mole && mole.classList.contains('up')) {
-                    wamScore++;
-                    wamStatus.textContent = wamScore;
-                    mole.classList.remove('up'); // Immediately hide the whacked mole
-                    // Don't clear wamMoleTimer here, let the next one pop naturally
-                }
+                 if (mole && mole.classList.contains('up')) {
+                     wamScore++;
+                     wamStatus.textContent = wamScore;
+                     mole.classList.remove('up'); // Immediately hide the whacked mole
+                     // Don't clear wamMoleTimer here, let the next one pop naturally
+                 }
             };
 
 
@@ -2448,6 +2440,8 @@
             const BONUS_BRICK_COUNT = 3; // How many bonus bricks to add
             const BONUS_POINTS = 5; // Points for hitting a bonus brick
             const NORMAL_POINTS = 1; // Points for hitting a normal brick
+            let lives = 3; // Add lives variable
+            let breakoutScore = 0; // Add score variable
 
 
             function initializeBricks() {
@@ -2479,7 +2473,7 @@
                          bonusBricksPlaced++;
                      }
                  }
-            }
+             }
 
 
             function resetBreakoutGame() {
@@ -2500,6 +2494,12 @@
                  isMovingRight = false;
                  if (paddleMoveInterval) clearInterval(paddleMoveInterval);
                  paddleMoveInterval = null;
+                 // Clear canvas on reset
+                 breakoutCtx.clearRect(0, 0, breakoutCanvas.width, breakoutCanvas.height);
+                 // Draw initial state after reset if needed (e.g., paddle, bricks)
+                 drawPaddle();
+                 drawBricks();
+
             }
 
              function startBreakoutGame() {
@@ -2543,6 +2543,9 @@
                  breakoutCanvas.removeEventListener('mousemove', handleBreakoutMouseMove);
                  breakoutCanvas.removeEventListener('touchmove', handleBreakoutTouchMove);
                  breakoutCanvas.removeEventListener('touchstart', handleBreakoutTouchMove);
+
+                 // Remove listeners from buttons (optional but good practice)
+                 // You might need to store bound functions to remove them correctly if needed elsewhere
             }
 
             function movePaddleWithButtons() {
@@ -2689,30 +2692,30 @@
             }
 
             function handleBreakoutMouseMove(e) {
-                 // No need for active check, listener removed when inactive
-                 let relativeX = e.clientX - breakoutCanvas.getBoundingClientRect().left;
-                 if (relativeX > paddleWidth / 2 && relativeX < breakoutCanvas.width - paddleWidth / 2) {
-                     paddleX = relativeX - paddleWidth / 2;
-                 } else if (relativeX <= paddleWidth / 2) {
-                     paddleX = 0; // Prevent moving off left edge
-                 } else {
-                     paddleX = breakoutCanvas.width - paddleWidth; // Prevent moving off right edge
-                 }
+                // No need for active check, listener removed when inactive
+                let relativeX = e.clientX - breakoutCanvas.getBoundingClientRect().left;
+                if (relativeX > paddleWidth / 2 && relativeX < breakoutCanvas.width - paddleWidth / 2) {
+                    paddleX = relativeX - paddleWidth / 2;
+                } else if (relativeX <= paddleWidth / 2) {
+                    paddleX = 0; // Prevent moving off left edge
+                } else {
+                    paddleX = breakoutCanvas.width - paddleWidth; // Prevent moving off right edge
+                }
             }
 
             function handleBreakoutTouchMove(e) {
-                 // No need for active check, listener removed when inactive
-                 e.preventDefault(); // Prevent scrolling
-                 // Use changedTouches for better reliability, especially with multi-touch possibilities
-                 let touch = e.changedTouches[0];
-                 let relativeX = touch.clientX - breakoutCanvas.getBoundingClientRect().left;
-                 if (relativeX > paddleWidth / 2 && relativeX < breakoutCanvas.width - paddleWidth / 2) {
-                     paddleX = relativeX - paddleWidth / 2;
-                 } else if (relativeX <= paddleWidth / 2) {
-                     paddleX = 0;
-                 } else {
-                     paddleX = breakoutCanvas.width - paddleWidth;
-                 }
+                // No need for active check, listener removed when inactive
+                e.preventDefault(); // Prevent scrolling
+                // Use changedTouches for better reliability, especially with multi-touch possibilities
+                let touch = e.changedTouches[0];
+                let relativeX = touch.clientX - breakoutCanvas.getBoundingClientRect().left;
+                if (relativeX > paddleWidth / 2 && relativeX < breakoutCanvas.width - paddleWidth / 2) {
+                    paddleX = relativeX - paddleWidth / 2;
+                } else if (relativeX <= paddleWidth / 2) {
+                    paddleX = 0;
+                } else {
+                    paddleX = breakoutCanvas.width - paddleWidth;
+                }
             }
 
 
