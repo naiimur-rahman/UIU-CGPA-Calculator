@@ -737,7 +737,7 @@
                     </div>
                 </div>
                 <div class="form-section">
-                    <h2 class="text-xl font-bold text-primary-color mb-4">Target CT Calculator</h2>
+                    <h2 class="text-xl font-bold text-primary-color mb-4">CT Marks</h2>
                     <div id="ct-scores-container" class="space-y-2"></div>
                     <button id="add-ct-score-btn" class="w-full btn btn-neutral mt-4"><i data-lucide="plus" class="w-5 h-5"></i>Add CT Score</button>
                     <div id="target-ct-result" class="mt-4 text-center hidden">
@@ -1004,7 +1004,7 @@
                 const ctInputContainer = document.createElement('div');
                 ctInputContainer.className = 'flex items-center gap-2';
                 ctInputContainer.innerHTML = `
-                    <label for="ct-score-${newIndex}" class="block text-sm font-medium text-tertiary-color">CT ${newIndex + 1} (out of 20)</label>
+                    <label for="ct-score-${newIndex}" class="block text-sm font-medium text-tertiary-color">CT ${newIndex + 1} (20)</label>
                     <input type="number" id="ct-score-${newIndex}" step="0.1" min="0" max="20" class="w-full form-input ct-score-input" placeholder="e.g., 18">
                      <button class="remove-ct-btn text-red-400 hover:text-red-600 p-2 rounded-full transition-colors"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
                 `;
@@ -1027,7 +1027,7 @@
                     // Re-label inputs
                     const remainingInputs = ctScoresContainer.querySelectorAll('.flex');
                     remainingInputs.forEach((container, index) => {
-                         container.querySelector('label').textContent = `CT ${index + 1} (out of 20)`;
+                         container.querySelector('label').textContent = `CT ${index + 1} (20)`;
                          container.querySelector('label').setAttribute('for', `ct-score-${index}`);
                          container.querySelector('input').setAttribute('id', `ct-score-${index}`);
                     });
@@ -1615,4 +1615,3 @@
     </script>
 </body>
 </html>
-
