@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UIU CGPA Calculator (Renovated)</title>
+    <title>UIU CGPA Calculator & Relax Zone</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,15 +29,13 @@
             --footer-text: #718096;
             --theme-toggle-bg: #e2e8f0;
             --theme-toggle-icon: #f6ad55;
-            
-            /* --- Added from Games --- */
             --btn-neutral-bg: #f3f4f6;
             --btn-neutral-text: #374151;
             --btn-neutral-hover: #e5e7eb;
             --notification-success-bg: #22c55e;
             --notification-error-bg: #ef4444;
             --notification-info-bg: #3b82f6;
-            --notification-warning-bg: #f59e0b; /* Added yellow warning color */
+            --notification-warning-bg: #f59e0b;
         }
 
         body[data-theme="dark"] {
@@ -59,16 +57,14 @@
             --footer-text: #a0aec0;
             --theme-toggle-bg: #2d3748;
             --theme-toggle-icon: #4299e1;
-
-            /* --- Added from Games --- */
             --btn-neutral-bg: #374151;
             --btn-neutral-text: #e5e7eb;
             --btn-neutral-hover: #4b5563;
             --notification-success-bg: #16a34a;
             --notification-error-bg: #dc2626;
-            --notification-info-bg: #2563eb; /* Darker blue for info */
-            --notification-warning-bg: #d97706; /* Added darker yellow warning color for dark mode */
-        } /* Added missing closing brace */
+            --notification-info-bg: #2563eb;
+            --notification-warning-bg: #d97706;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -86,7 +82,7 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 1.5rem; 
+            padding: 1.5rem;
             box-shadow: var(--card-shadow);
             position: relative;
             transition: background-color 0.3s, border-color 0.3s;
@@ -115,10 +111,10 @@
             appearance: none;
         }
         .form-select {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='w-5 h-5'%3e%3cpath fill-rule='evenodd' d='M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z' clip-rule='evenodd' /%3e%3c/svg%3e");
             background-position: right 0.5rem center;
             background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
+            background-size: 1.25em 1.25em;
             padding-right: 2.5rem;
         }
         .form-input:focus, .form-select:focus {
@@ -126,6 +122,15 @@
             border-color: #4f46e5;
             box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.4);
         }
+        
+        /* Hide arrows from number inputs */
+        .form-input[type=number] { -moz-appearance: textfield; }
+        .form-input[type=number]::-webkit-outer-spin-button,
+        .form-input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
         .btn {
             border-radius: 12px;
             font-weight: 600;
@@ -136,7 +141,7 @@
             justify-content: center;
             gap: 8px;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-            -webkit-tap-highlight-color: transparent; /* Prevent tap highlight on buttons */
+            -webkit-tap-highlight-color: transparent;
         }
         .btn:hover {
             transform: translateY(-2px);
@@ -146,42 +151,20 @@
             transform: translateY(0px);
             box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
         }
-        .btn-primary {
-            background-color: #4f46e5; color: white;
-        }
-        .btn-primary:hover {
-            background-color: #4338ca;
-        }
-        .btn-secondary {
-            background-color: #10b981; color: white;
-        }
-        .btn-secondary:hover {
-            background-color: #059669;
-        }
-        .btn-danger {
-            background-color: #e53e3e; color: white;
-        }
-        .btn-danger:hover {
-            background-color: #c53030;
-        }
+        .btn-primary { background-color: #4f46e5; color: white; }
+        .btn-primary:hover { background-color: #4338ca; }
+        .btn-secondary { background-color: #10b981; color: white; }
+        .btn-secondary:hover { background-color: #059669; }
+        .btn-danger { background-color: #e53e3e; color: white; }
+        .btn-danger:hover { background-color: #c53030; }
+        .btn-neutral { background-color: var(--btn-neutral-bg); color: var(--btn-neutral-text); }
+        .btn-neutral:hover { background-color: var(--btn-neutral-hover); }
         .btn-main-calc {
             background-image: linear-gradient(to right, #4f46e5, #6366f1);
             color: white; padding: 16px; font-size: 1.125rem;
         }
-        
-        /* --- From Games --- */
-        .btn-neutral {
-            background-color: var(--btn-neutral-bg);
-            color: var(--btn-neutral-text);
-        }
-        .btn-neutral:hover {
-            background-color: var(--btn-neutral-hover);
-        }
-        /* --- End From Games --- */
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out forwards;
-        }
+
+        .fade-in { animation: fadeIn 0.5s ease-in-out forwards; }
         .fade-in-up {
             animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
             animation-delay: var(--stagger-delay, 0ms);
@@ -192,15 +175,14 @@
             from { opacity: 0; transform: translateY(20px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
+
         .result-card { display: none; }
-        
         .text-primary-color { color: var(--text-primary); }
         .text-secondary-color { color: var(--text-secondary); }
         .text-tertiary-color { color: var(--text-tertiary); }
         .course-list-placeholder-bg { background-color: var(--placeholder-bg); }
         .course-item-bg { background-color: var(--course-item-bg); }
-        
-        /* Result Card Themes */
+
         .result-good { background: linear-gradient(to bottom right, #f0fdfa, #ccfbf1); border-color: #5eead4; }
         .result-mid { background: linear-gradient(to bottom right, #fffbeb, #fef3c7); border-color: #fcd34d; }
         .result-low { background: linear-gradient(to bottom right, #fef2f2, #fee2e2); border-color: #fca5a5; }
@@ -215,9 +197,8 @@
         body[data-theme="dark"] .planner-mid { background-color: rgba(70, 50, 20, 0.5); border-color: rgba(150, 110, 40, 0.3); }
         body[data-theme="dark"] .planner-low { background-color: rgba(70, 20, 20, 0.5); border-color: rgba(150, 40, 40, 0.3); }
 
-        /* --- Merged Notification Snackbar Styles --- */
         #notification-container {
-            position: fixed; top: 1.25rem; right: 1.25rem; z-index: 150; /* Ensure notifications are on top */
+            position: fixed; top: 1.25rem; right: 1.25rem; z-index: 150;
         }
         .notification {
             color: white; padding: 1rem 1.5rem;
@@ -227,12 +208,10 @@
         }
         .notification.success { background-color: var(--notification-success-bg); }
         .notification.error { background-color: var(--notification-error-bg); }
-        .notification.info { background-color: var(--notification-info-bg); } /* Info style */
-        .notification.warning { background-color: var(--notification-warning-bg); } /* Added warning style */
+        .notification.info { background-color: var(--notification-info-bg); }
+        .notification.warning { background-color: var(--notification-warning-bg); }
         .notification.show { transform: translateX(0); }
-        /* --- End Merged Notification Styles --- */
-
-        /* Theme Toggle */
+        
         .theme-toggle {
             width: 50px; height: 26px; border-radius: 13px;
             background: var(--theme-toggle-bg);
@@ -251,413 +230,44 @@
             display: grid;
             place-items: center;
         }
-        #theme-toggle-checkbox:checked + .theme-toggle::before,
-        #theme-toggle-checkbox-modal:checked + .theme-toggle::before { /* Added modal toggle */
+        #theme-toggle-checkbox:checked + .theme-toggle::before {
             transform: translateX(24px);
         }
-        
-        /* For confetti */
+
         .confetti-piece {
-            position: absolute;
-            width: 8px;
-            height: 16px;
-            background: #ffd300;
-            top: 0;
-            opacity: 0;
+            position: absolute; width: 8px; height: 16px;
+            background: #ffd300; top: 0; opacity: 0;
         }
 
-        /* --- Game Styles --- */
-        .game-container {
-            display: none; /* Hidden by default */
-        }
-        .game-container.active {
-            display: block; /* Shown when active */
-        }
-         .game-status {
-            color: var(--text-primary);
-            font-size: 1.25rem; /* 20px */
-            font-weight: 600;
-            min-height: 1.5em; /* Prevent layout shift */
-        }
-
-        /* --- Tic-Tac-Toe --- */
-        #tic-tac-toe-board {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            width: 100%;
-            max-width: 300px; /* Max width */
-            aspect-ratio: 1 / 1; /* Make it square */
-            margin: 20px auto;
-            border: 2px solid var(--input-border);
+        .course-item-container {
+            border: 1px solid var(--card-border);
             border-radius: 12px;
-            overflow: hidden;
-        }
-        .ttt-cell {
+            background-color: var(--course-item-bg);
+            padding: 1rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--text-primary);
-            cursor: pointer;
-            border-right: 2px solid var(--input-border);
-            border-bottom: 2px solid var(--input-border);
-            transition: background-color 0.2s;
-            line-height: 1;
-            padding: 0;
-            height: 100%; /* Ensure cell takes full height */
-            min-height: 60px; /* Minimum height for smaller screens */
-        }
-        .ttt-cell > span {
-            visibility: hidden; /* Hide placeholder text */
-        }
-        .ttt-cell.occupied > span {
-            visibility: visible; /* Show X or O */
-        }
-
-        @media (max-width: 360px) {
-             .ttt-cell {
-                font-size: 2rem; /* Smaller font on very small screens */
-             }
-        }
-        .ttt-cell:nth-child(3n) { border-right: none; }
-        .ttt-cell:nth-child(n+7) { border-bottom: none; }
-        .ttt-cell:hover:not(.occupied):not(.disabled) { /* Don't highlight when disabled (bot turn) */
-            background-color: var(--form-bg);
-        }
-        .ttt-cell.disabled { /* Style for disabled cells (bot turn) */
-            cursor: not-allowed;
-        }
-        .ttt-cell.X > span { color: #4f46e5; }
-        .ttt-cell.O > span { color: #10b981; }
-
-
-        /* --- Memory Match Game --- */
-        #memory-difficulty-select {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem; /* 8px */
-            margin-bottom: 1rem; /* 16px */
-            flex-wrap: wrap;
-        }
-        .btn-sm {
-            padding: 0.5rem 1rem; /* 8px 16px */
-            font-size: 0.875rem; /* 14px */
-        }
-        #memory-board {
-            display: grid;
-            gap: 10px;
-            width: 100%;
-            max-width: 400px;
-            margin: 20px auto;
-            perspective: 1000px; /* For 3D flip */
-        }
-        .memory-card {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
-            cursor: pointer;
-        }
-        .memory-card.is-flipped {
-            transform: rotateY(180deg);
-        }
-        .memory-card-face {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            border: 1px solid var(--input-border);
-        }
-        .memory-card-front {
-            background-color: var(--form-bg);
-            font-size: 2rem;
-            transform: rotateY(180deg);
-        }
-        /* Responsive font size for memory emojis */
-        @media (max-width: 400px) {
-            .memory-card-front {
-                font-size: 1.5rem;
-            }
-        }
-        .memory-card-back {
-            background-color: var(--form-bg); /* Use neutral form background */
-            color: var(--text-primary); /* Use primary text color */
-        }
-        .memory-card-back i { /* Style the icon */
-             color: var(--text-primary); /* Use primary text color */
-             width: 60%;
-             height: 60%;
-        }
-        .memory-card.is-matched {
-            opacity: 0.5;
-            cursor: default;
-        }
-
-        /* --- Snake Game --- */
-        #snake-game-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-        #snake-canvas {
-            background-color: var(--form-bg);
-            border: 2px solid var(--input-border);
-            border-radius: 8px;
-            width: 100%;
-            max-width: 400px;
-            aspect-ratio: 1 / 1;
-        }
-        #snake-controls {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(60px, 80px)); /* Flexible button size */
-            grid-template-rows: repeat(2, minmax(60px, 80px));
-            gap: 0.5rem;
-            justify-content: center;
-        }
-        .snake-control-btn {
-            background-color: var(--btn-neutral-bg);
-            color: var(--btn-neutral-text);
-            border-radius: 50%;
-            font-size: 2rem;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-            transition: all 0.2s;
-            display: flex; /* Center icon */
-            align-items: center;
-            justify-content: center;
-        }
-        .snake-control-btn:hover {
-            background-color: var(--btn-neutral-hover);
-            transform: translateY(-2px);
-        }
-        #snake-up { grid-column: 2 / 3; grid-row: 1 / 2; }
-        #snake-left { grid-column: 1 / 2; grid-row: 2 / 3; }
-        #snake-right { grid-column: 3 / 4; grid-row: 2 / 3; }
-        #snake-down { grid-column: 2 / 3; grid-row: 2 / 3; }
-
-        @media (min-width: 640px) {
-            #snake-controls {
-                display: none; /* Hide on-screen controls on desktop */
-            }
-        }
-
-        /* --- Whac-A-Mole --- */
-        #wam-board {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem; /* 16px */
-            width: 100%;
-            max-width: 300px;
-            margin: 20px auto;
-        }
-        .wam-hole {
-            width: 100%;
-            aspect-ratio: 1 / 1;
-            background-color: var(--input-border);
-            border-radius: 50%;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            border: 5px solid var(--form-bg);
-            box-shadow: inset 0 5px 10px rgba(0,0,0,0.2);
-        }
-        .wam-mole {
-            width: 70%;
-            height: 70%;
-            background-color: #8D6E63; /* Mole color */
-            border-radius: 50%;
-            position: absolute;
-            bottom: -100%;
-            left: 15%;
-            transition: bottom 0.2s ease-in-out;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-        }
-        @media (max-width: 400px) {
-            .wam-mole {
-                font-size: 1.5rem;
-            }
-        }
-        .wam-mole.up {
-            bottom: 15%;
-        }
-        .wam-hole:active {
-            transform: scale(0.95);
-        }
-
-        /* --- Word Guess Game --- */
-        #wg-word-display {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin: 1.5rem 0;
-            flex-wrap: wrap;
-        }
-        .wg-letter {
-            font-size: 2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            width: 40px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 3px solid var(--input-border);
-            line-height: 1;
-        }
-        #wg-input-area {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
-        }
-        #wg-letter-input {
-            width: 60px;
-            font-size: 1.5rem;
-            text-align: center;
-            text-transform: uppercase;
-        }
-        #wg-guessed-letters {
-            min-height: 2em;
-            color: var(--text-secondary);
-            margin-top: 1rem;
-        }
-
-        /* --- Breakout Game --- */
-        #breakout-game-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-        #breakout-canvas {
-            background-color: var(--form-bg);
-            border: 2px solid var(--input-border);
-            border-radius: 8px;
-            width: 100%;
-            max-width: 480px; /* Standard breakout width */
-            /* aspect-ratio: 4 / 3; /* Common aspect ratio, adjust as needed */
-            height: 400px; /* Fixed height for consistency */
-            cursor: none; /* Hide cursor over canvas */
-            touch-action: none; /* Prevent default touch actions like scroll */
-        }
-        #breakout-status {
-            display: flex;
             justify-content: space-between;
-            width: 100%;
-            max-width: 480px;
-            padding: 0 0.5rem;
-        }
-        #breakout-controls { /* Controls container */
-            display: flex;
-            justify-content: space-between; /* Space out buttons */
-            width: 100%;
-            max-width: 300px; /* Limit width */
-            margin-top: 0.5rem; /* Add some space */
-        }
-        .breakout-control-btn { /* Style for control buttons */
-            background-color: var(--btn-neutral-bg);
-            color: var(--btn-neutral-text);
-            border-radius: 12px;
-            font-size: 1.5rem;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-            transition: all 0.2s;
-            padding: 0.75rem 1.5rem;
-            user-select: none; /* Prevent text selection on hold */
-            -webkit-user-select: none;
-            touch-action: manipulation; /* Improve touch responsiveness */
-            display: flex; /* Center icon */
-            align-items: center;
-            justify-content: center;
-        }
-        .breakout-control-btn:hover {
-            background-color: var(--btn-neutral-hover);
-            transform: translateY(-2px);
-        }
-         .breakout-control-btn:active { /* Style when pressed */
-            transform: translateY(0px);
+            gap: 1rem;
             box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
         }
-        @media (min-width: 640px) { /* Hide mobile controls on desktop */
-            #breakout-controls {
-                display: none;
-            }
+        body[data-theme="dark"] .course-item-container {
+            border-color: rgba(255, 255, 255, 0.1);
         }
-
-
-        /* --- Game Modal Styles --- */
-        #game-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            display: none; /* Hidden by default */
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        .course-item-container.new-course { border-left: 4px solid #3b82f6; }
+        .course-item-container.retake-course { border-left: 4px solid #8b5cf6; }
+        
+        .error-placeholder {
+            min-height: 1.25rem; margin-top: 0.5rem; visibility: hidden; 
         }
-        #game-modal.show {
-            display: flex;
-            opacity: 1;
-        }
-        #game-modal-content {
-            background-color: var(--card-bg);
-            border-radius: 24px;
-            border: 1px solid var(--card-border);
-            padding: 1rem; /* Reduced padding for better fit */
-            width: calc(100% - 2rem); /* Full width minus margins */
-            max-width: 640px;
-            margin: 1rem;
-            max-height: calc(90vh - 2rem); /* Ensure it fits height */
-            overflow-y: auto;
-            position: relative;
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-        @media (min-width: 640px) { /* Restore padding on larger screens */
-             #game-modal-content {
-                padding: 1.5rem;
-             }
-        }
-        #close-game-modal {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background-color: var(--btn-neutral-bg);
-            color: var(--btn-neutral-text);
-            border-radius: 50%;
-            padding: 0.5rem;
-            transition: all 0.2s;
-        }
-        #close-game-modal:hover {
-            background-color: var(--btn-neutral-hover);
-            transform: rotate(90deg);
-        }
+        .error-placeholder.visible { visibility: visible; }
+        
+        /* --- Game Styles --- */
         #open-game-modal {
             position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
+            bottom: 1.5rem; right: 1.5rem;
             z-index: 40;
-            background-color: #4f46e5;
-            color: white;
-            padding: 1rem;
-            border-radius: 50%;
+            background-color: #4f46e5; color: white;
+            padding: 1rem; border-radius: 50%;
             box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4), 0 4px 6px -2px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
@@ -665,6 +275,192 @@
             transform: translateY(-4px) scale(1.05);
             box-shadow: 0 15px 25px -5px rgba(79, 70, 229, 0.5), 0 8px 10px -6px rgba(0,0,0,0.1);
         }
+        
+        #game-modal {
+            position: fixed; inset: 0; z-index: 100;
+            display: none; align-items: center; justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        #game-modal.show { display: flex; opacity: 1; }
+        
+        #game-modal-content {
+            background-color: var(--card-bg);
+            border-radius: 24px;
+            border: 1px solid var(--card-border);
+            padding: 1rem;
+            width: calc(100% - 2rem); max-width: 640px;
+            margin: 1rem; max-height: calc(90vh - 2rem);
+            overflow-y: auto; position: relative;
+            transform: scale(0.95); transition: transform 0.3s ease;
+        }
+        @media (min-width: 640px) {
+             #game-modal-content { padding: 1.5rem; }
+        }
+        #close-game-modal {
+            position: absolute; top: 1rem; right: 1rem;
+            background-color: var(--btn-neutral-bg);
+            color: var(--btn-neutral-text);
+            border-radius: 50%; padding: 0.5rem;
+            transition: all 0.2s;
+        }
+        #close-game-modal:hover {
+            background-color: var(--btn-neutral-hover);
+            transform: rotate(90deg);
+        }
+        
+        .game-container { display: none; }
+        .game-container.active { display: block; }
+        .game-status {
+            color: var(--text-primary);
+            font-size: 1.25rem; font-weight: 600;
+            min-height: 1.5em;
+        }
+        
+        /* --- Tic-Tac-Toe --- */
+        #tic-tac-toe-board {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            width: 100%; max-width: 300px; aspect-ratio: 1 / 1;
+            margin: 20px auto; border: 2px solid var(--input-border);
+            border-radius: 12px; overflow: hidden;
+        }
+        .ttt-cell {
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; font-weight: bold;
+            color: var(--text-primary); cursor: pointer;
+            border-right: 2px solid var(--input-border);
+            border-bottom: 2px solid var(--input-border);
+            transition: background-color 0.2s;
+            line-height: 1; padding: 0;
+            height: 100%; min-height: 60px;
+        }
+        .ttt-cell > span { visibility: hidden; }
+        .ttt-cell.occupied > span { visibility: visible; }
+        @media (max-width: 360px) { .ttt-cell { font-size: 2rem; } }
+        .ttt-cell:nth-child(3n) { border-right: none; }
+        .ttt-cell:nth-child(n+7) { border-bottom: none; }
+        .ttt-cell:hover:not(.occupied):not(.disabled) { background-color: var(--form-bg); }
+        .ttt-cell.disabled { cursor: not-allowed; }
+        .ttt-cell.X > span { color: #4f46e5; }
+        .ttt-cell.O > span { color: #10b981; }
+
+        /* --- Memory Match Game --- */
+        #memory-difficulty-select { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.875rem; }
+        #memory-board {
+            display: grid; gap: 10px;
+            width: 100%; max-width: 400px;
+            margin: 20px auto; perspective: 1000px;
+        }
+        .memory-card {
+            width: 100%; aspect-ratio: 1 / 1; position: relative;
+            transform-style: preserve-3d; transition: transform 0.6s;
+            cursor: pointer;
+        }
+        .memory-card.is-flipped { transform: rotateY(180deg); }
+        .memory-card-face {
+            position: absolute; width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px; border: 1px solid var(--input-border);
+        }
+        .memory-card-front { background-color: var(--form-bg); font-size: 2rem; transform: rotateY(180deg); }
+        @media (max-width: 400px) { .memory-card-front { font-size: 1.5rem; } }
+        .memory-card-back { background-color: var(--form-bg); color: var(--text-primary); }
+        .memory-card-back i { color: var(--text-primary); width: 60%; height: 60%; }
+        .memory-card.is-matched { opacity: 0.5; cursor: default; }
+
+        /* --- Snake Game --- */
+        #snake-game-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        #snake-canvas {
+            background-color: var(--form-bg); border: 2px solid var(--input-border);
+            border-radius: 8px; width: 100%;
+            max-width: 400px; aspect-ratio: 1 / 1;
+        }
+        #snake-controls {
+            display: grid; grid-template-columns: repeat(3, minmax(60px, 80px));
+            grid-template-rows: repeat(2, minmax(60px, 80px));
+            gap: 0.5rem; justify-content: center;
+        }
+        .snake-control-btn {
+            background-color: var(--btn-neutral-bg); color: var(--btn-neutral-text);
+            border-radius: 50%; font-size: 2rem; border: none; cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .snake-control-btn:hover { background-color: var(--btn-neutral-hover); transform: translateY(-2px); }
+        #snake-up { grid-column: 2 / 3; grid-row: 1 / 2; }
+        #snake-left { grid-column: 1 / 2; grid-row: 2 / 3; }
+        #snake-right { grid-column: 3 / 4; grid-row: 2 / 3; }
+        #snake-down { grid-column: 2 / 3; grid-row: 2 / 3; }
+        @media (min-width: 640px) { #snake-controls { display: none; } }
+
+        /* --- Whac-A-Mole --- */
+        #wam-board {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+            width: 100%; max-width: 300px; margin: 20px auto;
+        }
+        .wam-hole {
+            width: 100%; aspect-ratio: 1 / 1;
+            background-color: var(--input-border); border-radius: 50%;
+            overflow: hidden; position: relative; cursor: pointer;
+            border: 5px solid var(--form-bg);
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.2);
+        }
+        .wam-mole {
+            width: 70%; height: 70%; background-color: #8D6E63;
+            border-radius: 50%; position: absolute; bottom: -100%;
+            left: 15%; transition: bottom 0.2s ease-in-out;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem;
+        }
+        @media (max-width: 400px) { .wam-mole { font-size: 1.5rem; } }
+        .wam-mole.up { bottom: 15%; }
+        .wam-hole:active { transform: scale(0.95); }
+
+        /* --- Word Guess Game --- */
+        #wg-word-display {
+            display: flex; gap: 0.5rem; justify-content: center;
+            margin: 1.5rem 0; flex-wrap: wrap;
+        }
+        .wg-letter {
+            font-size: 2rem; font-weight: 600; color: var(--text-primary);
+            width: 40px; height: 50px; display: flex;
+            align-items: center; justify-content: center;
+            border-bottom: 3px solid var(--input-border); line-height: 1;
+        }
+        #wg-input-area { display: flex; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; }
+        #wg-letter-input { width: 60px; font-size: 1.5rem; text-align: center; text-transform: uppercase; }
+        #wg-guessed-letters { min-height: 2em; color: var(--text-secondary); margin-top: 1rem; }
+
+        /* --- Breakout Game --- */
+        #breakout-game-container { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+        #breakout-canvas {
+            background-color: var(--form-bg); border: 2px solid var(--input-border);
+            border-radius: 8px; width: 100%; max-width: 480px;
+            height: 400px; cursor: none; touch-action: none;
+        }
+        #breakout-status {
+            display: flex; justify-content: space-between;
+            width: 100%; max-width: 480px; padding: 0 0.5rem;
+        }
+        #breakout-controls {
+            display: flex; justify-content: space-between;
+            width: 100%; max-width: 300px; margin-top: 0.5rem;
+        }
+        .breakout-control-btn {
+            background-color: var(--btn-neutral-bg); color: var(--btn-neutral-text);
+            border-radius: 12px; font-size: 1.5rem; border: none;
+            cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            transition: all 0.2s; padding: 0.75rem 1.5rem;
+            user-select: none; -webkit-user-select: none;
+            touch-action: manipulation; display: flex;
+            align-items: center; justify-content: center;
+        }
+        .breakout-control-btn:hover { background-color: var(--btn-neutral-hover); transform: translateY(-2px); }
+        .breakout-control-btn:active { transform: translateY(0px); box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); }
+        @media (min-width: 640px) { #breakout-controls { display: none; } }
     </style>
 </head>
 <body class="min-h-screen">
@@ -685,31 +481,35 @@
                 <p class="text-secondary-color font-medium mt-2">Instantly calculate your CGPA and plan your academic future.</p>
             </div>
 
-            <!-- Current Standing Section -->
             <div class="form-section">
                 <h2 class="text-xl font-bold text-primary-color mb-4">Current Academic Standing <span class="text-sm font-normal text-secondary-color">(Optional)</span></h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"> 
                     <div>
                         <label for="current-cgpa" class="block text-sm font-medium text-tertiary-color mb-2">Current CGPA</label>
                         <input type="number" id="current-cgpa" step="0.01" min="0.00" max="4.00" class="w-full form-input" placeholder="e.g., 3.50">
-                        <p id="cgpa-error" class="text-red-500 text-sm mt-2 hidden"></p>
+                        <p id="cgpa-error" class="text-red-500 text-sm error-placeholder"></p>
                     </div>
                     <div>
-                        <!--FIXED: Label changed for clarity-->
-                        <!-- MODIFIED: Label text changed -->
-                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Completed Credit</label>
-                        <input type="number" id="completed-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 90 (Includes F grades)">
+                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Credits Attempted<br>(Incl. F grades)</label>
+                        <input type="number" id="completed-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 90">
+                        <p id="attempted-credits-error" class="error-placeholder text-red-500 text-sm"></p>
+                    </div>
+                    <div>
+                        <label for="completed-earned-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Credits Earned<br>(Before this Tri.)</label>
+                        <input type="number" id="completed-earned-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 85">
+                        <p id="earned-credits-error" class="error-placeholder text-red-500 text-sm"></p>
                     </div>
                 </div>
+                <p id="credits-error" class="text-red-500 text-sm text-center hidden"></p>
             </div>
 
-            <!-- Add New Courses Section -->
             <div class="form-section">
                 <h2 class="text-xl font-bold text-primary-color mb-4">This Trimester's Courses</h2>
                 <form id="add-course-form" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                     <div>
                         <label for="course-credit" class="block text-sm font-medium text-tertiary-color mb-2">Credit Hours</label>
                         <select id="course-credit" class="w-full form-select">
+                            <option value="" selected disabled>Select Credit</option>
                             <option value="3">3 Credits</option>
                             <option value="2">2 Credits</option>
                             <option value="1">1 Credit</option>
@@ -718,6 +518,7 @@
                     <div>
                         <label for="course-grade" class="block text-sm font-medium text-tertiary-color mb-2">Expected Grade</label>
                         <select id="course-grade" class="w-full form-select">
+                            <option value="" selected disabled>Select Grade</option>
                             <option value="4.00">A (4.00)</option>
                             <option value="3.67">A- (3.67)</option>
                             <option value="3.33">B+ (3.33)</option>
@@ -735,13 +536,13 @@
                 </form>
             </div>
 
-            <!-- Add Retake Courses Section -->
             <div class="form-section">
                 <h2 class="text-xl font-bold text-primary-color mb-4">Retake Courses <span class="text-sm font-normal text-secondary-color">(Optional)</span></h2>
                 <form id="add-retake-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                     <div>
                         <label for="retake-credit" class="block text-sm font-medium text-tertiary-color mb-2">Credits</label>
                         <select id="retake-credit" class="w-full form-select">
+                            <option value="" selected disabled>Select Credit</option>
                             <option value="3">3</option>
                             <option value="2">2</option>
                             <option value="1">1</option>
@@ -750,6 +551,7 @@
                     <div>
                         <label for="retake-old-grade" class="block text-sm font-medium text-tertiary-color mb-2">Old Grade</label>
                         <select id="retake-old-grade" class="w-full form-select">
+                            <option value="" selected disabled>Select Old Grade</option>
                             <option value="3.67">A- (3.67)</option>
                             <option value="3.33">B+ (3.33)</option>
                             <option value="3.00">B (3.00)</option>
@@ -759,12 +561,13 @@
                             <option value="1.67">C- (1.67)</option>
                             <option value="1.33">D+ (1.33)</option>
                             <option value="1.00">D (1.00)</option>
-                            <option value="0.00" selected>F (0.00)</option>
+                            <option value="0.00">F (0.00)</option>
                         </select>
                     </div>
                     <div>
                         <label for="retake-new-grade" class="block text-sm font-medium text-tertiary-color mb-2">New Grade</label>
                         <select id="retake-new-grade" class="w-full form-select">
+                            <option value="" selected disabled>Select New Grade</option>
                             <option value="4.00">A (4.00)</option>
                             <option value="3.67">A- (3.67)</option>
                             <option value="3.33">B+ (3.33)</option>
@@ -782,19 +585,15 @@
                 </form>
             </div>
 
-            <!-- Course List -->
             <div id="course-list-container" class="space-y-3 my-8"></div>
 
-            <!-- Action Buttons -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <button id="reset-all" class="w-full btn btn-danger"><i data-lucide="refresh-cw" class="w-6 h-6"></i>Reset All</button>
                 <button id="calculate-cgpa" class="w-full btn btn-main-calc"><i data-lucide="calculator" class="w-6 h-6"></i>Calculate CGPA</button>
             </div>
             <p id="calc-error" class="text-red-500 text-sm mt-2 text-center hidden"></p>
             
-            <!-- Result Section -->
             <div id="result-section" class="mt-8">
-                <!-- Good Standing -->
                 <div id="result-good" class="result-card w-full">
                     <div class="result-good border rounded-xl p-6 text-center">
                         <h3 id="good-standing-title" class="text-2xl font-bold text-green-800 mb-4">Excellent!</h3>
@@ -802,28 +601,29 @@
                             <div class="flex-1 px-4">
                                 <p class="text-green-600 text-lg">New CGPA</p>
                                 <p id="cgpa-good" class="text-4xl sm:text-5xl md:text-6xl font-bold text-green-700 my-2">0.00</p>
-                                <!--FIXED: Label changed for clarity-->
-                                <!-- MODIFIED: Label text changed -->
-                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-credits-good">0</span></p>
+                                <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-good">0</span></p>
+                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-good">0</span></p> 
                             </div>
                             <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-green-200/50">
                                 <p class="text-green-600 text-lg">Trimester GPA</p>
                                 <p id="tgpa-good" class="text-4xl sm:text-5xl md:text-6xl font-bold text-green-700 my-2">0.00</p>
-                                <!-- ADDED: Trimester completed credits -->
-                                <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-credits-good">0</span></p> 
+                                <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-good">0</span></p> 
+                                <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-good">0</span></p>
                             </div>
                         </div>
                     </div>
                      <div class="mt-6 w-full planner-good p-4 rounded-lg border">
                         <h4 class="text-lg font-semibold text-primary-color text-center">Target CGPA Planner</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-start">
                             <div>
                                 <label for="target-cgpa-good" class="block text-sm font-medium text-tertiary-color mb-1">Target CGPA</label>
                                 <input type="number" id="target-cgpa-good" step="0.01" min="0.00" max="4.00" class="w-full form-input" placeholder="e.g., 3.75">
+                                <p id="target-cgpa-good-error" class="text-red-500 text-sm error-placeholder"></p>
                             </div>
                             <div>
                                 <label for="target-credits-good" class="block text-sm font-medium text-tertiary-color mb-1">Next Trimester Credits</label>
-                                <input type="number" id="target-credits-good" min="6" step="0.5" class="w-full form-input" placeholder="e.g., 9">
+                                <input type="number" id="target-credits-good" min="0" step="0.5" class="w-full form-input" placeholder="e.g., 9">
+                                <p id="target-credits-good-error" class="text-red-500 text-sm error-placeholder"></p>
                             </div>
                         </div>
                         <div id="target-result-good" class="mt-4 text-center hidden">
@@ -833,7 +633,6 @@
                     </div>
                 </div>
 
-                <!-- Mid Standing -->
                 <div id="result-mid" class="result-card w-full">
                     <div class="result-mid border rounded-xl p-6 text-center">
                         <h3 id="mid-standing-title" class="text-2xl font-bold text-orange-800 mb-4">Keep Pushing!</h3>
@@ -841,28 +640,29 @@
                             <div class="flex-1 px-4">
                                 <p class="text-orange-600 text-lg">New CGPA</p>
                                 <p id="cgpa-mid" class="text-4xl sm:text-5xl md:text-6xl font-bold text-orange-700 my-2">0.00</p>
-                                <!--FIXED: Label changed for clarity-->
-                                <!-- MODIFIED: Label text changed -->
-                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-credits-mid">0</span></p>
+                                <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-mid">0</span></p>
+                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-mid">0</span></p>
                             </div>
                             <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-orange-200/50">
                                 <p class="text-orange-600 text-lg">Trimester GPA</p>
                                 <p id="tgpa-mid" class="text-4xl sm:text-5xl md:text-6xl font-bold text-orange-700 my-2">0.00</p>
-                                <!-- ADDED: Trimester completed credits -->
-                                <p class="text-sm text-secondary-color">This Trimester Completed Credit: <span id="trimester-credits-mid">0</span></p> 
+                                <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-mid">0</span></p>
+                                <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-mid">0</span></p>
                             </div>
                         </div>
                     </div>
                     <div class="mt-6 w-full planner-mid p-4 rounded-lg border">
                         <h4 class="text-lg font-semibold text-primary-color text-center">Target CGPA Planner</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-start">
                             <div>
                                 <label for="target-cgpa-mid" class="block text-sm font-medium text-tertiary-color mb-1">Target CGPA</label>
                                 <input type="number" id="target-cgpa-mid" step="0.01" min="0.00" max="4.00" class="w-full form-input" placeholder="e.g., 3.00">
+                                <p id="target-cgpa-mid-error" class="text-red-500 text-sm error-placeholder"></p>
                             </div>
                             <div>
                                 <label for="target-credits-mid" class="block text-sm font-medium text-tertiary-color mb-1">Next Trimester Credits</label>
-                                <input type="number" id="target-credits-mid" min="6" step="0.5" class="w-full form-input" placeholder="e.g., 12">
+                                <input type="number" id="target-credits-mid" min="0" step="0.5" class="w-full form-input" placeholder="e.g., 12">
+                                <p id="target-credits-mid-error" class="text-red-500 text-sm error-placeholder"></p>
                             </div>
                         </div>
                         <div id="target-result-mid" class="mt-4 text-center hidden">
@@ -872,40 +672,39 @@
                     </div>
                 </div>
                 
-                <!-- Low CGPA Result -->
                 <div id="result-low" class="result-card w-full">
                      <div class="result-low border rounded-xl p-6 text-center">
-                         <h3 id="low-cgpa-title" class="text-2xl font-bold text-red-800 mb-4">Probation!</h3>
-                         <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:divide-x-2 divide-red-200/50">
-                             <div class="flex-1 px-4">
-                                 <p class="text-red-600 text-lg">New CGPA</p>
-                                 <p id="cgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
-                                 <!--FIXED: Label changed for clarity-->
-                                 <!-- MODIFIED: Label text changed -->
-                                 <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-credits-low">0</span></p>
-                             </div>
-                             <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-red-200/50">
-                                 <p class="text-red-600 text-lg">Trimester GPA</p>
-                                 <p id="tgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
-                                 <!-- ADDED: Trimester completed credits -->
-                                 <p class="text-sm text-secondary-color">This Trimester Completed Credit: <span id="trimester-credits-low">0</span></p> 
-                             </div>
-                         </div>
-                     </div>
-                     <div class="mt-6 w-full planner-low p-4 rounded-lg border">
-                         <h4 class="text-lg font-semibold text-primary-color text-center">Recovery Plan</h4>
-                         <p class="text-center text-secondary-color mb-4">Let's find out what you need in your next trimester to reach a 2.0 CGPA.</p>
-                         <div class="max-w-xs mx-auto">
-                             <label for="next-credits" class="block text-sm font-medium text-tertiary-color mb-1">Next trimester's credits:</label>
-                             <input type="number" id="next-credits" min="6" step="0.5" class="w-full form-input" placeholder="e.g., 9">
-                         </div>
+                        <h3 id="low-cgpa-title" class="text-2xl font-bold text-red-800 mb-4">Probation!</h3>
+                        <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:divide-x-2 divide-red-200/50">
+                            <div class="flex-1 px-4">
+                                <p class="text-red-600 text-lg">New CGPA</p>
+                                <p id="cgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
+                                <p class="text-sm text-secondary-color">Total Attempted Credit: <span id="total-credits-low">0</span></p>
+                                <p class="text-sm text-secondary-color">Total Completed Credit: <span id="total-earned-credits-low">0</span></p>
+                            </div>
+                            <div class="flex-1 px-4 pt-4 md:pt-0 border-t-2 md:border-t-0 border-red-200/50">
+                                <p class="text-red-600 text-lg">Trimester GPA</p>
+                                <p id="tgpa-low" class="text-4xl sm:text-5xl md:text-6xl font-bold text-red-700 my-2">0.00</p>
+                                <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-low">0</span></p>
+                                <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-low">0</span></p>
+                            </div>
+                       </div>
+                    </div>
+                    <div class="mt-6 w-full planner-low p-4 rounded-lg border">
+                        <h4 class="text-lg font-semibold text-primary-color text-center">Recovery Plan</h4>
+                        <p class="text-center text-secondary-color mb-4">Let's find out what you need in your next trimester to reach a 2.0 CGPA.</p>
+                        <div class="max-w-xs mx-auto">
+                            <label for="next-credits" class="block text-sm font-medium text-tertiary-color mb-1">Next trimester's credits:</label>
+                            <input type="number" id="next-credits" min="0" step="0.5" class="w-full form-input" placeholder="e.g., 9">
+                            <p id="next-credits-error" class="text-red-500 text-sm error-placeholder"></p>
+                        </div>
 
-                         <div id="recovery-result" class="mt-4 text-center hidden">
-                             <p class="text-tertiary-color">To get out of probation, you need a GPA of:</p>
-                             <p id="required-gpa" class="text-3xl font-bold text-red-600"></p>
-                         </div>
-                     </div>
-                 </div>
+                        <div id="recovery-result" class="mt-4 text-center hidden">
+                            <p class="text-tertiary-color">To get out of probation, you need a GPA of:</p>
+                            <p id="required-gpa" class="text-3xl font-bold text-red-600"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <footer class="text-center mt-8 text-sm text-secondary-color font-semibold">
@@ -913,31 +712,18 @@
         </footer>
     </main>
 
-    <!-- --- Game Modal Button --- -->
     <button id="open-game-modal" class="btn">
         <i data-lucide="gamepad-2" class="w-7 h-7"></i>
     </button>
 
-    <!-- --- Game Modal --- -->
     <div id="game-modal" class="fade-in">
         <div id="game-modal-content" class="fade-in-up">
-            <!-- Close Button -->
             <button id="close-game-modal">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
             
-            <!-- Theme Toggle (Modal) -->
-            <div class="absolute top-4 left-4 flex items-center space-x-3">
-                <!-- MODIFIED: Renamed IDs -->
-                <span id="theme-icon-modal"></span>
-                <input type="checkbox" id="theme-toggle-checkbox-modal" class="sr-only">
-                <label for="theme-toggle-checkbox-modal" class="theme-toggle"></label>
-            </div>
-
-            <!-- Title -->
             <h2 class="text-2xl font-bold text-primary-color mb-4 text-center">Relax Zone</h2>
 
-            <!-- Game Selection -->
             <div class="form-section !p-3">
                  <div id="game-selection" class="flex flex-col sm:flex-row gap-2 flex-wrap justify-center">
                      <button id="select-game-ttt" data-game="tic-tac-toe" class="game-select-btn btn btn-primary flex-1 min-w-[150px]"><i data-lucide="grid-3x3" class="w-5 h-5"></i>Tic-Tac-Toe</button>
@@ -949,13 +735,11 @@
                  </div>
             </div>
 
-            <!-- Tic-Tac-Toe Game -->
             <div id="game-tic-tac-toe" class="game-container">
                 <div class="form-section !mb-0 text-center">
                     <h3 class="text-xl font-bold text-primary-color mb-4 text-center">Tic-Tac-Toe</h3>
-                    <div id="ttt-status" class="game-status text-center mb-4">Your Turn (X)</div> <!-- Updated initial status -->
+                    <div id="ttt-status" class="game-status text-center mb-4">Your Turn (X)</div>
                     <div id="tic-tac-toe-board">
-                        <!-- 9 cells for the game -->
                         <div class="ttt-cell" data-index="0"><span>X</span></div>
                         <div class="ttt-cell" data-index="1"><span>X</span></div>
                         <div class="ttt-cell" data-index="2"><span>X</span></div>
@@ -972,35 +756,26 @@
                 </div>
             </div>
 
-            <!-- Memory Match Game -->
             <div id="game-memory-match" class="game-container">
                 <div class="form-section !mb-0 text-center">
                     <h3 class="text-xl font-bold text-primary-color mb-4 text-center">Memory Match</h3>
-
                     <div id="memory-difficulty-select">
                         <button class="btn btn-sm btn-primary" data-difficulty="easy">Easy (4x3)</button>
                         <button class="btn btn-sm btn-neutral" data-difficulty="medium">Medium (4x4)</button>
                         <button class="btn btn-sm btn-neutral" data-difficulty="hard">Hard (5x4)</button>
                     </div>
-
                     <div id="memory-status" class="game-status text-center mb-4">Moves: 0</div>
-
-                    <div id="memory-board">
-                        <!-- Memory cards will be generated by JS -->
-                    </div>
-
+                    <div id="memory-board"></div>
                     <button id="memory-reset-btn" class="w-full sm:w-auto mx-auto btn btn-primary mt-6 flex">
                         <i data-lucide="rotate-ccw" class="w-5 h-5"></i>Reset Game
                     </button>
                 </div>
             </div>
 
-            <!-- Snake Game -->
             <div id="game-snake" class="game-container">
                 <div class="form-section !mb-0 text-center">
                     <h3 class="text-xl font-bold text-primary-color mb-4 text-center">Snake</h3>
                     <div id="game-status-snake" class="game-status text-center mb-4">Score: 0</div>
-
                     <div id="snake-game-container">
                         <canvas id="snake-canvas" width="400" height="400"></canvas>
                         <div id="snake-controls">
@@ -1010,14 +785,12 @@
                             <button id="snake-right" class="snake-control-btn"><i data-lucide="arrow-right"></i></button>
                         </div>
                     </div>
-
                     <button id="snake-reset-btn" class="w-full sm:w-auto mx-auto btn btn-primary mt-6 flex">
                         <i data-lucide="rotate-ccw" class="w-5 h-5"></i>Reset Game
                     </button>
                 </div>
             </div>
 
-            <!-- Whac-A-Mole Game -->
             <div id="game-whac-a-mole" class="game-container">
                 <div class="form-section !mb-0 text-center">
                     <div class="flex justify-between items-center mb-4">
@@ -1028,41 +801,29 @@
                         </div>
                     </div>
                     <div id="game-status-timer-wam" class="game-status text-center mb-4">Time: 30s</div>
-
-                    <div id="wam-board">
-                        <!-- 9 holes will be generated by JS -->
-                    </div>
-
+                    <div id="wam-board"></div>
                     <button id="wam-start-btn" class="w-full sm:w-auto mx-auto btn btn-primary mt-6 flex">
                         <i data-lucide="play" class="w-5 h-5"></i>Start Game
                     </button>
                 </div>
             </div>
 
-            <!-- Word Guess Game -->
             <div id="game-word-guess" class="game-container">
                 <div class="form-section !mb-0 text-center">
                     <h3 class="text-xl font-bold text-primary-color mb-4 text-center">Word Guess</h3>
                     <div id="wg-status" class="game-status text-center mb-4">Guesses left: 6</div>
-
-                    <div id="wg-word-display">
-                        <!-- Letter boxes will be generated by JS -->
-                    </div>
-
+                    <div id="wg-word-display"></div>
                     <div id="wg-guessed-letters" class="text-center text-secondary-color">Guessed: </div>
-
                     <form id="wg-input-area">
                         <input type="text" id="wg-letter-input" class="form-input" maxlength="1" placeholder="A" />
                         <button type="submit" class="btn btn-primary">Guess</button>
                     </form>
-
                     <button id="wg-reset-btn" class="w-full sm:w-auto mx-auto btn btn-primary mt-6 flex">
                         <i data-lucide="rotate-ccw" class="w-5 h-5"></i>New Word
                     </button>
                 </div>
             </div>
 
-            <!-- Breakout Game -->
             <div id="game-breakout" class="game-container">
                 <div class="form-section !mb-0 text-center">
                     <h3 class="text-xl font-bold text-primary-color mb-4 text-center">Breakout</h3>
@@ -1070,39 +831,34 @@
                         <span id="breakout-score">Score: 0</span>
                         <span id="breakout-lives">Lives: 3</span>
                     </div>
-
                     <div id="breakout-game-container">
                         <canvas id="breakout-canvas" width="480" height="400"></canvas>
-                         <!-- Mobile Controls for Breakout -->
                         <div id="breakout-controls">
                             <button id="breakout-left" class="breakout-control-btn"><i data-lucide="arrow-left"></i></button>
                             <button id="breakout-right" class="breakout-control-btn"><i data-lucide="arrow-right"></i></button>
                         </div>
                     </div>
-
                     <button id="breakout-reset-btn" class="w-full sm:w-auto mx-auto btn btn-primary mt-6 flex">
                         <i data-lucide="rotate-ccw" class="w-5 h-5"></i>Reset Game
                     </button>
                 </div>
             </div>
-            <!-- End Relax Zone Content -->
-
         </div>
     </div>
-    <!-- --- End Game Modal HTML --- -->
 
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Elements --- //
+            // --- Elements (Combined) --- //
             const getEl = (id) => document.getElementById(id);
             const body = document.body;
             const themeToggle = getEl('theme-toggle-checkbox');
             const themeIcon = getEl('theme-icon');
-            
-            // Forms & Inputs
+
+            // Calculator Elements
             const currentCgpaInput = getEl('current-cgpa');
-            const completedCreditsInput = getEl('completed-credits'); // This is Total ATTEMPTED Credits
+            const completedCreditsInput = getEl('completed-credits');
+            const completedEarnedCreditsInput = getEl('completed-earned-credits');
             const addCourseForm = getEl('add-course-form');
             const courseCreditEl = getEl('course-credit');
             const courseGradeEl = getEl('course-grade');
@@ -1110,80 +866,78 @@
             const retakeCreditEl = getEl('retake-credit');
             const retakeOldGradeEl = getEl('retake-old-grade');
             const retakeNewGradeEl = getEl('retake-new-grade');
-            
-            // Containers & Buttons
             const courseListContainer = getEl('course-list-container');
             const calculateBtn = getEl('calculate-cgpa');
             const resetBtn = getEl('reset-all');
-            
-            // Error Messages
             const cgpaErrorEl = getEl('cgpa-error');
+            const attemptedCreditsErrorEl = getEl('attempted-credits-error');
+            const earnedCreditsErrorEl = getEl('earned-credits-error');
             const calcErrorEl = getEl('calc-error');
-            
-            // Result Cards
-            const resultCards = {
-                good: getEl('result-good'),
-                mid: getEl('result-mid'),
-                low: getEl('result-low'),
-            };
+            const creditsErrorEl = getEl('credits-error');
+            const errorPlaceholders = document.querySelectorAll('.error-placeholder');
+            const resultCards = { good: getEl('result-good'), mid: getEl('result-mid'), low: getEl('result-low') };
             const allResultCards = document.querySelectorAll('.result-card');
 
-            // --- State --- //
+            // Game Elements
+            const gameModal = getEl('game-modal');
+            const openGameModalBtn = getEl('open-game-modal');
+            const closeGameModalBtn = getEl('close-game-modal');
+            const gameSelection = getEl('game-selection');
+            const gameSelectBtns = document.querySelectorAll('.game-select-btn');
+            const gameContainers = document.querySelectorAll('.game-container');
+            
+            // --- State (Calculator) --- //
             let courses = [];
-            let calculationCache = {
-                finalCgpa: 0,
-                totalGpaCredits: 0, // Total Attempted Credits
-                currentTotalPoints: 0,
+            let calculationCache = { finalCgpa: 0, totalGpaCredits: 0, currentTotalPoints: 0, totalCompletedCredits: 0 };
+            
+            // --- Shared Helper Functions --- //
+            const showNotification = (message, type = 'success') => {
+                const container = getEl('notification-container');
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                let icon;
+                switch(type) {
+                    case 'error': icon = 'alert-circle'; break;
+                    case 'info': icon = 'info'; break;
+                    case 'warning': icon = 'alert-triangle'; break;
+                    default: icon = 'check-circle';
+                }
+                notification.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5"></i><span>${message}</span>`;
+                container.appendChild(notification);
+                lucide.createIcons();
+                setTimeout(() => notification.classList.add('show'), 10);
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    notification.addEventListener('transitionend', () => notification.remove());
+                }, 3000);
             };
 
-            // --- Merged Theme Management --- //
+            const shuffle = (array) => array.sort(() => Math.random() - 0.5);
+
+            // --- Theme Management --- //
             const updateTheme = (isDark) => {
                 body.setAttribute('data-theme', isDark ? 'dark' : 'light');
-                
-                // Update main page toggle
-                if (themeToggle) themeToggle.checked = isDark; 
-                
-                // Update modal toggle
-                const themeToggleModal = getEl('theme-toggle-checkbox-modal'); // Get it
-                if (themeToggleModal) themeToggleModal.checked = isDark;
-
+                if (themeToggle) themeToggle.checked = isDark;
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                
-                const iconHtml = isDark ? 
-                    '<i data-lucide="moon" class="w-5 h-5 text-blue-300"></i>' : 
+                const iconHtml = isDark ?
+                    '<i data-lucide="moon" class="w-5 h-5 text-blue-300"></i>' :
                     '<i data-lucide="sun" class="w-5 h-5 text-yellow-500"></i>';
-                
-                // Update main page icon
-                if (themeIcon) themeIcon.innerHTML = iconHtml; 
-                
-                // Update modal icon
-                const themeIconModal = getEl('theme-icon-modal'); // Get it
-                if (themeIconModal) themeIconModal.innerHTML = iconHtml;
-
+                if (themeIcon) themeIcon.innerHTML = iconHtml;
                 lucide.createIcons();
             };
 
-            themeToggle.addEventListener('change', () => updateTheme(themeToggle.checked));
-
-            // --- ADDED FOR MODAL THEME TOGGLE ---
-            const themeToggleModal = getEl('theme-toggle-checkbox-modal');
-            if (themeToggleModal) {
-                themeToggleModal.addEventListener('change', () => updateTheme(themeToggleModal.checked));
-            }
-            // --- END ADDED ---
-            
             const initializeTheme = () => {
                 const savedTheme = localStorage.getItem('theme');
-                // Default to light theme unless 'dark' is explicitly saved.
                 updateTheme(savedTheme === 'dark');
             };
 
-            // --- Local Storage Persistence --- //
+            // --- Calculator-Specific Functions --- //
             const saveState = () => {
                 const state = {
                     courses,
                     currentCgpa: currentCgpaInput.value,
-                    completedCredits: completedCreditsInput.value
+                    completedCredits: completedCreditsInput.value,
+                    completedEarnedCredits: completedEarnedCreditsInput.value
                 };
                 localStorage.setItem('cgpaCalculatorState', JSON.stringify(state));
             };
@@ -1191,101 +945,68 @@
             const loadState = () => {
                 const savedState = localStorage.getItem('cgpaCalculatorState');
                 if (savedState) {
-                    const { courses: savedCourses, currentCgpa, completedCredits } = JSON.parse(savedState);
+                    const { courses: savedCourses, currentCgpa, completedCredits, completedEarnedCredits } = JSON.parse(savedState);
                     courses = savedCourses || [];
                     currentCgpaInput.value = currentCgpa || '';
                     completedCreditsInput.value = completedCredits || '';
+                    completedEarnedCreditsInput.value = completedEarnedCredits || '';
                     renderCourses();
                 }
             };
 
-            // --- Merged UI & Animations --- //
-            
-            // --- Replaced with Games' showNotification --- //
-            const showNotification = (message, type = 'success') => {
-                 const container = getEl('notification-container');
-                 const notification = document.createElement('div');
-                 // Add base class and type-specific class
-                 notification.className = `notification ${type}`; // e.g., 'notification success'
-
-                 let icon;
-                 switch(type) {
-                     case 'error': icon = 'alert-circle'; break;
-                     case 'info': icon = 'info'; break;
-                     case 'warning': icon = 'alert-triangle'; break; // Added warning icon
-                     default: icon = 'check-circle'; // Success
-                 }
-
-                 notification.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5"></i><span>${message}</span>`;
-
-                 container.appendChild(notification);
-                 lucide.createIcons();
-
-                 setTimeout(() => notification.classList.add('show'), 10);
-                 setTimeout(() => {
-                     notification.classList.remove('show');
-                     notification.addEventListener('transitionend', () => notification.remove());
-                 }, 3000); // Notification stays for 3 seconds
-             };
-            // --- End Replaced --- //
-            
-            const shuffle = (array) => array.sort(() => Math.random() - 0.5); // Added from Games
-
-            const animateCountUp = (el, endValue) => {
+            const animateValue = (el, endValue, isFloat = true) => {
                 let startValue = 0;
                 const duration = 1000;
                 const startTime = performance.now();
-
                 function step(currentTime) {
                     const elapsedTime = currentTime - startTime;
                     const progress = Math.min(elapsedTime / duration, 1);
-                    const currentValue = startValue + (endValue - startValue) * progress;
-                    
-                    // Handle non-number values like 'Impossible'
-                    if (isNaN(currentValue)) {
-                        el.textContent = endValue;
-                        return;
-                    }
-
-                    el.textContent = currentValue.toFixed(2);
+                    const easeOutQuad = 1 - Math.pow(1 - progress, 3);
+                    let currentValue = startValue + (endValue - startValue) * easeOutQuad;
+                    if (isNaN(currentValue) || !isFinite(currentValue)) { currentValue = endValue; }
                     if (progress < 1) {
+                        el.textContent = isFloat ? currentValue.toFixed(2) : Math.round(currentValue);
                         requestAnimationFrame(step);
                     } else {
-                        el.textContent = endValue.toFixed(2);
+                        el.textContent = isFloat ? endValue.toFixed(2) : (endValue % 1 === 0 ? endValue.toFixed(0) : endValue.toFixed(2));
                     }
                 }
+                const existingText = el.textContent.trim();
+                if (existingText && !isNaN(parseFloat(existingText))) { startValue = parseFloat(existingText); }
                 requestAnimationFrame(step);
             };
-            
-             const triggerConfetti = () => {
-                  const parent = document.querySelector('.card');
-                  for (let i = 0; i < 50; i++) {
-                       const confetti = document.createElement('div');
-                       confetti.className = 'confetti-piece';
-                       const colors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#6366f1'];
-                       confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                       confetti.style.left = `${Math.random() * 100}%`;
-                       confetti.style.animation = `fall ${1.5 + Math.random() * 2}s ${Math.random() * 1}s linear forwards`;
-                       parent.appendChild(confetti);
-                  }
-                  const keyframes = `
-                  @keyframes fall {
-                       to {
-                            transform: translateY(100vh) rotate(${Math.random() * 720}deg);
-                            opacity: 0;
-                       }
-                  }`;
-                  const styleSheet = document.createElement("style");
-                  styleSheet.type = "text/css";
-                  styleSheet.innerText = keyframes;
-                  document.head.appendChild(styleSheet);
-                  setTimeout(() => document.querySelectorAll('.confetti-piece').forEach(e => e.remove()), 4000);
-             };
 
-            // --- Core Logic (Calculator) --- //
+            const triggerConfetti = () => {
+                const parent = document.querySelector('.card');
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti-piece';
+                    const colors = ['#4f46e5', '#10b981', '#f59e0b', '#ef4444', '#6366f1'];
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = `${Math.random() * 100}%`;
+                    confetti.style.animation = `fall ${1.5 + Math.random() * 2}s ${Math.random() * 1}s linear forwards`;
+                    parent.appendChild(confetti);
+                }
+                const keyframes = `@keyframes fall { to { transform: translateY(100vh) rotate(${Math.random() * 720}deg); opacity: 0; } }`;
+                const styleSheet = document.createElement("style");
+                styleSheet.type = "text/css";
+                styleSheet.innerText = keyframes;
+                document.head.appendChild(styleSheet);
+                setTimeout(() => {
+                    document.querySelectorAll('.confetti-piece').forEach(e => e.remove());
+                    if (styleSheet.parentNode) { styleSheet.parentNode.removeChild(styleSheet); }
+                }, 4000);
+            };
+
+            const gradeMap = {
+                "4.00": "A", "3.67": "A-", "3.33": "B+", "3.00": "B", "2.67": "B-",
+                "2.33": "C+", "2.00": "C", "1.67": "C-", "1.33": "D+", "1.00": "D", "0.00": "F"
+            };
+
             const getGradeLetter = (grade) => {
-                const gradeMap = {4.00:'A',3.67:'A-',3.33:'B+',3.00:'B',2.67:'B-',2.33:'C+',2.00:'C',1.67:'C-',1.33:'D+',1.00:'D',0.00:'F'};
-                return gradeMap[grade] || '';
+                const gradeNum = typeof grade === 'number' ? grade : parseFloat(grade);
+                if (isNaN(gradeNum)) return '';
+                return gradeMap[gradeNum.toFixed(2)] || '';
             };
 
             const renderCourses = () => {
@@ -1294,1413 +1015,317 @@
                     courseListContainer.innerHTML = `<div class="text-center text-secondary-color p-4 course-list-placeholder-bg rounded-lg fade-in"><p>No courses added yet.</p></div>`;
                     return;
                 }
-
                 courses.forEach((course, index) => {
                     const courseEl = document.createElement('div');
                     courseEl.style.setProperty('--stagger-delay', `${index * 100}ms`);
                     let courseHTML = '';
-                    let borderColor = course.type === 'new' ? 'border-l-4 border-blue-500' : 'border-l-4 border-indigo-500';
-
+                    let courseClass = 'course-item-container fade-in-up';
+                    const gradeValueRaw = course.type === 'new' ? course.grade : course.newGrade;
+                    const gradeValueNum = typeof gradeValueRaw === 'number' ? gradeValueRaw : parseFloat(gradeValueRaw);
+                    const gradeValue = isNaN(gradeValueNum) ? 'N/A' : gradeValueNum.toFixed(2);
+                    const gradeLetter = getGradeLetter(gradeValueNum);
                     if (course.type === 'new') {
-                        courseHTML = `
-                            <div class="flex-grow">
-                                <p class="font-semibold text-tertiary-color">${course.credit} Credits</p>
-                            </div>
-                            <div class="text-center">
-                                <span class="font-bold text-lg text-blue-400">${getGradeLetter(course.grade)}</span>
-                                <span class="block text-xs text-secondary-color">(${course.grade.toFixed(2)})</span>
-                            </div>`;
+                        courseClass += ' new-course';
+                        courseHTML = `<div class="flex-grow"><p class="font-semibold text-tertiary-color">${course.credit} Credits</p></div><div class="text-center"><span class="font-bold text-lg text-blue-500">${gradeLetter}</span><span class="block text-xs text-secondary-color">(${gradeValue})</span></div>`;
                     } else { // Retake
-                        courseHTML = `
-                             <div class="flex-grow">
-                                 <p class="font-semibold text-tertiary-color">${course.credit} Credits <span class="font-bold text-indigo-400">(Retake)</span></p>
-                             </div>
-                             <div class="text-center">
-                                 <span class="font-bold text-secondary-color line-through">${getGradeLetter(course.oldGrade)}</span>
-                                 <i data-lucide="arrow-right" class="inline-block w-4 h-4 text-secondary-color mx-1"></i>
-                                 <span class="font-bold text-lg text-green-400">${getGradeLetter(course.newGrade)}</span>
-                             </div>`;
+                        courseClass += ' retake-course';
+                        const oldGradeLetter = getGradeLetter(course.oldGrade);
+                        const newGradeLetter = getGradeLetter(course.newGrade);
+                        const newGradeNum = typeof course.newGrade === 'number' ? course.newGrade : parseFloat(course.newGrade);
+                        const newGradeValue = isNaN(newGradeNum) ? 'N/A' : newGradeNum.toFixed(2);
+                        courseHTML = `<div class="flex-grow"><p class="font-semibold text-tertiary-color">${course.credit} Credits <span class="font-bold text-purple-500">(Retake)</span></p></div><div class="text-center flex items-center gap-1"><span class="font-bold text-secondary-color line-through text-sm">${oldGradeLetter}</span><i data-lucide="arrow-right" class="w-4 h-4 text-secondary-color"></i><div><span class="font-bold text-lg text-green-500">${newGradeLetter}</span><span class="block text-xs text-secondary-color">(${newGradeValue})</span></div></div>`;
                     }
-
-                    courseEl.className = `flex justify-between items-center p-4 rounded-lg shadow-sm border ${borderColor} course-item-bg fade-in-up`;
-                    courseEl.innerHTML = courseHTML + `
-                        <button class="remove-btn text-red-400 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 p-2 rounded-full transition-colors" data-index="${index}">
-                            <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>`;
-                    
+                    courseEl.className = courseClass;
+                    courseEl.innerHTML = courseHTML + `<button class="remove-btn text-red-400 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 p-2 rounded-full transition-colors" data-index="${index}"><i data-lucide="trash-2" class="w-5 h-5"></i></button>`;
                     courseListContainer.appendChild(courseEl);
                 });
-
                 lucide.createIcons();
             };
-            
+
             const hideResults = () => {
-                allResultCards.forEach(card => card.style.display = 'none');
-                allResultCards.forEach(card => card.classList.remove('fade-in-up'));
-                [cgpaErrorEl, calcErrorEl].forEach(el => el.classList.add('hidden'));
+                allResultCards.forEach(card => { card.style.display = 'none'; card.classList.remove('fade-in-up'); });
+                errorPlaceholders.forEach(el => { el.textContent = ''; el.classList.remove('visible'); });
+                calcErrorEl.textContent = ''; creditsErrorEl.textContent = '';
+                calcErrorEl.classList.add('hidden'); creditsErrorEl.classList.add('hidden');
             };
 
             const handleCalculation = () => {
                 hideResults();
-
+                let hasError = false;
                 const currentCgpaVal = currentCgpaInput.value.trim();
-                if (currentCgpaVal) {
-                    const currentCgpa = parseFloat(currentCgpaVal);
-                    if (currentCgpa > 4.0 || currentCgpa < 0) {
-                        cgpaErrorEl.textContent = "Aeh! 🙂";
-                        cgpaErrorEl.classList.remove('hidden');
-                        return; // Stop calculation
-                    }
+                const currentCgpa = parseFloat(currentCgpaVal);
+                if (currentCgpaVal && (isNaN(currentCgpa) || currentCgpa > 4.0 || currentCgpa < 0)) {
+                    cgpaErrorEl.textContent = "Aeh! 🙂"; cgpaErrorEl.classList.add('visible'); hasError = true;
                 }
-                
-                if (courses.length === 0) {
-                   calcErrorEl.textContent = "Please add at least one course to calculate.";
-                   calcErrorEl.classList.remove('hidden');
-                   return;
-                }
-
+                const initialAttemptedCreditsVal = completedCreditsInput.value.trim();
+                const initialEarnedCreditsVal = completedEarnedCreditsInput.value.trim();
+                const initialAttemptedCredits = parseFloat(initialAttemptedCreditsVal);
+                const initialEarnedCredits = parseFloat(initialEarnedCreditsVal);
+                const hasInitialStandingAttempt = currentCgpaVal !== '' || initialAttemptedCreditsVal !== '' || initialEarnedCreditsVal !== '';
+                const isInitialStandingComplete = currentCgpaVal !== '' && !isNaN(currentCgpa) && currentCgpa >= 0 && currentCgpa <= 4.0 && initialAttemptedCreditsVal !== '' && !isNaN(initialAttemptedCredits) && initialAttemptedCredits >= 0 && initialEarnedCreditsVal !== '' && !isNaN(initialEarnedCredits) && initialEarnedCredits >= 0;
+                if (hasInitialStandingAttempt && !isInitialStandingComplete) {
+                    if (currentCgpaVal === '') { cgpaErrorEl.textContent = "Required."; cgpaErrorEl.classList.add('visible'); hasError = true; }
+                    else if (isNaN(currentCgpa) || currentCgpa < 0 || currentCgpa > 4.0) { cgpaErrorEl.textContent = "Aeh! 🙂"; cgpaErrorEl.classList.add('visible'); hasError = true; }
+                    if (initialAttemptedCreditsVal === '' || isNaN(initialAttemptedCredits) || initialAttemptedCredits < 0) { if(attemptedCreditsErrorEl){ attemptedCreditsErrorEl.textContent = "Required & >= 0."; attemptedCreditsErrorEl.classList.add('visible');} hasError = true; }
+                    if (initialEarnedCreditsVal === '' || isNaN(initialEarnedCredits) || initialEarnedCredits < 0) { if(earnedCreditsErrorEl){ earnedCreditsErrorEl.textContent = "Required & >= 0."; earnedCreditsErrorEl.classList.add('visible');} hasError = true; }
+                    if (!hasError && isInitialStandingComplete && initialEarnedCredits > initialAttemptedCredits) { creditsErrorEl.textContent = "Earned cannot be > attempted."; creditsErrorEl.classList.remove('hidden'); hasError = true; }
+                } else if (isInitialStandingComplete && initialEarnedCredits > initialAttemptedCredits) { creditsErrorEl.textContent = "Earned cannot be > attempted."; creditsErrorEl.classList.remove('hidden'); hasError = true; }
+                if (courses.length === 0) { if (!hasError) { calcErrorEl.textContent = "Please add at least one course."; calcErrorEl.classList.remove('hidden'); } hasError = true; }
                 const trimesterCredits = courses.reduce((total, course) => total + course.credit, 0);
-                if (trimesterCredits < 6) {
-                    calcErrorEl.textContent = "Minimum 6 credits are required for this trimester to calculate.";
-                    calcErrorEl.classList.remove('hidden');
-                    return; // Stop calculation
-                }
-
-                // Check for retakes without initial standing
+                if (!hasError && courses.length > 0 && trimesterCredits < 6) { calcErrorEl.textContent = "Minimum 6 trimester credits required."; calcErrorEl.classList.remove('hidden'); hasError = true; }
                 const hasRetakes = courses.some(c => c.type === 'retake');
-                const hasInitialStanding = (parseFloat(completedCreditsInput.value) || 0) > 0 && currentCgpaInput.value.trim() !== '';
-                
-                if(hasRetakes && !hasInitialStanding) {
-                    calcErrorEl.textContent = "Please enter Current CGPA and Completed Credit for accurate retake calculation."; // Updated error message
-                    calcErrorEl.classList.remove('hidden');
-                    return;
+                if (!hasError && hasRetakes && !isInitialStandingComplete) {
+                    calcErrorEl.textContent = hasInitialStandingAttempt ? "Enter complete & valid Current Standing for retakes." : "Enter Current Standing to add retake courses.";
+                    calcErrorEl.classList.remove('hidden'); hasError = true;
                 }
-
+                if(hasError) return;
                 const results = calculateResults();
                 displayResults(results);
             };
 
-            // --- calculateResults function (no changes needed from previous version) --- //
             const calculateResults = () => {
                 const currentCgpa = parseFloat(currentCgpaInput.value) || 0;
-                // This is Total ATTEMPTED Credits
-                const completedCredits = parseFloat(completedCreditsInput.value) || 0; 
-                const hasInitialStanding = completedCredits > 0 && currentCgpaInput.value.trim() !== '';
-
-                // Start with initial points
-                const initialPoints = currentCgpa * completedCredits;
+                const initialAttemptedCredits = parseFloat(completedCreditsInput.value) || 0;
+                const initialEarnedCredits = parseFloat(completedEarnedCreditsInput.value) || 0;
+                const hasInitialStanding = currentCgpaInput.value.trim() !== '' && !isNaN(parseFloat(currentCgpaInput.value)) && completedCreditsInput.value.trim() !== '' && !isNaN(initialAttemptedCredits) && initialAttemptedCredits >= 0 && completedEarnedCreditsInput.value.trim() !== '' && !isNaN(initialEarnedCredits) && initialEarnedCredits >= 0;
+                const initialPoints = currentCgpa * initialAttemptedCredits;
                 let totalPoints = initialPoints;
-                let totalGpaCredits = completedCredits; // All attempted credits (including F's)
-                
-                let trimesterPoints = 0;
-                let trimesterGpaCredits = 0; // Renamed to clarify it's for this trimester
-
+                let totalGpaCredits = initialAttemptedCredits;
+                let totalCompletedCredits = initialEarnedCredits; 
+                let trimesterPoints = 0, trimesterGpaCredits = 0, trimesterCompletedCredits = 0;
                 courses.forEach(course => {
                     const credit = course.credit;
-                    trimesterGpaCredits += credit; // Add credits for this trimester calculation
-
+                    trimesterGpaCredits += credit;
                     if (course.type === 'new') {
-                        // New course calculation
                         const grade = course.grade;
                         trimesterPoints += credit * grade;
-                        totalPoints += credit * grade;
-                        totalGpaCredits += credit;
-                        
-                    } else {
-                        // Retake course calculation - FIXED
-                        const oldGrade = course.oldGrade;
-                        const newGrade = course.newGrade;
-                        
+                        if (hasInitialStanding) { totalPoints += credit * grade; totalGpaCredits += credit; }
+                        else { totalPoints += credit * grade; totalGpaCredits += credit; }
+                        if (grade > 0) { trimesterCompletedCredits += credit; totalCompletedCredits += credit; }
+                    } else { // Retake
+                        const oldGrade = course.oldGrade, newGrade = course.newGrade;
                         trimesterPoints += credit * newGrade;
-                        
+                        if (newGrade > 0) { trimesterCompletedCredits += credit; }
                         if (hasInitialStanding) {
-                            // Remove old grade points and add new grade points
                             totalPoints = totalPoints - (oldGrade * credit) + (newGrade * credit);
-                            // totalGpaCredits remains same (credits already counted)
-                            
+                            if (oldGrade === 0 && newGrade > 0) { totalCompletedCredits += credit; }
+                            else if (oldGrade > 0 && newGrade === 0) { totalCompletedCredits -= credit; }
                         } else {
-                            // No initial standing - treat as new course
-                            totalPoints += credit * newGrade;
-                            totalGpaCredits += credit;
+                            totalPoints += credit * newGrade; totalGpaCredits += credit;
+                            if (newGrade > 0) { totalCompletedCredits += credit; }
                         }
                     }
                 });
-
                 const finalCgpa = totalGpaCredits > 0 ? totalPoints / totalGpaCredits : 0;
                 const trimesterGpa = trimesterGpaCredits > 0 ? trimesterPoints / trimesterGpaCredits : 0;
-                
-                calculationCache = { finalCgpa, totalGpaCredits, currentTotalPoints: totalPoints };
-
-                // We return totalGpaCredits (attempted) as we cannot accurately know "earned" credits
-                // MODIFIED: Return trimesterGpaCredits as well
-                return { finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits };
+                totalCompletedCredits = Math.max(0, totalCompletedCredits);
+                calculationCache = { finalCgpa, totalGpaCredits, currentTotalPoints: totalPoints, totalCompletedCredits };
+                return { finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits, trimesterCompletedCredits, totalCompletedCredits };
             };
             
-            // --- displayResults function (no changes needed from previous version) --- //
-            const displayResults = ({ finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits }) => { 
-                let card, cgpaEl, tgpaEl, creditsEl, triCreditsEl, titleEl, standing; // Added triCreditsEl
-                
+            const displayResults = ({ finalCgpa, trimesterGpa, totalGpaCredits, trimesterGpaCredits, trimesterCompletedCredits, totalCompletedCredits }) => {
+                let card, standing;
                 if (finalCgpa >= 3.0) {
                     standing = 'good';
-                    titleEl = getEl('good-standing-title');
-                    if (finalCgpa >= 3.8) {
-                        titleEl.textContent = "তুখোড় ইশটুডেন্ট! 🎓";
-                        if(trimesterGpa >= 3.8) triggerConfetti();
-                    } else if (finalCgpa >= 3.5) {
-                        titleEl.textContent = "ওয়েভারওয়ালা! 💸";
-                    } else if (finalCgpa >= 3.2) {
-                        titleEl.textContent = "সেইফ জোনে আছেন 😌";
-                    } else {
-                        titleEl.textContent = "সিজি ৩.০০ ধরে রাখেন! 😅";
-                    }
+                    const titleEl = getEl('good-standing-title');
+                    if (finalCgpa >= 3.8) titleEl.textContent = "তুখোড় ইশটুডেন্ট! 🎓";
+                    else if (finalCgpa >= 3.5) titleEl.textContent = "ওয়েভারওয়ালা! 💸";
+                    else if (finalCgpa >= 3.2) titleEl.textContent = "সেইফ জোনে আছেন 😌";
+                    else titleEl.textContent = "সিজি ৩.০০ ধরে রাখেন! 😅";
+                    if (finalCgpa >= 3.8 && trimesterGpa >= 3.8) triggerConfetti();
                 } else if (finalCgpa >= 2.0) {
                     standing = 'mid';
-                    titleEl = getEl('mid-standing-title');
-                    if (finalCgpa >= 2.6) {
-                        titleEl.textContent = "কামব্যাক মাস্ট! 💪";
-                    } else if (finalCgpa >= 2.2) {
-                        titleEl.textContent = "রেড জোনে আছেন! 🚨";
-                    } else {
-                        titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে! 📉";
-                    }
+                    const titleEl = getEl('mid-standing-title');
+                    if (finalCgpa >= 2.6) titleEl.textContent = "কামব্যাক মাস্ট! 💪";
+                    else if (finalCgpa >= 2.2) titleEl.textContent = "রেড জোনে আছেন! 🚨";
+                    else titleEl.textContent = "আরেকটু হলেই লেটার ধরিয়ে দেবে! 📉";
                 } else {
                     standing = 'low';
-                    titleEl = getEl('low-cgpa-title');
-                    if(finalCgpa < 1.5) {
-                        titleEl.textContent = "RIP 💀";
-                    } else {
-                        titleEl.textContent = "জঘন্য রকমের পরিশ্রমী হন! 🤯";
-                    }
+                    const titleEl = getEl('low-cgpa-title');
+                    if(finalCgpa < 1.5) titleEl.textContent = "RIP 💀";
+                    else titleEl.textContent = "জঘন্য রকমের পরিশ্রমী হন! 🤯";
                 }
-
                 card = resultCards[standing];
-                cgpaEl = getEl(`cgpa-${standing}`);
-                tgpaEl = getEl(`tgpa-${standing}`);
-                creditsEl = getEl(`total-credits-${standing}`);
-                triCreditsEl = getEl(`trimester-credits-${standing}`); // Get new element
-                
-                animateCountUp(cgpaEl, finalCgpa > 4 ? 4 : finalCgpa); // Cap CGPA at 4.00
-                animateCountUp(tgpaEl, trimesterGpa > 4 ? 4 : trimesterGpa); // Cap TGPA at 4.00
-                
-                // Display the new total *attempted* credits
-                creditsEl.textContent = totalGpaCredits.toFixed(2).replace(/\.00$/, '');
-                // ADDED: Display trimester credits
-                triCreditsEl.textContent = trimesterGpaCredits.toFixed(2).replace(/\.00$/, ''); 
-
+                animateValue(getEl(`cgpa-${standing}`), Math.min(finalCgpa, 4.00), true);
+                animateValue(getEl(`tgpa-${standing}`), Math.min(trimesterGpa, 4.00), true);
+                animateValue(getEl(`total-credits-${standing}`), totalGpaCredits, totalGpaCredits % 1 !== 0);
+                animateValue(getEl(`trimester-credits-${standing}`), trimesterGpaCredits, trimesterGpaCredits % 1 !== 0);
+                animateValue(getEl(`trimester-earned-credits-${standing}`), trimesterCompletedCredits, trimesterCompletedCredits % 1 !== 0);
+                animateValue(getEl(`total-earned-credits-${standing}`), totalCompletedCredits, totalCompletedCredits % 1 !== 0);
                 card.style.display = 'block';
                 setTimeout(() => card.classList.add('fade-in-up'), 10);
                 card.scrollIntoView({ behavior: 'smooth', block: 'center' });
             };
 
-            const handleTargetCalculation = (targetCgpaInput, targetCreditsInput, resultEl, gpaEl) => {
+            const handleTargetCalculation = (targetCgpaInput, targetCreditsInput, resultEl, gpaEl, errorEl) => {
                 const targetCgpa = parseFloat(targetCgpaInput.value);
                 const nextCredits = parseFloat(targetCreditsInput.value);
-                
-                if (isNaN(targetCgpa) || isNaN(nextCredits) || nextCredits < 6 || targetCgpa > 4.00) {
-                    resultEl.classList.add('hidden');
-                    return;
-                }
-                
-                // Don't show if target is already met
-                if (targetCgpa <= calculationCache.finalCgpa) {
-                     resultEl.classList.remove('hidden');
-                     gpaEl.textContent = `Achieved!`;
-                     return;
-                }
-
+                const targetCgpaErrorEl = targetCgpaInput.nextElementSibling;
+                errorEl.textContent = ''; errorEl.classList.remove('visible');
+                if (targetCgpaErrorEl) { targetCgpaErrorEl.textContent = ''; targetCgpaErrorEl.classList.remove('visible'); }
+                let creditsValid = true;
+                if (isNaN(nextCredits) || nextCredits <= 0) { resultEl.classList.add('hidden'); if (targetCreditsInput.value.trim() !== '') { errorEl.textContent = 'Credits must be positive.'; errorEl.classList.add('visible'); } creditsValid = false; }
+                else if (nextCredits < 6) { errorEl.textContent = '(Min. 6 credits recommended)'; errorEl.classList.add('visible'); }
+                let cgpaValid = true;
+                if (isNaN(targetCgpa) || targetCgpa > 4.00 || targetCgpa < 0.00) { resultEl.classList.add('hidden'); if (targetCgpaInput.value.trim() !== '') { if (targetCgpaErrorEl) { targetCgpaErrorEl.textContent = 'Aeh! 🙂'; targetCgpaErrorEl.classList.add('visible'); } } cgpaValid = false; }
+                if (!creditsValid || !cgpaValid) return;
                 const targetTotalPoints = targetCgpa * (calculationCache.totalGpaCredits + nextCredits);
                 const requiredNextPoints = targetTotalPoints - calculationCache.currentTotalPoints;
                 const requiredGpa = requiredNextPoints / nextCredits;
-                
                 resultEl.classList.remove('hidden');
                 if (requiredGpa > 4.0) gpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)})`;
-                else if (requiredGpa < 0) gpaEl.textContent = `Achieved!`; // Should be caught by earlier check, but good failsafe
+                else if (requiredGpa < 0) gpaEl.textContent = `0.00 (F) or higher`;
                 else gpaEl.textContent = requiredGpa.toFixed(2);
             };
 
-            // --- Event Listeners (Calculator) --- //
-            [currentCgpaInput, completedCreditsInput].forEach(el => el.addEventListener('input', saveState));
-
-            addCourseForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                courses.push({ type: 'new', credit: parseFloat(courseCreditEl.value), grade: parseFloat(courseGradeEl.value) });
-                renderCourses(); hideResults(); saveState();
-                showNotification('Course added!');
-            });
-
-            // --- FIXED: Added warning for retakes w/o initial standing --- //
-            addRetakeForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const credit = parseFloat(retakeCreditEl.value);
-                const oldGrade = parseFloat(retakeOldGradeEl.value);
-                const newGrade = parseFloat(retakeNewGradeEl.value);
-                if (oldGrade >= newGrade) {
-                    showNotification("New grade must be higher.", 'error');
-                    return;
-                }
-
-                // New Warning
-                const hasInitialStanding = (parseFloat(completedCreditsInput.value) || 0) > 0 && currentCgpaInput.value.trim() !== '';
-                if (!hasInitialStanding) {
-                    showNotification("Retake added. Enter Current Standing for best results.", 'warning'); // Use warning type
-                } else {
-                    showNotification('Retake course added!');
-                }
-
-                courses.push({ type: 'retake', credit, oldGrade, newGrade });
-                renderCourses(); hideResults(); saveState();
-            });
-            
-            courseListContainer.addEventListener('click', (e) => {
-                const removeBtn = e.target.closest('.remove-btn');
-                if (removeBtn) {
-                    courses.splice(parseInt(removeBtn.dataset.index), 1);
-                    renderCourses(); hideResults(); saveState();
-                }
-            });
-
-            calculateBtn.addEventListener('click', handleCalculation);
-            
-            resetBtn.addEventListener('click', () => {
-                courses = [];
-                currentCgpaInput.value = '';
-                completedCreditsInput.value = '';
-                renderCourses();
-                hideResults();
-                saveState();
-                showNotification('Calculator has been reset.', 'success');
-            });
-            
-            // Probation Planner
-            getEl('next-credits').addEventListener('input', (e) => {
-                const nextCredits = parseFloat(e.target.value);
-                const resultEl = getEl('recovery-result');
-                const gpaEl = getEl('required-gpa');
-                if (isNaN(nextCredits) || nextCredits < 6) {
-                    resultEl.classList.add('hidden'); return;
-                }
+            const handleRecoveryCalculation = (nextCreditsInput, resultEl, gpaEl, errorEl) => {
+                const nextCredits = parseFloat(nextCreditsInput.value);
+                errorEl.textContent = ''; errorEl.classList.remove('visible'); resultEl.classList.add('hidden');
+                if (isNaN(nextCredits) || nextCredits <= 0) { if (nextCreditsInput.value.trim() !== '') { errorEl.textContent = 'Credits must be positive.'; errorEl.classList.add('visible'); } return; }
+                if (nextCredits < 6) { errorEl.textContent = '(Min. 6 credits recommended)'; errorEl.classList.add('visible'); }
                 const targetTotalPoints = 2.0 * (calculationCache.totalGpaCredits + nextCredits);
                 const requiredNextPoints = targetTotalPoints - calculationCache.currentTotalPoints;
                 const requiredGpa = requiredNextPoints / nextCredits;
                 resultEl.classList.remove('hidden');
                 if (requiredGpa > 4.0) gpaEl.textContent = `Impossible (${requiredGpa.toFixed(2)})`;
-                else if (requiredGpa <= 0) gpaEl.textContent = 'Any passing grade!';
+                else if (requiredGpa <= 1.0) gpaEl.textContent = 'Min. 1.00 (D)';
                 else gpaEl.textContent = requiredGpa.toFixed(2);
-            });
-
-            // Target Planners
-            ['good', 'mid'].forEach(standing => {
-                const targetCgpaInput = getEl(`target-cgpa-${standing}`);
-                const targetCreditsInput = getEl(`target-credits-${standing}`);
-                const resultEl = getEl(`target-result-${standing}`);
-                const gpaEl = getEl(`required-gpa-${standing}`);
-                [targetCgpaInput, targetCreditsInput].forEach(el => el.addEventListener('input', () => {
-                    handleTargetCalculation(targetCgpaInput, targetCreditsInput, resultEl, gpaEl);
-                }));
-            });
-
-            // --- --- --- --- --- --- --- --- --- ---
-            // --- --- --- GAMES LOGIC --- --- ---
-            // --- --- --- --- --- --- --- --- --- ---
-
-            // --- Game Modal Logic --- //
-            const gameModal = getEl('game-modal');
-            const openGameModalBtn = getEl('open-game-modal');
-            const closeGameModalBtn = getEl('close-game-modal');
-            const gameSelection = getEl('game-selection');
-            const gameSelectBtns = document.querySelectorAll('.game-select-btn');
-            const gameContainers = document.querySelectorAll('.game-container');
-            const wgLetterInput = getEl('wg-letter-input'); // Get word guess input here for global use
+            };
             
-            // --- Game State Flags --- //
-            let isSnakeGameActive = false;
-            let wamGameActive = false;
-            let isBreakoutGameActive = false;
-            let snakeGameLoop = null; // Declare all game loops/intervals here
-            let wamGameTimer = null;
-            let wamMoleTimer = null;
-            let breakoutGameLoop = null;
-            let paddleMoveInterval = null;
+            // --- Game Logic --- //
+            let isSnakeGameActive = false, wamGameActive = false, isBreakoutGameActive = false;
+            let snakeGameLoop = null, wamGameTimer = null, wamMoleTimer = null, breakoutGameLoop = null, paddleMoveInterval = null;
 
-
-            const selectGame = (gameKey) => { // gameKey will be 'tic-tac-toe', 'memory-match', 'snake', etc.
-                gameContainers.forEach(container => {
-                    container.classList.toggle('active', container.id === `game-${gameKey}`);
-                });
-
-                // Stop other active games and remove specific listeners
+            const selectGame = (gameKey) => {
+                gameContainers.forEach(container => container.classList.toggle('active', container.id === `game-${gameKey}`));
                 if (gameKey !== 'snake' && isSnakeGameActive) stopSnakeGame();
                 if (gameKey !== 'whac-a-mole' && wamGameActive) stopWamGame();
                 if (gameKey !== 'breakout' && isBreakoutGameActive) stopBreakoutGame();
-
-
-                // Start selected game and add specific listeners
                 if (gameKey === 'snake') startSnakeGame();
                 else if (gameKey === 'breakout') startBreakoutGame();
-
-
-                // Update button styles
                 gameSelectBtns.forEach(btn => {
                     btn.classList.toggle('btn-primary', btn.dataset.game === gameKey);
                     btn.classList.toggle('btn-neutral', btn.dataset.game !== gameKey);
                 });
             };
 
-             openGameModalBtn.addEventListener('click', () => {
-                 gameModal.classList.add('show');
-                  // Show info notification only if not on a large screen (assuming PC)
-                  if (window.innerWidth < 1024) { // Example breakpoint for large screens
-                     showNotification("Enjoy the games! (Best experience on PC)", "info"); // Updated message here
-                  }
-                 // Re-render icons *after* modal is shown
-                 lucide.createIcons();
-             });
-            closeGameModalBtn.addEventListener('click', () => {
-                gameModal.classList.remove('show');
-                // Stop all potential games when modal closes
-                if (isSnakeGameActive) stopSnakeGame();
-                if (wamGameActive) stopWamGame();
-                if (isBreakoutGameActive) stopBreakoutGame();
-            });
-            gameSelection.addEventListener('click', (e) => {
-                const btn = e.target.closest('.game-select-btn');
-                if (btn && btn.dataset.game) {
-                    selectGame(btn.dataset.game);
-                }
-            });
-
-            // --- Game Logic (Tic-Tac-Toe) --- //
-            const tttBoard = getEl('tic-tac-toe-board');
-            const tttCells = document.querySelectorAll('.ttt-cell');
-            const tttStatus = getEl('ttt-status');
-            const tttResetBtn = getEl('ttt-reset-btn');
-            const TTT_PLAYER = 'X';
-            const TTT_BOT = 'O';
-            let currentTTTPlayer = TTT_PLAYER; // Human starts
-            let tttBoardState = Array(9).fill(null);
-            let tttGameActive = true;
-            const tttWinningConditions = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-                [0, 4, 8], [2, 4, 6]  // Diagonals
-            ];
-
+            // Tic-Tac-Toe
+            const tttBoard = getEl('tic-tac-toe-board'), tttCells = document.querySelectorAll('.ttt-cell'), tttStatus = getEl('ttt-status'), tttResetBtn = getEl('ttt-reset-btn');
+            const TTT_PLAYER = 'X', TTT_BOT = 'O';
+            let currentTTTPlayer, tttBoardState, tttGameActive;
+            const tttWinningConditions = [ [0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6] ];
             const handleTTTCellClick = (e) => {
-                const cell = e.target.closest('.ttt-cell');
-                if (!cell || cell.classList.contains('disabled')) return; // Ignore clicks if disabled
-
-                const index = parseInt(cell.dataset.index); // Ensure index is number
-
-                if (tttBoardState[index] !== null || !tttGameActive || currentTTTPlayer !== TTT_PLAYER) {
-                     return; // Ignore clicks on occupied cells, inactive game, or bot's turn
-                }
-
-                 makeTTTMove(index, TTT_PLAYER);
-
-                 // Check game status after player move
-                 if (checkTTTWin(TTT_PLAYER)) {
-                     tttStatus.textContent = `You win! 🎉`;
-                     tttGameActive = false;
-                     disableTTTBoard();
-                     return;
-                 } else if (isTTTDraw()) {
-                     tttStatus.textContent = "It's a draw! 🤝";
-                     tttGameActive = false;
-                     disableTTTBoard();
-                     return;
-                 }
-
-                // If game continues, switch to bot's turn
-                switchTTTPlayer(TTT_BOT);
-                 // Delay bot move slightly for better UX
-                 setTimeout(botMove, 500);
+                const cell = e.target.closest('.ttt-cell'); if (!cell || cell.classList.contains('disabled')) return;
+                const index = parseInt(cell.dataset.index); if (tttBoardState[index] !== null || !tttGameActive || currentTTTPlayer !== TTT_PLAYER) return;
+                makeTTTMove(index, TTT_PLAYER);
+                if (checkTTTWin(TTT_PLAYER)) { tttStatus.textContent = `You win! 🎉`; tttGameActive = false; disableTTTBoard(); return; }
+                else if (isTTTDraw()) { tttStatus.textContent = "It's a draw! 🤝"; tttGameActive = false; disableTTTBoard(); return; }
+                switchTTTPlayer(TTT_BOT); setTimeout(botMove, 500);
             };
-
-            const makeTTTMove = (index, player) => {
-                 tttBoardState[index] = player;
-                 const cell = tttCells[index];
-                 cell.querySelector('span').textContent = player;
-                 cell.classList.add('occupied', player);
-                 cell.classList.add('disabled'); // Disable cell after move
-            };
-
-            const switchTTTPlayer = (nextPlayer) => {
-                 currentTTTPlayer = nextPlayer;
-                 tttStatus.textContent = nextPlayer === TTT_PLAYER ? "Your Turn (X)" : "Bot's Turn (O)";
-                 // Disable/Enable board based on whose turn it is
-                 if (nextPlayer === TTT_BOT) {
-                     disableTTTBoard(false); // Disable all except occupied
-                 } else {
-                     enableTTTBoard();
-                 }
-            };
-
-            const disableTTTBoard = (all = true) => {
-                 tttCells.forEach(cell => {
-                     if (all || !cell.classList.contains('occupied')) {
-                          cell.classList.add('disabled');
-                     }
-                 });
-            };
-
-            const enableTTTBoard = () => {
-                 tttCells.forEach(cell => {
-                     if (!cell.classList.contains('occupied')) {
-                          cell.classList.remove('disabled');
-                     }
-                 });
-            };
-
-            const botMove = () => {
-                 if (!tttGameActive || currentTTTPlayer !== TTT_BOT) return;
-
-                 let bestMove = findBestMove();
-
-                 if (bestMove !== -1) {
-                     makeTTTMove(bestMove, TTT_BOT);
-
-                     // Check game status after bot move
-                     if (checkTTTWin(TTT_BOT)) {
-                         tttStatus.textContent = `Bot wins! 🤖`;
-                         tttGameActive = false;
-                         disableTTTBoard(); // Disable fully on game over
-                         return;
-                     } else if (isTTTDraw()) {
-                         tttStatus.textContent = "It's a draw! 🤝";
-                         tttGameActive = false;
-                         disableTTTBoard();
-                         return;
-                     }
-                 }
-                 // Switch back to player's turn
-                 switchTTTPlayer(TTT_PLAYER);
-            };
-
-            const findBestMove = () => {
-                // 1. Check if bot can win
-                for (let i = 0; i < 9; i++) {
-                    if (tttBoardState[i] === null) {
-                        tttBoardState[i] = TTT_BOT; // Try the move
-                        if (checkTTTWin(TTT_BOT)) {
-                            tttBoardState[i] = null; // Undo
-                            return i; // Winning move
-                        }
-                        tttBoardState[i] = null; // Undo
-                    }
-                }
-
-                // 2. Check if player can win and block
-                for (let i = 0; i < 9; i++) {
-                    if (tttBoardState[i] === null) {
-                        tttBoardState[i] = TTT_PLAYER; // Try player's move
-                        if (checkTTTWin(TTT_PLAYER)) {
-                            tttBoardState[i] = null; // Undo
-                            return i; // Blocking move
-                        }
-                        tttBoardState[i] = null; // Undo
-                    }
-                }
-
-                // 3. Take center if available
-                if (tttBoardState[4] === null) {
-                    return 4;
-                }
-
-                // 4. Take a random corner if available
-                 const corners = [0, 2, 6, 8];
-                 const availableCorners = corners.filter(i => tttBoardState[i] === null);
-                 if (availableCorners.length > 0) {
-                      return availableCorners[Math.floor(Math.random() * availableCorners.length)];
-                 }
-
-                 // 5. Take any random available cell
-                 const availableCells = [];
-                 for (let i = 0; i < 9; i++) {
-                     if (tttBoardState[i] === null) {
-                          availableCells.push(i);
-                     }
-                 }
-                if (availableCells.length > 0) {
-                     return availableCells[Math.floor(Math.random() * availableCells.length)];
-                }
-
-                return -1; // Should not happen if game isn't draw
-            };
-
-            const checkTTTWin = (player) => {
-                 return tttWinningConditions.some(condition => {
-                     return condition.every(index => tttBoardState[index] === player);
-                 });
-            };
-
-             const isTTTDraw = () => {
-                 return tttBoardState.every(cellState => cellState !== null);
-            };
-
-
-            const resetTTTGame = () => {
-                tttBoardState = Array(9).fill(null);
-                tttGameActive = true;
-                currentTTTPlayer = TTT_PLAYER; // Human always starts
-                tttCells.forEach(cell => {
-                    cell.querySelector('span').textContent = 'X'; // Use 'X' for sizing, will be hidden by CSS
-                    cell.classList.remove('occupied', 'X', 'O', 'disabled'); // Remove disabled class
-                });
-                tttStatus.textContent = `Your Turn (X)`;
-                 enableTTTBoard(); // Make sure board is enabled on reset
-            };
-
-            const initializeTTTGame = () => {
-                tttBoard.addEventListener('click', handleTTTCellClick);
-                tttResetBtn.addEventListener('click', resetTTTGame);
-                resetTTTGame(); // Initialize the board state
-            };
-
-            // --- Game Logic (Memory Match) --- //
-            const memoryBoard = getEl('memory-board');
-            const memoryStatus = getEl('memory-status');
-            const memoryResetBtn = getEl('memory-reset-btn');
-            const memoryDifficultySelect = getEl('memory-difficulty-select');
-
-            const memoryAllEmojis = ['🎓', '💻', '📚', '💡', '🧪', '📈', '🚀', '🧠', '🧩', '🏆']; // 10 pairs
-            const memoryDifficultySettings = {
-                easy: { pairs: 6, cols: 4, gridClass: 'grid-cols-4' },
-                medium: { pairs: 8, cols: 4, gridClass: 'grid-cols-4' },
-                hard: { pairs: 10, cols: 5, gridClass: 'grid-cols-5' }
-            };
-            let currentMemoryDifficulty = 'easy';
-            let memoryCards = [];
-            let flippedCards = [];
-            let matchedPairs = 0;
-            let memoryMoves = 0;
-            let canFlip = true;
-
-            const startMemoryGame = () => {
-                const settings = memoryDifficultySettings[currentMemoryDifficulty];
-                const emojisForGame = memoryAllEmojis.slice(0, settings.pairs);
-                memoryCards = shuffle([...emojisForGame, ...emojisForGame]);
-
-                flippedCards = [];
-                matchedPairs = 0;
-                memoryMoves = 0;
-                canFlip = true;
-                memoryStatus.textContent = "Moves: 0";
-                memoryBoard.innerHTML = '';
-
-                // Apply grid styles
-                memoryBoard.style.gridTemplateColumns = `repeat(${settings.cols}, 1fr)`;
-
-                memoryCards.forEach((emoji, index) => {
-                    const card = document.createElement('div');
-                    card.classList.add('memory-card');
-                    card.dataset.index = index;
-                    card.innerHTML = `
-                        <div class="memory-card-face memory-card-front">${emoji}</div>
-                        <div class="memory-card-face memory-card-back"><i data-lucide="help-circle"></i></div>
-                    `;
-                    card.addEventListener('click', () => flipMemoryCard(card, emoji));
-                    memoryBoard.appendChild(card);
-                });
-                lucide.createIcons(); // Create icons after adding them to the board
-            };
-
-            const flipMemoryCard = (card, emoji) => {
-                if (!canFlip || card.classList.contains('is-flipped') || card.classList.contains('is-matched')) {
-                    return;
-                }
-
-                card.classList.add('is-flipped');
-                flippedCards.push({ card, emoji });
-
-                if (flippedCards.length === 2) {
-                    canFlip = false;
-                    memoryMoves++;
-                    memoryStatus.textContent = `Moves: ${memoryMoves}`;
-                    checkForMemoryMatch();
-                }
-            };
-
-            const checkForMemoryMatch = () => {
-                const [first, second] = flippedCards;
-                if (first.emoji === second.emoji) {
-                    disableMemoryCards(first.card, second.card);
-                } else {
-                    unflipMemoryCards(first.card, second.card);
-                }
-            };
-
-            const disableMemoryCards = (cardOne, cardTwo) => {
-                cardOne.classList.add('is-matched');
-                cardTwo.classList.add('is-matched');
-                matchedPairs++;
-                flippedCards = [];
-                canFlip = true;
-
-                if (matchedPairs === memoryDifficultySettings[currentMemoryDifficulty].pairs) {
-                    setTimeout(() => {
-                        memoryStatus.textContent = `You won in ${memoryMoves} moves! 🎉`;
-                    }, 500);
-                }
-            };
-
-            const unflipMemoryCards = (cardOne, cardTwo) => {
-                setTimeout(() => {
-                    cardOne.classList.remove('is-flipped');
-                    cardTwo.classList.remove('is-flipped');
-                    flippedCards = [];
-                    canFlip = true;
-                }, 1000);
-            };
-
-            const initializeMemoryGame = () => {
-                memoryResetBtn.addEventListener('click', startMemoryGame);
-
-                memoryDifficultySelect.addEventListener('click', (e) => {
-                    const btn = e.target.closest('button');
-                    if (!btn || !btn.dataset.difficulty) return;
-
-                    currentMemoryDifficulty = btn.dataset.difficulty;
-
-                    // Update button styles
-                    memoryDifficultySelect.querySelectorAll('button').forEach(b => {
-                        b.classList.remove('btn-primary');
-                        b.classList.add('btn-neutral');
-                    });
-                    btn.classList.add('btn-primary');
-                    btn.classList.remove('btn-neutral');
-
-                    startMemoryGame();
-                });
-
-                startMemoryGame();
-            };
-
-            // --- Game Logic (Snake) --- //
-            const snakeCanvas = getEl('snake-canvas');
-            const snakeCtx = snakeCanvas.getContext('2d');
-            const snakeStatus = getEl('game-status-snake');
-            const snakeResetBtn = getEl('snake-reset-btn');
-
-            const snakeGridSize = 20; // Renamed to avoid conflict
-            let snake, food, score, direction, gameSpeed;
-            // isSnakeGameActive and snakeGameLoop declared globally
-
-            const resetSnakeGame = () => {
-                snake = [{ x: 10, y: 10 }]; // Start in middle
-                food = getRandomFoodPos();
-                score = 0;
-                direction = 'right';
-                gameSpeed = 150; // ms per frame
-                snakeStatus.textContent = `Score: 0`;
-                if (snakeGameLoop) clearInterval(snakeGameLoop);
-                snakeGameLoop = null; // Ensure it's null after clearing
-                 isSnakeGameActive = false; // Ensure it's false on reset
-            };
-
-            const startSnakeGame = () => {
-                if (isSnakeGameActive && snakeGameLoop) return; // Don't start if already running
-                resetSnakeGame();
-                isSnakeGameActive = true;
-                document.addEventListener('keydown', handleSnakeKeyInput); // Add listener on start
-                snakeGameLoop = setInterval(snakeGameLoopFunction, gameSpeed); // Use snakeGameLoopFunction
-            };
-
-            const stopSnakeGame = () => {
-                isSnakeGameActive = false;
-                if (snakeGameLoop) clearInterval(snakeGameLoop);
-                snakeGameLoop = null;
-                document.removeEventListener('keydown', handleSnakeKeyInput); // Clean up listener
-            };
-
-            const getRandomFoodPos = () => {
-                return {
-                    x: Math.floor(Math.random() * (snakeCanvas.width / snakeGridSize)),
-                    y: Math.floor(Math.random() * (snakeCanvas.height / snakeGridSize))
-                };
-            };
-
-            const drawSnake = () => { // Renamed from draw
-                if (!isSnakeGameActive) return;
-                // Clear canvas
-                snakeCtx.fillStyle = body.dataset.theme === 'dark' ? 'rgba(26, 26, 26, 0.7)' : '#fdfdff';
-                snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height);
-
-                // Draw food
-                snakeCtx.fillStyle = '#e53e3e'; // Red
-                snakeCtx.fillRect(food.x * snakeGridSize, food.y * snakeGridSize, snakeGridSize, snakeGridSize);
-
-                // Draw snake
-                snake.forEach((segment, index) => {
-                    snakeCtx.fillStyle = index === 0 ? '#4f46e5' : '#6366f1'; // Head and body
-                    snakeCtx.fillRect(segment.x * snakeGridSize, segment.y * snakeGridSize, snakeGridSize, snakeGridSize);
-                    snakeCtx.strokeStyle = body.dataset.theme === 'dark' ? '#1a1a1a' : '#fff'; // Border
-                    snakeCtx.strokeRect(segment.x * snakeGridSize, segment.y * snakeGridSize, snakeGridSize, snakeGridSize);
-                });
-            };
-
-            const updateSnake = () => { // Renamed from update
-                if (!isSnakeGameActive) return;
-                const head = { ...snake[0] };
-                switch (direction) {
-                    case 'up': head.y--; break;
-                    case 'down': head.y++; break;
-                    case 'left': head.x--; break;
-                    case 'right': head.x++; break;
-                }
-
-                // Check for wall collision
-                if (head.x < 0 || head.x >= snakeCanvas.width / snakeGridSize || head.y < 0 || head.y >= snakeCanvas.height / snakeGridSize) {
-                    gameOverSnake(); // Renamed
-                    return;
-                }
-
-
-                // Check for self-collision
-                for (let i = 1; i < snake.length; i++) {
-                    if (head.x === snake[i].x && head.y === snake[i].y) {
-                        gameOverSnake(); // Renamed
-                        return;
-                    }
-                }
-
-                snake.unshift(head); // Add new head
-
-                // Check for food collision
-                if (head.x === food.x && head.y === food.y) {
-                    score++;
-                    snakeStatus.textContent = `Score: ${score}`;
-                    food = getRandomFoodPos();
-                } else {
-                    snake.pop(); // Remove tail
-                }
-            };
-
-            const gameOverSnake = () => { // Renamed
-                stopSnakeGame(); // Use stop function to clean up interval and listener
-                snakeStatus.textContent = `Game Over! Score: ${score}`;
-            };
-
-            const snakeGameLoopFunction = () => { // Renamed from gameLoop
-                if (!isSnakeGameActive) {
-                   // This check is good, but the interval should already be cleared by stopSnakeGame
-                   return;
-                }
-                updateSnake();
-                drawSnake();
-            };
-
-            const handleSnakeKeyInput = (e) => {
-                // No need to check isSnakeGameActive here, listener is removed when inactive
-                const key = e.key;
-                let directionChanged = false;
-                if ((key === 'ArrowUp' || key === 'w') && direction !== 'down') {
-                    direction = 'up';
-                    directionChanged = true;
-                } else if ((key === 'ArrowDown' || key === 's') && direction !== 'up') {
-                    direction = 'down';
-                    directionChanged = true;
-                } else if ((key === 'ArrowLeft' || key === 'a') && direction !== 'right') {
-                    direction = 'left';
-                    directionChanged = true;
-                } else if ((key === 'ArrowRight' || key === 'd') && direction !== 'left') {
-                    direction = 'right';
-                    directionChanged = true;
-                }
-
-                if (directionChanged) {
-                    e.preventDefault(); // Prevent page scrolling
-                }
-            };
-
-            const initializeSnakeGame = () => {
-                snakeResetBtn.addEventListener('click', startSnakeGame);
-
-                // On-screen controls
-                getEl('snake-up').addEventListener('click', () => { if(direction !== 'down') direction = 'up'; });
-                getEl('snake-down').addEventListener('click', () => { if(direction !== 'up') direction = 'down'; });
-                getEl('snake-left').addEventListener('click', () => { if(direction !== 'right') direction = 'left'; });
-                getEl('snake-right').addEventListener('click', () => { if(direction !== 'left') direction = 'right'; });
-                 // Ensure game is reset state initially
-                resetSnakeGame();
-            };
-
-            // --- Game Logic (Whac-A-Mole) --- //
-            const wamBoard = getEl('wam-board');
-            const wamStatus = getEl('game-status-wam');
-            const wamTimer = getEl('game-status-timer-wam');
-            const wamStartBtn = getEl('wam-start-btn');
-
-            let wamScore = 0;
-            let wamTimeLeft = 30;
-            // wamGameTimer, wamMoleTimer, wamGameActive declared globally
-            let wamHoles = [];
-
-            const initializeWamGame = () => {
-                wamBoard.innerHTML = ''; // Clear board
-                wamHoles = [];
-                for (let i = 0; i < 9; i++) {
-                    const hole = document.createElement('div');
-                    hole.classList.add('wam-hole');
-                    const mole = document.createElement('div');
-                    mole.classList.add('wam-mole');
-                    mole.textContent = '😵'; // Add a "dizzy" face to the mole
-                    hole.appendChild(mole);
-                    wamBoard.appendChild(hole);
-                    wamHoles.push(mole);
-                }
-
-                wamStartBtn.addEventListener('click', startWamGame);
-                wamBoard.addEventListener('click', whackMole);
-                 // Reset display on init
-                wamStatus.textContent = '0';
-                wamTimer.textContent = 'Time: 30s';
-                wamStartBtn.disabled = false;
-                wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game';
-                lucide.createIcons();
-            };
-
-            const startWamGame = () => {
-                if (wamGameActive) return;
-
-                wamScore = 0;
-                wamTimeLeft = 30;
-                wamGameActive = true;
-                wamStatus.textContent = wamScore;
-                wamTimer.textContent = `Time: ${wamTimeLeft}s`;
-                wamStartBtn.disabled = true;
-                wamStartBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                wamStartBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Playing...';
-                lucide.createIcons();
-
-
-                // Game timer
-                wamGameTimer = setInterval(() => {
-                    wamTimeLeft--;
-                    wamTimer.textContent = `Time: ${wamTimeLeft}s`;
-                    if (wamTimeLeft <= 0) {
-                        stopWamGame();
-                    }
-                }, 1000);
-
-                // Mole popping
-                popMole();
-            };
-
-            const stopWamGame = () => {
-                wamGameActive = false;
-                if (wamGameTimer) clearInterval(wamGameTimer);
-                if (wamMoleTimer) clearTimeout(wamMoleTimer);
-                wamGameTimer = null;
-                wamMoleTimer = null;
-                wamTimer.textContent = `Game Over! Final Score: ${wamScore}`;
-                wamStartBtn.disabled = false;
-                wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game';
-                lucide.createIcons();
-
-                // Hide any visible mole
-                wamHoles.forEach(mole => mole.classList.remove('up'));
-            };
-
-            const popMole = () => {
-                if (!wamGameActive) return;
-
-                // Clear previous timeout and hide moles
-                // clearTimeout(wamMoleTimer); // Don't clear here, allow multiple moles potentially
-                wamHoles.forEach(mole => mole.classList.remove('up'));
-
-                const randomHole = wamHoles[Math.floor(Math.random() * wamHoles.length)];
-                randomHole.classList.add('up');
-
-                // Mole stays up for a random time
-                const upTime = Math.random() * (1000 - 400) + 400; // Time mole stays *up*
-                setTimeout(() => {
-                    if(wamGameActive) randomHole.classList.remove('up');
-                }, upTime);
-
-                // Time until *next* mole pops up
-                const nextPopTime = Math.random() * (1000 - 300) + 300;
-                wamMoleTimer = setTimeout(() => {
-                    if (wamGameActive) popMole(); // Pop another one after a delay
-                }, nextPopTime);
-            };
-
-
-            const whackMole = (e) => {
-                if (!wamGameActive) return;
-
-                 // Target the hole, then check if the mole inside is 'up'
-                const hole = e.target.closest('.wam-hole');
-                if (!hole) return;
-                const mole = hole.querySelector('.wam-mole');
-
-                if (mole && mole.classList.contains('up')) {
-                    wamScore++;
-                    wamStatus.textContent = wamScore;
-                    mole.classList.remove('up'); // Immediately hide the whacked mole
-                    // Don't clear wamMoleTimer here, let the next one pop naturally
-                }
-            };
-
-
-            // --- Game Logic (Word Guess) --- //
-            const wgStatus = getEl('wg-status');
-            const wgWordDisplay = getEl('wg-word-display');
-            const wgGuessedLettersEl = getEl('wg-guessed-letters');
-            const wgInputArea = getEl('wg-input-area');
-            // const wgLetterInput = getEl('wg-letter-input'); // Already defined globally
-            const wgResetBtn = getEl('wg-reset-btn');
-
-            // Expanded Word List
-            const wgWordList = [
-                'APPLE', 'BANANA', 'ORANGE', 'GRAPE', 'LEMON', 'MANGO', 'PEACH', 'BERRY',
-                'CHERRY', 'PLUM', 'HOUSE', 'TABLE', 'CHAIR', 'LIGHT', 'FLOOR', 'DOOR',
-                'WINDOW', 'ROOF', 'GARDEN', 'WATER', 'CLOUD', 'FLOWER', 'TREE', 'GRASS',
-                'STONE', 'RIVER', 'OCEAN', 'BEACH', 'MOUNTAIN', 'VALLEY', 'SUNNY', 'HAPPY',
-                'MUSIC', 'DANCE', 'SMILE', 'LAUGH', 'FRIEND', 'FAMILY', 'SCHOOL', 'STUDY',
-                'LEARN', 'TEACH', 'WRITE', 'READ', 'SPEAK', 'LISTEN', 'COMPUTER', 'PHONE',
-                'EMAIL', 'BUTTON' // Total 50 words
-            ];
-
-            let wgTargetWord = '';
-            let wgWordState = [];
-            let wgGuessedLetters = [];
-            let wgGuessesLeft = 0;
-            let wgGameActive = true;
-
-            const startWordGuessGame = () => {
-                wgGameActive = true;
-                wgGuessesLeft = 6;
-                wgGuessedLetters = [];
-                wgTargetWord = wgWordList[Math.floor(Math.random() * wgWordList.length)];
-                wgWordState = Array(wgTargetWord.length).fill('_');
-
-                // --- Reveal initial letters ---
-                let lettersToReveal = 0;
-                if (wgTargetWord.length <= 4) {
-                    lettersToReveal = 1;
-                } else if (wgTargetWord.length <= 7) {
-                    lettersToReveal = 2;
-                } else {
-                    lettersToReveal = 3;
-                }
-
-                const indices = Array.from(Array(wgTargetWord.length).keys()); // [0, 1, 2, ...]
-                shuffle(indices); // Randomize indices
-                for (let i = 0; i < lettersToReveal; i++) {
-                    const revealIndex = indices[i];
-                    wgWordState[revealIndex] = wgTargetWord[revealIndex];
-                    // Also add revealed letters to guessed list so user doesn't guess them again
-                    if (!wgGuessedLetters.includes(wgTargetWord[revealIndex])) {
-                        wgGuessedLetters.push(wgTargetWord[revealIndex]);
-                    }
-                }
-                // --- End reveal logic ---
-
-                wgStatus.textContent = `Guesses left: ${wgGuessesLeft}`;
-                wgStatus.classList.remove('text-green-500', 'text-red-500');
-                wgGuessedLettersEl.textContent = `Guessed: ${wgGuessedLetters.join(', ')}`;
-                wgInputArea.style.display = 'flex';
-                wgLetterInput.value = '';
-                wgLetterInput.disabled = false;
-
-                updateWordDisplay();
-            };
-
-            const updateWordDisplay = () => {
-                wgWordDisplay.innerHTML = '';
-                wgWordState.forEach(letter => {
-                    const letterEl = document.createElement('div');
-                    letterEl.classList.add('wg-letter');
-                    letterEl.textContent = letter;
-                    wgWordDisplay.appendChild(letterEl);
-                });
-            };
-
-            const handleWordGuess = (e) => {
-                e.preventDefault();
-                if (!wgGameActive) return;
-
-                const letter = wgLetterInput.value.toUpperCase();
-                wgLetterInput.value = '';
-
-                if (!letter || letter.length !== 1 || !/[A-Z]/.test(letter)) {
-                    showNotification("Please enter a single letter.", "error");
-                    return;
-                }
-
-                if (wgGuessedLetters.includes(letter)) {
-                    showNotification("You already guessed that letter.", "error");
-                    return;
-                }
-
-                wgGuessedLetters.push(letter);
-                wgGuessedLettersEl.textContent = `Guessed: ${wgGuessedLetters.join(', ')}`;
-
-                if (wgTargetWord.includes(letter)) {
-                    // Correct guess
-                    let correctGuess = false;
-                    for (let i = 0; i < wgTargetWord.length; i++) {
-                        if (wgTargetWord[i] === letter) {
-                            wgWordState[i] = letter;
-                            correctGuess = true;
-                        }
-                    }
-                    if(correctGuess) updateWordDisplay();
-                } else {
-                    // Incorrect guess
-                    wgGuessesLeft--;
-                    wgStatus.textContent = `Guesses left: ${wgGuessesLeft}`;
-                }
-
-                checkWordGuessWinLoss();
-            };
-
-            const checkWordGuessWinLoss = () => {
-                if (wgWordState.join('') === wgTargetWord) {
-                    wgStatus.textContent = "You win! 🎉";
-                    wgStatus.classList.add('text-green-500');
-                    wgGameActive = false;
-                    wgInputArea.style.display = 'none';
-                    wgLetterInput.disabled = true;
-                } else if (wgGuessesLeft <= 0) {
-                    wgStatus.textContent = `You lose! The word was: ${wgTargetWord}`;
-                    wgStatus.classList.add('text-red-500');
-                    wgGameActive = false;
-                    wgInputArea.style.display = 'none';
-                    wgLetterInput.disabled = true;
-                }
-            };
-
-            const initializeWordGuessGame = () => {
-                wgInputArea.addEventListener('submit', handleWordGuess);
-                wgResetBtn.addEventListener('click', startWordGuessGame);
-                startWordGuessGame();
-            };
-
-             // --- Game Logic (Breakout) --- //
-            const breakoutCanvas = getEl('breakout-canvas');
-            const breakoutCtx = breakoutCanvas.getContext('2d');
-            const breakoutScoreEl = getEl('breakout-score');
-            const breakoutLivesEl = getEl('breakout-lives');
-            const breakoutResetBtn = getEl('breakout-reset-btn');
-            const breakoutLeftBtn = getEl('breakout-left'); // Get mobile control buttons
-            const breakoutRightBtn = getEl('breakout-right');
-
-            let ballRadius = 8;
-            let ballX, ballY, ballDX, ballDY;
-
-            let paddleHeight = 10;
-            let paddleWidth = 75;
-            let paddleX;
-            let paddleSpeed = 7; // Speed for button controls
-            let isMovingLeft = false; // Track button presses
-            let isMovingRight = false;
-            // paddleMoveInterval, isBreakoutGameActive, breakoutGameLoop declared globally
-
-            let brickRowCount = 5;
-            let brickColumnCount = 7;
-            let brickWidth = 55;
-            let brickHeight = 15;
-            let brickPadding = 5;
-            let brickOffsetTop = 30;
-            let brickOffsetLeft = 30;
-            let bricks = [];
-            const BONUS_BRICK_COUNT = 3; // How many bonus bricks to add
-            const BONUS_POINTS = 5; // Points for hitting a bonus brick
-            const NORMAL_POINTS = 1; // Points for hitting a normal brick
-
-
-            function initializeBricks() {
-                 bricks = [];
-                 let bonusBricksPlaced = 0;
-                 let totalBricks = brickColumnCount * brickRowCount;
-
-                 for (let c = 0; c < brickColumnCount; c++) {
-                     bricks[c] = [];
-                     for (let r = 0; r < brickRowCount; r++) {
-                         let isBonus = false;
-                         // Decide if this brick should be a bonus brick
-                         if (bonusBricksPlaced < BONUS_BRICK_COUNT) {
-                             // Simple random chance, could be improved to guarantee distribution
-                             if (Math.random() < (BONUS_BRICK_COUNT - bonusBricksPlaced) / (totalBricks - (c * brickRowCount + r))) {
-                                 isBonus = true;
-                                 bonusBricksPlaced++;
-                             }
-                         }
-                         bricks[c][r] = { x: 0, y: 0, status: 1, bonus: isBonus }; // Add bonus property
-                     }
-                 }
-                  // If not all bonus bricks were placed due to chance, force placement
-                 while (bonusBricksPlaced < BONUS_BRICK_COUNT) {
-                     let c = Math.floor(Math.random() * brickColumnCount);
-                     let r = Math.floor(Math.random() * brickRowCount);
-                     if (bricks[c] && bricks[c][r] && !bricks[c][r].bonus) { // Add checks
-                         bricks[c][r].bonus = true;
-                         bonusBricksPlaced++;
-                     }
-                 }
-            }
-
-
-            function resetBreakoutGame() {
-                 breakoutScore = 0;
-                 lives = 3;
-                 ballX = breakoutCanvas.width / 2;
-                 ballY = breakoutCanvas.height - 30;
-                 ballDX = 2.5; // Slightly faster initial speed
-                 ballDY = -2.5;
-                 paddleX = (breakoutCanvas.width - paddleWidth) / 2;
-                 initializeBricks(); // Initializes bricks with bonus property
-                 breakoutScoreEl.textContent = `Score: ${breakoutScore}`;
-                 breakoutLivesEl.textContent = `Lives: ${lives}`;
-                 if (breakoutGameLoop) cancelAnimationFrame(breakoutGameLoop);
-                 breakoutGameLoop = null; // Ensure it's null
-                 isBreakoutGameActive = false; // Ensure inactive on reset
-                 isMovingLeft = false;
-                 isMovingRight = false;
-                 if (paddleMoveInterval) clearInterval(paddleMoveInterval);
-                 paddleMoveInterval = null;
-            }
-
-             function startBreakoutGame() {
-                  if (isBreakoutGameActive && breakoutGameLoop) return; // Don't restart if active
-                  resetBreakoutGame();
-                  isBreakoutGameActive = true;
-                  // Add listeners specifically for Breakout
-                  breakoutCanvas.addEventListener('mousemove', handleBreakoutMouseMove); // Listen on canvas
-                  breakoutCanvas.addEventListener('touchmove', handleBreakoutTouchMove, { passive: false }); // Listen on canvas
-                  breakoutCanvas.addEventListener('touchstart', handleBreakoutTouchMove, { passive: false }); // Also needed for initial touch position
-
-                  // Add listeners for mobile buttons
-                  breakoutLeftBtn.addEventListener('touchstart', () => isMovingLeft = true, { passive: true }); // Use passive for touchstart if not preventing default
-                  breakoutLeftBtn.addEventListener('touchend', () => isMovingLeft = false);
-                  breakoutRightBtn.addEventListener('touchstart', () => isMovingRight = true, { passive: true });
-                  breakoutRightBtn.addEventListener('touchend', () => isMovingRight = false);
-                  // Mouse equivalents for desktop testing/use
-                  breakoutLeftBtn.addEventListener('mousedown', () => isMovingLeft = true);
-                  breakoutLeftBtn.addEventListener('mouseup', () => isMovingLeft = false);
-                  breakoutLeftBtn.addEventListener('mouseleave', () => isMovingLeft = false); // Stop if mouse leaves button
-                  breakoutRightBtn.addEventListener('mousedown', () => isMovingRight = true);
-                  breakoutRightBtn.addEventListener('mouseup', () => isMovingRight = false);
-                  breakoutRightBtn.addEventListener('mouseleave', () => isMovingRight = false);
-
-                  // Start interval for button-based movement
-                  paddleMoveInterval = setInterval(movePaddleWithButtons, 20); // Move every 20ms
-
-                  breakoutGameLoop = requestAnimationFrame(drawBreakout); // Start the loop
-             }
-
-            function stopBreakoutGame() {
-                 isBreakoutGameActive = false;
-                 if (breakoutGameLoop) cancelAnimationFrame(breakoutGameLoop);
-                 breakoutGameLoop = null;
-                  if (paddleMoveInterval) clearInterval(paddleMoveInterval); // Clear button move interval
-                 paddleMoveInterval = null;
-                 isMovingLeft = false;
-                 isMovingRight = false;
-
-                 // Remove listeners specific to Breakout from the canvas
-                 breakoutCanvas.removeEventListener('mousemove', handleBreakoutMouseMove);
-                 breakoutCanvas.removeEventListener('touchmove', handleBreakoutTouchMove);
-                 breakoutCanvas.removeEventListener('touchstart', handleBreakoutTouchMove);
-            }
-
-            function movePaddleWithButtons() {
-                 if (!isBreakoutGameActive) return;
-                 if (isMovingLeft) {
-                     paddleX -= paddleSpeed;
-                     if (paddleX < 0) paddleX = 0;
-                 } else if (isMovingRight) {
-                     paddleX += paddleSpeed;
-                     if (paddleX + paddleWidth > breakoutCanvas.width) {
-                         paddleX = breakoutCanvas.width - paddleWidth;
-                     }
-                 }
-            }
-
-
-            function drawBall() {
-                 breakoutCtx.beginPath();
-                 breakoutCtx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2);
-                 breakoutCtx.fillStyle = '#4f46e5';
-                 breakoutCtx.fill();
-                 breakoutCtx.closePath();
-            }
-
-            function drawPaddle() {
-                 breakoutCtx.beginPath();
-                 breakoutCtx.rect(paddleX, breakoutCanvas.height - paddleHeight, paddleWidth, paddleHeight);
-                 breakoutCtx.fillStyle = '#10b981';
-                 breakoutCtx.fill();
-                 breakoutCtx.closePath();
-            }
-
-            function drawBricks() {
-                 const brickColors = ['#ef4444', '#f59e0b', '#84cc16', '#22c55e', '#0ea5e9']; // Example colors
-                 const bonusColor = '#FFD700'; // Gold color for bonus bricks
-
-                 for (let c = 0; c < brickColumnCount; c++) {
-                     for (let r = 0; r < brickRowCount; r++) {
-                         if (bricks[c][r].status === 1) {
-                             let brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-                             let brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-                             bricks[c][r].x = brickX;
-                             bricks[c][r].y = brickY;
-                             breakoutCtx.beginPath();
-                             breakoutCtx.rect(brickX, brickY, brickWidth, brickHeight);
-                             // Use bonus color if it's a bonus brick
-                             breakoutCtx.fillStyle = bricks[c][r].bonus ? bonusColor : brickColors[r % brickColors.length];
-                             breakoutCtx.fill();
-                             breakoutCtx.closePath();
-                         }
-                     }
-                 }
-            }
-
-
-            function collisionDetection() {
-                 for (let c = 0; c < brickColumnCount; c++) {
-                     for (let r = 0; r < brickRowCount; r++) {
-                         let b = bricks[c][r];
-                         if (b.status === 1) {
-                             if (ballX + ballRadius > b.x && ballX - ballRadius < b.x + brickWidth && ballY + ballRadius > b.y && ballY - ballRadius < b.y + brickHeight) {
-                                 ballDY = -ballDY;
-                                 b.status = 0; // Brick is hit
-
-                                 // Award points based on whether it's a bonus brick
-                                 breakoutScore += b.bonus ? BONUS_POINTS : NORMAL_POINTS;
-                                 breakoutScoreEl.textContent = `Score: ${breakoutScore}`;
-
-                                 if (b.bonus) {
-                                      // Optional: Add a visual effect or sound for bonus
-                                      showNotification(`+${BONUS_POINTS} Bonus!`, 'success');
-                                 }
-
-                                 // Check for win condition (all bricks cleared)
-                                 let totalBricksRemaining = 0;
-                                 for(let col = 0; col < brickColumnCount; col++) {
-                                     for(let row = 0; row < brickRowCount; row++) {
-                                         if (bricks[col][row].status === 1) {
-                                             totalBricksRemaining++;
-                                         }
-                                     }
-                                 }
-                                 if (totalBricksRemaining === 0) {
-                                     breakoutScoreEl.textContent = `YOU WIN! Score: ${breakoutScore}`;
-                                     stopBreakoutGame();
-                                 }
-                             }
-                         }
-                     }
-                 }
-            }
-
-
-            function drawBreakout() {
-                 if (!isBreakoutGameActive) return; // Stop drawing if game is inactive
-
-                 breakoutCtx.clearRect(0, 0, breakoutCanvas.width, breakoutCanvas.height);
-                 drawBricks();
-                 drawBall();
-                 drawPaddle();
-                 collisionDetection();
-
-                 // Ball collision with walls (left/right)
-                 if (ballX + ballDX > breakoutCanvas.width - ballRadius || ballX + ballDX < ballRadius) {
-                     ballDX = -ballDX;
-                 }
-                 // Ball collision with top wall
-                 if (ballY + ballDY < ballRadius) {
-                     ballDY = -ballDY;
-                 } else if (ballY + ballDY > breakoutCanvas.height - ballRadius - paddleHeight) {
-                      // Check if it hits the paddle
-                     if (ballX > paddleX && ballX < paddleX + paddleWidth) {
-                          // Simple bounce angle adjustment based on hit position
-                         let collidePoint = ballX - (paddleX + paddleWidth / 2);
-                         collidePoint = collidePoint / (paddleWidth / 2); // Normalize to -1 to 1
-                         let angle = collidePoint * (Math.PI / 3); // Max angle 60 degrees
-                         ballDX = 3 * Math.sin(angle); // Adjust speed based on angle
-                         ballDY = -3 * Math.cos(angle);
-                        // ballDY = -ballDY; // Original simple bounce
-                     } else {
-                         // Ball missed the paddle
-                         lives--;
-                         breakoutLivesEl.textContent = `Lives: ${lives}`;
-                         if (lives <= 0) {
-                              breakoutScoreEl.textContent = `GAME OVER! Score: ${breakoutScore}`;
-                              stopBreakoutGame();
-                             // Consider adding a game over screen or restarting
-                         } else {
-                             // Reset ball and paddle position
-                             ballX = breakoutCanvas.width / 2;
-                             ballY = breakoutCanvas.height - 30;
-                             ballDX = 2.5 * (Math.random() < 0.5 ? 1 : -1) ; // Randomize direction slightly
-                             ballDY = -2.5;
-                             paddleX = (breakoutCanvas.width - paddleWidth) / 2;
-                         }
-                     }
-                 }
-
-
-                 ballX += ballDX;
-                 ballY += ballDY;
-
-                 breakoutGameLoop = requestAnimationFrame(drawBreakout); // Continue the loop
-            }
-
-            function handleBreakoutMouseMove(e) {
-                 // No need for active check, listener removed when inactive
-                 let relativeX = e.clientX - breakoutCanvas.getBoundingClientRect().left;
-                  if (relativeX > paddleWidth / 2 && relativeX < breakoutCanvas.width - paddleWidth / 2) {
-                       paddleX = relativeX - paddleWidth / 2;
-                  } else if (relativeX <= paddleWidth / 2) {
-                       paddleX = 0; // Prevent moving off left edge
-                  } else {
-                       paddleX = breakoutCanvas.width - paddleWidth; // Prevent moving off right edge
-                  }
-            }
-
-            function handleBreakoutTouchMove(e) {
-                 // No need for active check, listener removed when inactive
-                 e.preventDefault(); // Prevent scrolling
-                 // Use changedTouches for better reliability, especially with multi-touch possibilities
-                 let touch = e.changedTouches[0];
-                 let relativeX = touch.clientX - breakoutCanvas.getBoundingClientRect().left;
-                 if (relativeX > paddleWidth / 2 && relativeX < breakoutCanvas.width - paddleWidth / 2) {
-                     paddleX = relativeX - paddleWidth / 2;
-                 } else if (relativeX <= paddleWidth / 2) {
-                     paddleX = 0;
-                 } else {
-                     paddleX = breakoutCanvas.width - paddleWidth;
-                 }
-            }
-
-
-             const initializeBreakoutGame = () => {
-                 breakoutResetBtn.addEventListener('click', startBreakoutGame);
-                 resetBreakoutGame(); // Set initial state without starting loop/listeners
-             };
-
-
-            // --- --- --- END GAMES LOGIC --- --- ---
-
-
-            // --- Initialization --- //
-            initializeTheme();
-            loadState();
+            const makeTTTMove = (index, player) => { tttBoardState[index] = player; const cell = tttCells[index]; cell.querySelector('span').textContent = player; cell.classList.add('occupied', player, 'disabled'); };
+            const switchTTTPlayer = (nextPlayer) => { currentTTTPlayer = nextPlayer; tttStatus.textContent = nextPlayer === TTT_PLAYER ? "Your Turn (X)" : "Bot's Turn (O)"; if (nextPlayer === TTT_BOT) disableTTTBoard(false); else enableTTTBoard(); };
+            const disableTTTBoard = (all = true) => tttCells.forEach(cell => { if (all || !cell.classList.contains('occupied')) cell.classList.add('disabled'); });
+            const enableTTTBoard = () => tttCells.forEach(cell => { if (!cell.classList.contains('occupied')) cell.classList.remove('disabled'); });
+            const botMove = () => { if (!tttGameActive || currentTTTPlayer !== TTT_BOT) return; let bestMove = findBestMove(); if (bestMove !== -1) { makeTTTMove(bestMove, TTT_BOT); if (checkTTTWin(TTT_BOT)) { tttStatus.textContent = `Bot wins! 🤖`; tttGameActive = false; disableTTTBoard(); return; } else if (isTTTDraw()) { tttStatus.textContent = "It's a draw! 🤝"; tttGameActive = false; disableTTTBoard(); return; } } switchTTTPlayer(TTT_PLAYER); };
+            const findBestMove = () => { for (let i = 0; i < 9; i++) if (tttBoardState[i] === null) { tttBoardState[i] = TTT_BOT; if (checkTTTWin(TTT_BOT)) { tttBoardState[i] = null; return i; } tttBoardState[i] = null; } for (let i = 0; i < 9; i++) if (tttBoardState[i] === null) { tttBoardState[i] = TTT_PLAYER; if (checkTTTWin(TTT_PLAYER)) { tttBoardState[i] = null; return i; } tttBoardState[i] = null; } if (tttBoardState[4] === null) return 4; const corners = [0, 2, 6, 8], availableCorners = corners.filter(i => tttBoardState[i] === null); if (availableCorners.length > 0) return availableCorners[Math.floor(Math.random() * availableCorners.length)]; const availableCells = []; for (let i = 0; i < 9; i++) if (tttBoardState[i] === null) availableCells.push(i); if (availableCells.length > 0) return availableCells[Math.floor(Math.random() * availableCells.length)]; return -1; };
+            const checkTTTWin = (player) => tttWinningConditions.some(c => c.every(i => tttBoardState[i] === player));
+            const isTTTDraw = () => tttBoardState.every(cell => cell !== null);
+            const resetTTTGame = () => { tttBoardState = Array(9).fill(null); tttGameActive = true; currentTTTPlayer = TTT_PLAYER; tttCells.forEach(cell => { cell.querySelector('span').textContent = 'X'; cell.classList.remove('occupied', 'X', 'O', 'disabled'); }); tttStatus.textContent = `Your Turn (X)`; enableTTTBoard(); };
+            const initializeTTTGame = () => { tttBoard.addEventListener('click', handleTTTCellClick); tttResetBtn.addEventListener('click', resetTTTGame); resetTTTGame(); };
+
+            // Memory Match
+            const memoryBoard = getEl('memory-board'), memoryStatus = getEl('memory-status'), memoryResetBtn = getEl('memory-reset-btn'), memoryDifficultySelect = getEl('memory-difficulty-select');
+            const memoryAllEmojis = ['🎓', '💻', '📚', '💡', '🧪', '📈', '🚀', '🧠', '🧩', '🏆'];
+            const memoryDifficultySettings = { easy: { pairs: 6, cols: 4 }, medium: { pairs: 8, cols: 4 }, hard: { pairs: 10, cols: 5 } };
+            let currentMemoryDifficulty = 'easy', memoryCards, flippedCards, matchedPairs, memoryMoves, canFlip;
+            const startMemoryGame = () => { const settings = memoryDifficultySettings[currentMemoryDifficulty]; const emojis = memoryAllEmojis.slice(0, settings.pairs); memoryCards = shuffle([...emojis, ...emojis]); flippedCards = []; matchedPairs = 0; memoryMoves = 0; canFlip = true; memoryStatus.textContent = "Moves: 0"; memoryBoard.innerHTML = ''; memoryBoard.style.gridTemplateColumns = `repeat(${settings.cols}, 1fr)`; memoryCards.forEach((emoji, index) => { const card = document.createElement('div'); card.className = 'memory-card'; card.dataset.index = index; card.innerHTML = `<div class="memory-card-face memory-card-front">${emoji}</div><div class="memory-card-face memory-card-back"><i data-lucide="help-circle"></i></div>`; card.addEventListener('click', () => flipMemoryCard(card, emoji)); memoryBoard.appendChild(card); }); lucide.createIcons(); };
+            const flipMemoryCard = (card, emoji) => { if (!canFlip || card.classList.contains('is-flipped') || card.classList.contains('is-matched')) return; card.classList.add('is-flipped'); flippedCards.push({ card, emoji }); if (flippedCards.length === 2) { canFlip = false; memoryMoves++; memoryStatus.textContent = `Moves: ${memoryMoves}`; checkForMemoryMatch(); } };
+            const checkForMemoryMatch = () => { const [first, second] = flippedCards; if (first.emoji === second.emoji) disableMemoryCards(first.card, second.card); else unflipMemoryCards(first.card, second.card); };
+            const disableMemoryCards = (c1, c2) => { c1.classList.add('is-matched'); c2.classList.add('is-matched'); matchedPairs++; flippedCards = []; canFlip = true; if (matchedPairs === memoryDifficultySettings[currentMemoryDifficulty].pairs) setTimeout(() => memoryStatus.textContent = `You won in ${memoryMoves} moves! 🎉`, 500); };
+            const unflipMemoryCards = (c1, c2) => setTimeout(() => { c1.classList.remove('is-flipped'); c2.classList.remove('is-flipped'); flippedCards = []; canFlip = true; }, 1000);
+            const initializeMemoryGame = () => { memoryResetBtn.addEventListener('click', startMemoryGame); memoryDifficultySelect.addEventListener('click', (e) => { const btn = e.target.closest('button'); if (!btn || !btn.dataset.difficulty) return; currentMemoryDifficulty = btn.dataset.difficulty; memoryDifficultySelect.querySelectorAll('button').forEach(b => { b.classList.remove('btn-primary'); b.classList.add('btn-neutral'); }); btn.classList.add('btn-primary'); btn.classList.remove('btn-neutral'); startMemoryGame(); }); startMemoryGame(); };
+
+            // Snake Game
+            const snakeCanvas = getEl('snake-canvas'), snakeCtx = snakeCanvas.getContext('2d'), snakeStatus = getEl('game-status-snake'), snakeResetBtn = getEl('snake-reset-btn');
+            const snakeGridSize = 20; let snake, food, score, direction, gameSpeed;
+            const resetSnakeGame = () => { snake = [{ x: 10, y: 10 }]; food = getRandomFoodPos(); score = 0; direction = 'right'; gameSpeed = 150; snakeStatus.textContent = `Score: 0`; if (snakeGameLoop) clearInterval(snakeGameLoop); snakeGameLoop = null; isSnakeGameActive = false; };
+            const startSnakeGame = () => { if (isSnakeGameActive && snakeGameLoop) return; resetSnakeGame(); isSnakeGameActive = true; document.addEventListener('keydown', handleSnakeKeyInput); snakeGameLoop = setInterval(snakeGameLoopFunction, gameSpeed); };
+            const stopSnakeGame = () => { isSnakeGameActive = false; if (snakeGameLoop) clearInterval(snakeGameLoop); snakeGameLoop = null; document.removeEventListener('keydown', handleSnakeKeyInput); };
+            const getRandomFoodPos = () => ({ x: Math.floor(Math.random() * (snakeCanvas.width / snakeGridSize)), y: Math.floor(Math.random() * (snakeCanvas.height / snakeGridSize)) });
+            const drawSnake = () => { if (!isSnakeGameActive) return; snakeCtx.fillStyle = body.dataset.theme === 'dark' ? 'rgba(26, 26, 26, 0.7)' : '#fdfdff'; snakeCtx.fillRect(0, 0, snakeCanvas.width, snakeCanvas.height); snakeCtx.fillStyle = '#e53e3e'; snakeCtx.fillRect(food.x * snakeGridSize, food.y * snakeGridSize, snakeGridSize, snakeGridSize); snake.forEach((segment, index) => { snakeCtx.fillStyle = index === 0 ? '#4f46e5' : '#6366f1'; snakeCtx.fillRect(segment.x * snakeGridSize, segment.y * snakeGridSize, snakeGridSize, snakeGridSize); snakeCtx.strokeStyle = body.dataset.theme === 'dark' ? '#1a1a1a' : '#fff'; snakeCtx.strokeRect(segment.x * snakeGridSize, segment.y * snakeGridSize, snakeGridSize, snakeGridSize); }); };
+            const updateSnake = () => { if (!isSnakeGameActive) return; const head = { ...snake[0] }; switch (direction) { case 'up': head.y--; break; case 'down': head.y++; break; case 'left': head.x--; break; case 'right': head.x++; break; } if (head.x < 0 || head.x >= snakeCanvas.width / snakeGridSize || head.y < 0 || head.y >= snakeCanvas.height / snakeGridSize) { gameOverSnake(); return; } for (let i = 1; i < snake.length; i++) if (head.x === snake[i].x && head.y === snake[i].y) { gameOverSnake(); return; } snake.unshift(head); if (head.x === food.x && head.y === food.y) { score++; snakeStatus.textContent = `Score: ${score}`; food = getRandomFoodPos(); } else snake.pop(); };
+            const gameOverSnake = () => { stopSnakeGame(); snakeStatus.textContent = `Game Over! Score: ${score}`; };
+            const snakeGameLoopFunction = () => { if (!isSnakeGameActive) return; updateSnake(); drawSnake(); };
+            const handleSnakeKeyInput = (e) => { const key = e.key; let changed = false; if ((key === 'ArrowUp' || key === 'w') && direction !== 'down') { direction = 'up'; changed = true; } else if ((key === 'ArrowDown' || key === 's') && direction !== 'up') { direction = 'down'; changed = true; } else if ((key === 'ArrowLeft' || key === 'a') && direction !== 'right') { direction = 'left'; changed = true; } else if ((key === 'ArrowRight' || key === 'd') && direction !== 'left') { direction = 'right'; changed = true; } if (changed) e.preventDefault(); };
+            const initializeSnakeGame = () => { snakeResetBtn.addEventListener('click', startSnakeGame); getEl('snake-up').addEventListener('click', () => { if(direction !== 'down') direction = 'up'; }); getEl('snake-down').addEventListener('click', () => { if(direction !== 'up') direction = 'down'; }); getEl('snake-left').addEventListener('click', () => { if(direction !== 'right') direction = 'left'; }); getEl('snake-right').addEventListener('click', () => { if(direction !== 'left') direction = 'right'; }); resetSnakeGame(); };
+
+            // Whac-A-Mole
+            const wamBoard = getEl('wam-board'), wamStatus = getEl('game-status-wam'), wamTimer = getEl('game-status-timer-wam'), wamStartBtn = getEl('wam-start-btn');
+            let wamScore, wamTimeLeft, wamHoles = [];
+            const initializeWamGame = () => { wamBoard.innerHTML = ''; wamHoles = []; for (let i = 0; i < 9; i++) { const hole = document.createElement('div'); hole.className = 'wam-hole'; const mole = document.createElement('div'); mole.className = 'wam-mole'; mole.textContent = '😵'; hole.appendChild(mole); wamBoard.appendChild(hole); wamHoles.push(mole); } wamStartBtn.addEventListener('click', startWamGame); wamBoard.addEventListener('click', whackMole); wamStatus.textContent = '0'; wamTimer.textContent = 'Time: 30s'; wamStartBtn.disabled = false; wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed'); wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game'; lucide.createIcons(); };
+            const startWamGame = () => { if (wamGameActive) return; wamScore = 0; wamTimeLeft = 30; wamGameActive = true; wamStatus.textContent = wamScore; wamTimer.textContent = `Time: ${wamTimeLeft}s`; wamStartBtn.disabled = true; wamStartBtn.classList.add('opacity-50', 'cursor-not-allowed'); wamStartBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Playing...'; lucide.createIcons(); wamGameTimer = setInterval(() => { wamTimeLeft--; wamTimer.textContent = `Time: ${wamTimeLeft}s`; if (wamTimeLeft <= 0) stopWamGame(); }, 1000); popMole(); };
+            const stopWamGame = () => { wamGameActive = false; if (wamGameTimer) clearInterval(wamGameTimer); if (wamMoleTimer) clearTimeout(wamMoleTimer); wamGameTimer = null; wamMoleTimer = null; wamTimer.textContent = `Game Over! Final Score: ${wamScore}`; wamStartBtn.disabled = false; wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed'); wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game'; lucide.createIcons(); wamHoles.forEach(mole => mole.classList.remove('up')); };
+            const popMole = () => { if (!wamGameActive) return; wamHoles.forEach(mole => mole.classList.remove('up')); const randomHole = wamHoles[Math.floor(Math.random() * wamHoles.length)]; randomHole.classList.add('up'); const upTime = Math.random() * (1000 - 400) + 400; setTimeout(() => { if(wamGameActive) randomHole.classList.remove('up'); }, upTime); const nextPopTime = Math.random() * (1000 - 300) + 300; wamMoleTimer = setTimeout(() => { if (wamGameActive) popMole(); }, nextPopTime); };
+            const whackMole = (e) => { if (!wamGameActive) return; const hole = e.target.closest('.wam-hole'); if (!hole) return; const mole = hole.querySelector('.wam-mole'); if (mole && mole.classList.contains('up')) { wamScore++; wamStatus.textContent = wamScore; mole.classList.remove('up'); } };
             
-            // --- From Games --- //
+            // Word Guess
+            const wgStatus = getEl('wg-status'), wgWordDisplay = getEl('wg-word-display'), wgGuessedLettersEl = getEl('wg-guessed-letters'), wgInputArea = getEl('wg-input-area'), wgLetterInput = getEl('wg-letter-input'), wgResetBtn = getEl('wg-reset-btn');
+            const wgWordList = ['APPLE', 'BANANA', 'ORANGE', 'GRAPE', 'LEMON', 'MANGO', 'PEACH', 'BERRY', 'CHERRY', 'PLUM', 'HOUSE', 'TABLE', 'CHAIR', 'LIGHT', 'FLOOR', 'DOOR', 'WINDOW', 'ROOF', 'GARDEN', 'WATER', 'CLOUD', 'FLOWER', 'TREE', 'GRASS', 'STONE', 'RIVER', 'OCEAN', 'BEACH', 'MOUNTAIN', 'VALLEY', 'SUNNY', 'HAPPY', 'MUSIC', 'DANCE', 'SMILE', 'LAUGH', 'FRIEND', 'FAMILY', 'SCHOOL', 'STUDY', 'LEARN', 'TEACH', 'WRITE', 'READ', 'SPEAK', 'LISTEN', 'COMPUTER', 'PHONE', 'EMAIL', 'BUTTON'];
+            let wgTargetWord, wgWordState, wgGuessedLetters, wgGuessesLeft, wgGameActive;
+            const startWordGuessGame = () => { wgGameActive = true; wgGuessesLeft = 6; wgGuessedLetters = []; wgTargetWord = wgWordList[Math.floor(Math.random() * wgWordList.length)]; wgWordState = Array(wgTargetWord.length).fill('_'); let lettersToReveal = wgTargetWord.length <= 4 ? 1 : wgTargetWord.length <= 7 ? 2 : 3; const indices = Array.from(Array(wgTargetWord.length).keys()); shuffle(indices); for (let i = 0; i < lettersToReveal; i++) { const revealIndex = indices[i]; wgWordState[revealIndex] = wgTargetWord[revealIndex]; if (!wgGuessedLetters.includes(wgTargetWord[revealIndex])) wgGuessedLetters.push(wgTargetWord[revealIndex]); } wgStatus.textContent = `Guesses left: ${wgGuessesLeft}`; wgStatus.classList.remove('text-green-500', 'text-red-500'); wgGuessedLettersEl.textContent = `Guessed: ${wgGuessedLetters.join(', ')}`; wgInputArea.style.display = 'flex'; wgLetterInput.value = ''; wgLetterInput.disabled = false; updateWordDisplay(); };
+            const updateWordDisplay = () => { wgWordDisplay.innerHTML = ''; wgWordState.forEach(letter => { const letterEl = document.createElement('div'); letterEl.className = 'wg-letter'; letterEl.textContent = letter; wgWordDisplay.appendChild(letterEl); }); };
+            const handleWordGuess = (e) => { e.preventDefault(); if (!wgGameActive) return; const letter = wgLetterInput.value.toUpperCase(); wgLetterInput.value = ''; if (!letter || letter.length !== 1 || !/[A-Z]/.test(letter)) { showNotification("Please enter a single letter.", "error"); return; } if (wgGuessedLetters.includes(letter)) { showNotification("You already guessed that letter.", "error"); return; } wgGuessedLetters.push(letter); wgGuessedLettersEl.textContent = `Guessed: ${wgGuessedLetters.join(', ')}`; if (wgTargetWord.includes(letter)) { let correct = false; for (let i = 0; i < wgTargetWord.length; i++) if (wgTargetWord[i] === letter) { wgWordState[i] = letter; correct = true; } if (correct) updateWordDisplay(); } else { wgGuessesLeft--; wgStatus.textContent = `Guesses left: ${wgGuessesLeft}`; } checkWordGuessWinLoss(); };
+            const checkWordGuessWinLoss = () => { if (wgWordState.join('') === wgTargetWord) { wgStatus.textContent = "You win! 🎉"; wgStatus.classList.add('text-green-500'); wgGameActive = false; wgInputArea.style.display = 'none'; wgLetterInput.disabled = true; } else if (wgGuessesLeft <= 0) { wgStatus.textContent = `You lose! The word was: ${wgTargetWord}`; wgStatus.classList.add('text-red-500'); wgGameActive = false; wgInputArea.style.display = 'none'; wgLetterInput.disabled = true; } };
+            const initializeWordGuessGame = () => { wgInputArea.addEventListener('submit', handleWordGuess); wgResetBtn.addEventListener('click', startWordGuessGame); startWordGuessGame(); };
+
+            // Breakout Game
+            const breakoutCanvas = getEl('breakout-canvas'), breakoutCtx = breakoutCanvas.getContext('2d'), breakoutScoreEl = getEl('breakout-score'), breakoutLivesEl = getEl('breakout-lives'), breakoutResetBtn = getEl('breakout-reset-btn'), breakoutLeftBtn = getEl('breakout-left'), breakoutRightBtn = getEl('breakout-right');
+            let ballRadius = 8, ballX, ballY, ballDX, ballDY, paddleHeight = 10, paddleWidth = 75, paddleX, paddleSpeed = 7, isMovingLeft = false, isMovingRight = false;
+            let brickRowCount = 5, brickColumnCount = 7, brickWidth = 55, brickHeight = 15, brickPadding = 5, brickOffsetTop = 30, brickOffsetLeft = 30, bricks = [];
+            const BONUS_BRICK_COUNT = 3, BONUS_POINTS = 5, NORMAL_POINTS = 1;
+            function initializeBricks() { bricks = []; let bonusPlaced = 0, totalBricks = brickColumnCount * brickRowCount; for (let c = 0; c < brickColumnCount; c++) { bricks[c] = []; for (let r = 0; r < brickRowCount; r++) { let isBonus = false; if (bonusPlaced < BONUS_BRICK_COUNT && Math.random() < (BONUS_BRICK_COUNT - bonusPlaced) / (totalBricks - (c * brickRowCount + r))) { isBonus = true; bonusPlaced++; } bricks[c][r] = { x: 0, y: 0, status: 1, bonus: isBonus }; } } while (bonusPlaced < BONUS_BRICK_COUNT) { let c = Math.floor(Math.random() * brickColumnCount), r = Math.floor(Math.random() * brickRowCount); if (bricks[c] && bricks[c][r] && !bricks[c][r].bonus) { bricks[c][r].bonus = true; bonusPlaced++; } } }
+            function resetBreakoutGame() { breakoutScore = 0; lives = 3; ballX = breakoutCanvas.width / 2; ballY = breakoutCanvas.height - 30; ballDX = 2.5; ballDY = -2.5; paddleX = (breakoutCanvas.width - paddleWidth) / 2; initializeBricks(); breakoutScoreEl.textContent = `Score: ${breakoutScore}`; breakoutLivesEl.textContent = `Lives: ${lives}`; if (breakoutGameLoop) cancelAnimationFrame(breakoutGameLoop); breakoutGameLoop = null; isBreakoutGameActive = false; isMovingLeft = false; isMovingRight = false; if (paddleMoveInterval) clearInterval(paddleMoveInterval); paddleMoveInterval = null; }
+            function startBreakoutGame() { if (isBreakoutGameActive && breakoutGameLoop) return; resetBreakoutGame(); isBreakoutGameActive = true; breakoutCanvas.addEventListener('mousemove', handleBreakoutMouseMove); breakoutCanvas.addEventListener('touchmove', handleBreakoutTouchMove, { passive: false }); breakoutCanvas.addEventListener('touchstart', handleBreakoutTouchMove, { passive: false }); breakoutLeftBtn.addEventListener('touchstart', () => isMovingLeft = true, { passive: true }); breakoutLeftBtn.addEventListener('touchend', () => isMovingLeft = false); breakoutRightBtn.addEventListener('touchstart', () => isMovingRight = true, { passive: true }); breakoutRightBtn.addEventListener('touchend', () => isMovingRight = false); breakoutLeftBtn.addEventListener('mousedown', () => isMovingLeft = true); breakoutLeftBtn.addEventListener('mouseup', () => isMovingLeft = false); breakoutLeftBtn.addEventListener('mouseleave', () => isMovingLeft = false); breakoutRightBtn.addEventListener('mousedown', () => isMovingRight = true); breakoutRightBtn.addEventListener('mouseup', () => isMovingRight = false); breakoutRightBtn.addEventListener('mouseleave', () => isMovingRight = false); paddleMoveInterval = setInterval(movePaddleWithButtons, 20); breakoutGameLoop = requestAnimationFrame(drawBreakout); }
+            function stopBreakoutGame() { isBreakoutGameActive = false; if (breakoutGameLoop) cancelAnimationFrame(breakoutGameLoop); breakoutGameLoop = null; if (paddleMoveInterval) clearInterval(paddleMoveInterval); paddleMoveInterval = null; isMovingLeft = false; isMovingRight = false; breakoutCanvas.removeEventListener('mousemove', handleBreakoutMouseMove); breakoutCanvas.removeEventListener('touchmove', handleBreakoutTouchMove); breakoutCanvas.removeEventListener('touchstart', handleBreakoutTouchMove); }
+            function movePaddleWithButtons() { if (!isBreakoutGameActive) return; if (isMovingLeft) { paddleX -= paddleSpeed; if (paddleX < 0) paddleX = 0; } else if (isMovingRight) { paddleX += paddleSpeed; if (paddleX + paddleWidth > breakoutCanvas.width) paddleX = breakoutCanvas.width - paddleWidth; } }
+            function drawBall() { breakoutCtx.beginPath(); breakoutCtx.arc(ballX, ballY, ballRadius, 0, Math.PI * 2); breakoutCtx.fillStyle = '#4f46e5'; breakoutCtx.fill(); breakoutCtx.closePath(); }
+            function drawPaddle() { breakoutCtx.beginPath(); breakoutCtx.rect(paddleX, breakoutCanvas.height - paddleHeight, paddleWidth, paddleHeight); breakoutCtx.fillStyle = '#10b981'; breakoutCtx.fill(); breakoutCtx.closePath(); }
+            function drawBricks() { const brickColors = ['#ef4444', '#f59e0b', '#84cc16', '#22c55e', '#0ea5e9'], bonusColor = '#FFD700'; for (let c = 0; c < brickColumnCount; c++) for (let r = 0; r < brickRowCount; r++) if (bricks[c][r].status === 1) { let bX = c * (brickWidth + brickPadding) + brickOffsetLeft, bY = r * (brickHeight + brickPadding) + brickOffsetTop; bricks[c][r].x = bX; bricks[c][r].y = bY; breakoutCtx.beginPath(); breakoutCtx.rect(bX, bY, brickWidth, brickHeight); breakoutCtx.fillStyle = bricks[c][r].bonus ? bonusColor : brickColors[r % brickColors.length]; breakoutCtx.fill(); breakoutCtx.closePath(); } }
+            function collisionDetection() { for (let c = 0; c < brickColumnCount; c++) for (let r = 0; r < brickRowCount; r++) { let b = bricks[c][r]; if (b.status === 1 && ballX + ballRadius > b.x && ballX - ballRadius < b.x + brickWidth && ballY + ballRadius > b.y && ballY - ballRadius < b.y + brickHeight) { ballDY = -ballDY; b.status = 0; breakoutScore += b.bonus ? BONUS_POINTS : NORMAL_POINTS; breakoutScoreEl.textContent = `Score: ${breakoutScore}`; if (b.bonus) showNotification(`+${BONUS_POINTS} Bonus!`, 'success'); let remaining = 0; for(let col=0; col<brickColumnCount; col++) for(let row=0; row<brickRowCount; row++) if (bricks[col][row].status===1) remaining++; if (remaining === 0) { breakoutScoreEl.textContent = `YOU WIN! Score: ${breakoutScore}`; stopBreakoutGame(); } } } }
+            function drawBreakout() { if (!isBreakoutGameActive) return; breakoutCtx.clearRect(0, 0, breakoutCanvas.width, breakoutCanvas.height); drawBricks(); drawBall(); drawPaddle(); collisionDetection(); if (ballX + ballDX > breakoutCanvas.width - ballRadius || ballX + ballDX < ballRadius) ballDX = -ballDX; if (ballY + ballDY < ballRadius) ballDY = -ballDY; else if (ballY + ballDY > breakoutCanvas.height - ballRadius - paddleHeight) if (ballX > paddleX && ballX < paddleX + paddleWidth) { let cP = (ballX - (paddleX + paddleWidth / 2)) / (paddleWidth / 2), angle = cP * (Math.PI / 3); ballDX = 3 * Math.sin(angle); ballDY = -3 * Math.cos(angle); } else { lives--; breakoutLivesEl.textContent = `Lives: ${lives}`; if (lives <= 0) { breakoutScoreEl.textContent = `GAME OVER! Score: ${breakoutScore}`; stopBreakoutGame(); } else { ballX = breakoutCanvas.width / 2; ballY = breakoutCanvas.height - 30; ballDX = 2.5 * (Math.random() < 0.5 ? 1 : -1); ballDY = -2.5; paddleX = (breakoutCanvas.width - paddleWidth) / 2; } } ballX += ballDX; ballY += ballDY; breakoutGameLoop = requestAnimationFrame(drawBreakout); }
+            function handleBreakoutMouseMove(e) { let rX = e.clientX - breakoutCanvas.getBoundingClientRect().left; if (rX > paddleWidth / 2 && rX < breakoutCanvas.width - paddleWidth / 2) paddleX = rX - paddleWidth / 2; else if (rX <= paddleWidth/2) paddleX = 0; else paddleX = breakoutCanvas.width - paddleWidth; }
+            function handleBreakoutTouchMove(e) { e.preventDefault(); let touch = e.changedTouches[0], rX = touch.clientX - breakoutCanvas.getBoundingClientRect().left; if (rX > paddleWidth / 2 && rX < breakoutCanvas.width - paddleWidth / 2) paddleX = rX - paddleWidth / 2; else if (rX <= paddleWidth/2) paddleX = 0; else paddleX = breakoutCanvas.width - paddleWidth; }
+            const initializeBreakoutGame = () => { breakoutResetBtn.addEventListener('click', startBreakoutGame); resetBreakoutGame(); };
+            
+
+            // --- Event Listeners (Combined) --- //
+            // Calculator Listeners
+            themeToggle.addEventListener('change', () => updateTheme(themeToggle.checked));
+            [currentCgpaInput, completedCreditsInput, completedEarnedCreditsInput].forEach(el => el.addEventListener('input', saveState));
+            addCourseForm.addEventListener('submit', (e) => { e.preventDefault(); const c = courseCreditEl.value, g = courseGradeEl.value; if (!c || !g) { showNotification("Please select both credit and grade.", 'error'); return; } courses.push({ type: 'new', credit: parseFloat(c), grade: parseFloat(g) }); renderCourses(); hideResults(); saveState(); showNotification('Course added!'); courseCreditEl.value = ""; courseGradeEl.value = ""; });
+            addRetakeForm.addEventListener('submit', (e) => { e.preventDefault(); const c = retakeCreditEl.value, oG = retakeOldGradeEl.value, nG = retakeNewGradeEl.value; if (!c || !oG || !nG) { showNotification("Please select all retake fields.", 'error'); return; } const credit = parseFloat(c), oldGrade = parseFloat(oG), newGrade = parseFloat(nG); if (oldGrade >= newGrade) { showNotification("New grade must be higher.", 'error'); return; } const hasInitial = (parseFloat(completedCreditsInput.value) || 0) > 0 && currentCgpaInput.value.trim() !== '' && (parseFloat(completedEarnedCreditsInput.value) || 0) >= 0 && completedEarnedCreditsInput.value.trim() !== ''; showNotification(hasInitial ? 'Retake course added!' : "Retake added. Enter Full Current Standing for best results.", hasInitial ? 'success' : 'warning'); courses.push({ type: 'retake', credit, oldGrade, newGrade }); renderCourses(); hideResults(); saveState(); retakeCreditEl.value = ""; retakeOldGradeEl.value = ""; retakeNewGradeEl.value = ""; });
+            courseListContainer.addEventListener('click', (e) => { const removeBtn = e.target.closest('.remove-btn'); if (removeBtn) { courses.splice(parseInt(removeBtn.dataset.index), 1); renderCourses(); hideResults(); saveState(); } });
+            calculateBtn.addEventListener('click', handleCalculation);
+            resetBtn.addEventListener('click', () => { courses = []; currentCgpaInput.value = ''; completedCreditsInput.value = ''; completedEarnedCreditsInput.value = ''; renderCourses(); hideResults(); saveState(); showNotification('Calculator has been reset.', 'success'); });
+            const nextCreditsInput = getEl('next-credits');
+            nextCreditsInput.addEventListener('input', () => handleRecoveryCalculation(nextCreditsInput, getEl('recovery-result'), getEl('required-gpa'), getEl('next-credits-error')));
+            ['good', 'mid'].forEach(s => { const tc = getEl(`target-cgpa-${s}`), tcr = getEl(`target-credits-${s}`); [tc, tcr].forEach(el => el.addEventListener('input', () => handleTargetCalculation(tc, tcr, getEl(`target-result-${s}`), getEl(`required-gpa-${s}`), getEl(`target-credits-${s}-error`)))); });
+            
+            // Game Modal Listeners
+            openGameModalBtn.addEventListener('click', () => { gameModal.classList.add('show'); if (window.innerWidth < 1024) showNotification("Enjoy the games! (Best experience on PC)", "info"); lucide.createIcons(); });
+            closeGameModalBtn.addEventListener('click', () => { gameModal.classList.remove('show'); if (isSnakeGameActive) stopSnakeGame(); if (wamGameActive) stopWamGame(); if (isBreakoutGameActive) stopBreakoutGame(); });
+            gameSelection.addEventListener('click', (e) => { const btn = e.target.closest('.game-select-btn'); if (btn && btn.dataset.game) selectGame(btn.dataset.game); });
+
+            // --- Initialization (Combined) --- //
+            initializeTheme();
+            loadState(); // Load calculator state
             initializeTTTGame();
             initializeMemoryGame();
             initializeSnakeGame();
             initializeWamGame();
             initializeWordGuessGame();
-            initializeBreakoutGame(); // Initialize Breakout
+            initializeBreakoutGame();
             selectGame('tic-tac-toe'); // Set default game
-            // --- End From Games --- //
-
             lucide.createIcons();
         });
     </script>
