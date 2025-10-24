@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UIU CGPA Calculator & Relax Zone</title>
+    <title>UIU CGPA Calculator (Renovated)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -481,8 +481,15 @@
                 <p class="text-secondary-color font-medium mt-2">Instantly calculate your CGPA and plan your academic future.</p>
             </div>
 
-            <div class="form-section">
-                <h2 class="text-xl font-bold text-primary-color mb-4">Current Academic Standing <span class="text-sm font-normal text-secondary-color">(Optional)</span></h2>
+            <div class="mb-8 flex justify-center border-b border-gray-200 dark:border-gray-700">
+                <button id="cgpa-tab-btn" class="px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500">CGPA Calculator</button>
+                <button id="course-grade-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Course Grade</button>
+                <button id="grading-policy-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Grading Policy</button>
+            </div>
+
+            <div id="cgpa-calculator-tab">
+                <div class="form-section">
+                    <h2 class="text-xl font-bold text-primary-color mb-4">Current Academic Standing <span class="text-sm font-normal text-secondary-color">(Optional)</span></h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"> 
                     <div>
                         <label for="current-cgpa" class="block text-sm font-medium text-tertiary-color mb-2">Current CGPA</label>
@@ -490,12 +497,12 @@
                         <p id="cgpa-error" class="text-red-500 text-sm error-placeholder"></p>
                     </div>
                     <div>
-                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Credits Attempted (Incl. F grades)</label>
+                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Credits Attempted<br>(Incl. F grades)</label>
                         <input type="number" id="completed-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 90">
                         <p id="attempted-credits-error" class="error-placeholder text-red-500 text-sm"></p>
                     </div>
                     <div>
-                        <label for="completed-earned-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Credits Earned (Before this Tri.)</label>
+                        <label for="completed-earned-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Credits Earned<br>(Before this Tri.)</label>
                         <input type="number" id="completed-earned-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 85">
                         <p id="earned-credits-error" class="error-placeholder text-red-500 text-sm"></p>
                     </div>
@@ -706,6 +713,75 @@
                     </div>
                 </div>
             </div>
+            </div>
+            <div id="course-grade-tab" style="display: none;">
+                <div class="form-section">
+                    <h2 class="text-xl font-bold text-primary-color mb-4">Course Grade Calculator</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+                        <div>
+                            <label for="assignment-marks" class="block text-sm font-medium text-tertiary-color mb-2">Assignment (out of 5)</label>
+                            <input type="number" id="assignment-marks" step="0.1" min="0" max="5" class="w-full form-input" placeholder="e.g., 4.5">
+                        </div>
+                        <div>
+                            <label for="attendance-marks" class="block text-sm font-medium text-tertiary-color mb-2">Attendance (out of 5)</label>
+                            <input type="number" id="attendance-marks" step="0.1" min="0" max="5" class="w-full form-input" placeholder="e.g., 5">
+                        </div>
+                        <div>
+                            <label for="midterm-marks" class="block text-sm font-medium text-tertiary-color mb-2">Midterm (out of 30)</label>
+                            <input type="number" id="midterm-marks" step="0.1" min="0" max="30" class="w-full form-input" placeholder="e.g., 25">
+                        </div>
+                        <div>
+                            <label for="final-marks" class="block text-sm font-medium text-tertiary-color mb-2">Final (out of 40)</label>
+                            <input type="number" id="final-marks" step="0.1" min="0" max="40" class="w-full form-input" placeholder="e.g., 32">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h2 class="text-xl font-bold text-primary-color mb-4">Target CT Calculator</h2>
+                    <div id="ct-scores-container" class="space-y-2"></div>
+                    <button id="add-ct-score-btn" class="w-full btn btn-neutral mt-4"><i data-lucide="plus" class="w-5 h-5"></i>Add CT Score</button>
+                    <div id="target-ct-result" class="mt-4 text-center hidden">
+                        <p id="required-ct-marks" class="text-3xl font-bold text-indigo-600"></p>
+                    </div>
+                </div>
+                <button id="calculate-course-grade" class="w-full btn btn-main-calc"><i data-lucide="bar-chart-2" class="w-6 h-6"></i>Calculate Grade</button>
+                <div id="course-grade-result-section" class="mt-8 text-center" style="display: none;">
+                    <p class="text-lg text-secondary-color">Your Grade:</p>
+                    <p id="course-grade-display" class="text-5xl font-bold text-primary-color"></p>
+                    <p id="course-points-display" class="text-2xl text-tertiary-color"></p>
+                    <p id="course-marks-display" class="text-lg text-secondary-color"></p>
+                    <p class="text-sm text-red-500 mt-2">Without Grace Mark</p>
+                </div>
+            </div>
+            <div id="grading-policy-tab" style="display: none;">
+                <div class="form-section">
+                    <h2 class="text-xl font-bold text-primary-color mb-4 text-center">UIU Grading Policy</h2>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-800">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Letter Grade</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Grade Points</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Marks Range (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">A</td><td class="px-6 py-4 whitespace-nowrap">4.00</td><td class="px-6 py-4 whitespace-nowrap">90 – 100</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">A-</td><td class="px-6 py-4 whitespace-nowrap">3.67</td><td class="px-6 py-4 whitespace-nowrap">86 – 89</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">B+</td><td class="px-6 py-4 whitespace-nowrap">3.33</td><td class="px-6 py-4 whitespace-nowrap">82 – 85</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">B</td><td class="px-6 py-4 whitespace-nowrap">3.00</td><td class="px-6 py-4 whitespace-nowrap">78 – 81</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">B-</td><td class="px-6 py-4 whitespace-nowrap">2.67</td><td class="px-6 py-4 whitespace-nowrap">74 – 77</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">C+</td><td class="px-6 py-4 whitespace-nowrap">2.33</td><td class="px-6 py-4 whitespace-nowrap">70 – 73</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">C</td><td class="px-6 py-4 whitespace-nowrap">2.00</td><td class="px-6 py-4 whitespace-nowrap">66 – 69</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">C-</td><td class="px-6 py-4 whitespace-nowrap">1.67</td><td class="px-6 py-4 whitespace-nowrap">62 – 65</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">D+</td><td class="px-6 py-4 whitespace-nowrap">1.33</td><td class="px-6 py-4 whitespace-nowrap">58 – 61</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">D</td><td class="px-6 py-4 whitespace-nowrap">1.00</td><td class="px-6 py-4 whitespace-nowrap">55 – 57</td></tr>
+                                <tr class="dark:bg-gray-800 dark:text-gray-200"><td class="px-6 py-4 whitespace-nowrap">F</td><td class="px-6 py-4 whitespace-nowrap">0.00</td><td class="px-6 py-4 whitespace-nowrap">0 – 54</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
         <footer class="text-center mt-8 text-sm text-secondary-color font-semibold">
             <p>Developed by <a href="https://www.facebook.com/naiimurr" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline">Naimur Rahman</a> (CSE 242) for the students of UIU❤️</p>
@@ -849,6 +925,143 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Course Grade Calculator Elements --- //
+            const addCtScoreBtn = document.getElementById('add-ct-score-btn');
+            const ctScoresContainer = document.getElementById('ct-scores-container');
+            const calculateCourseGradeBtn = document.getElementById('calculate-course-grade');
+            const targetCtResultEl = document.getElementById('target-ct-result');
+            const requiredCtMarksEl = document.getElementById('required-ct-marks');
+            const courseGradeResultSection = document.getElementById('course-grade-result-section');
+            const courseGradeDisplay = document.getElementById('course-grade-display');
+            const coursePointsDisplay = document.getElementById('course-points-display');
+            const courseMarksDisplay = document.getElementById('course-marks-display');
+
+            let ctScores = [];
+
+            const calculateTargetCt = () => {
+                const enteredScores = Array.from(ctScoresContainer.querySelectorAll('input')).map(input => {
+                    const val = parseFloat(input.value);
+                    return isNaN(val) ? null : val;
+                });
+                const validScores = enteredScores.filter(s => s !== null);
+
+                if (validScores.length < 3) {
+                    targetCtResultEl.classList.add('hidden');
+                    return;
+                }
+
+                const sortedScores = [...validScores].sort((a, b) => b - a);
+                const bestThree = sortedScores.slice(0, 3);
+                const currentCtMarks = bestThree.reduce((a, b) => a + b, 0) / 3;
+
+                targetCtResultEl.classList.remove('hidden');
+                if (validScores.length === 3) {
+                     requiredCtMarksEl.textContent = `Current Best 3 Avg: ${currentCtMarks.toFixed(2)} / 20`;
+                } else if (validScores.length === 4) {
+                    requiredCtMarksEl.textContent = `Final CT Mark (Best 3): ${currentCtMarks.toFixed(2)} / 20`;
+                }
+            };
+
+            addCtScoreBtn.addEventListener('click', () => {
+                const ctInputs = ctScoresContainer.getElementsByTagName('input');
+                if (ctInputs.length >= 4) {
+                    showNotification("You can add a maximum of 4 CT scores.", 'error');
+                    return;
+                }
+                const newIndex = ctInputs.length;
+                const ctInputContainer = document.createElement('div');
+                ctInputContainer.className = 'flex items-center gap-2';
+                ctInputContainer.innerHTML = `
+                    <label for="ct-score-${newIndex}" class="block text-sm font-medium text-tertiary-color">CT ${newIndex + 1} (out of 20)</label>
+                    <input type="number" id="ct-score-${newIndex}" step="0.1" min="0" max="20" class="w-full form-input ct-score-input" placeholder="e.g., 18">
+                     <button class="remove-ct-btn text-red-400 hover:text-red-600 p-2 rounded-full transition-colors"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+                `;
+                ctScoresContainer.appendChild(ctInputContainer);
+                if (lucide && typeof lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
+
+                ctInputContainer.querySelector('.ct-score-input').addEventListener('input', calculateTargetCt);
+                 ctInputContainer.querySelector('.remove-ct-btn').addEventListener('click', () => {
+                    ctInputContainer.remove();
+                    // Re-label inputs
+                    const remainingInputs = ctScoresContainer.querySelectorAll('.flex');
+                    remainingInputs.forEach((container, index) => {
+                         container.querySelector('label').textContent = `CT ${index + 1} (out of 20)`;
+                         container.querySelector('label').setAttribute('for', `ct-score-${index}`);
+                         container.querySelector('input').setAttribute('id', `ct-score-${index}`);
+                    });
+                    calculateTargetCt();
+                });
+                calculateTargetCt();
+            });
+
+            calculateCourseGradeBtn.addEventListener('click', () => {
+                const assignment = parseFloat(document.getElementById('assignment-marks').value) || 0;
+                const attendance = parseFloat(document.getElementById('attendance-marks').value) || 0;
+                const midterm = parseFloat(document.getElementById('midterm-marks').value) || 0;
+                const final = parseFloat(document.getElementById('final-marks').value) || 0;
+                const ctInputs = Array.from(ctScoresContainer.querySelectorAll('.ct-score-input'));
+                const ctScores = ctInputs.map(input => parseFloat(input.value) || 0);
+
+                if (ctScores.length < 3) {
+                    showNotification("Please enter at least 3 CT scores.", "error");
+                    return;
+                }
+
+                const sortedScores = [...ctScores].sort((a, b) => b - a);
+                const bestThreeScores = sortedScores.slice(0, 3);
+                const avgCtScore = bestThreeScores.reduce((a, b) => a + b, 0) / 3;
+
+                const totalMarks = assignment + attendance + midterm + final + avgCtScore;
+
+                let grade = '', points = 0.00;
+                if (totalMarks >= 90) { grade = 'A'; points = 4.00; }
+                else if (totalMarks >= 86) { grade = 'A-'; points = 3.67; }
+                else if (totalMarks >= 82) { grade = 'B+'; points = 3.33; }
+                else if (totalMarks >= 78) { grade = 'B'; points = 3.00; }
+                else if (totalMarks >= 74) { grade = 'B-'; points = 2.67; }
+                else if (totalMarks >= 70) { grade = 'C+'; points = 2.33; }
+                else if (totalMarks >= 66) { grade = 'C'; points = 2.00; }
+                else if (totalMarks >= 62) { grade = 'C-'; points = 1.67; }
+                else if (totalMarks >= 58) { grade = 'D+'; points = 1.33; }
+                else if (totalMarks >= 55) { grade = 'D'; points = 1.00; }
+                else { grade = 'F'; points = 0.00; }
+
+                courseGradeDisplay.textContent = grade;
+                coursePointsDisplay.textContent = `(${points.toFixed(2)} Points)`;
+                courseMarksDisplay.textContent = `Total Marks: ${totalMarks.toFixed(2)} / 100`;
+                courseGradeResultSection.style.display = 'block';
+            });
+
+            // --- Tab Switching Logic --- //
+            const cgpaTabBtn = document.getElementById('cgpa-tab-btn');
+            const courseGradeTabBtn = document.getElementById('course-grade-tab-btn');
+            const gradingPolicyTabBtn = document.getElementById('grading-policy-tab-btn');
+
+            const cgpaCalculatorTab = document.getElementById('cgpa-calculator-tab');
+            const courseGradeTab = document.getElementById('course-grade-tab');
+            const gradingPolicyTab = document.getElementById('grading-policy-tab');
+
+            const allTabs = [cgpaCalculatorTab, courseGradeTab, gradingPolicyTab];
+            const allTabBtns = [cgpaTabBtn, courseGradeTabBtn, gradingPolicyTabBtn];
+
+            const switchTab = (tabToShow, btnToActivate) => {
+                allTabs.forEach(tab => tab.style.display = 'none');
+                allTabBtns.forEach(btn => {
+                    btn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'border-indigo-500');
+                    btn.classList.add('text-gray-500', 'dark:text-gray-400', 'border-transparent');
+                });
+
+                tabToShow.style.display = 'block';
+                btnToActivate.classList.add('text-indigo-600', 'dark:text-indigo-400', 'border-indigo-500');
+                btnToActivate.classList.remove('text-gray-500', 'dark:text-gray-400', 'border-transparent');
+            };
+
+            cgpaTabBtn.addEventListener('click', () => switchTab(cgpaCalculatorTab, cgpaTabBtn));
+            courseGradeTabBtn.addEventListener('click', () => switchTab(courseGradeTab, courseGradeTabBtn));
+            gradingPolicyTabBtn.addEventListener('click', () => switchTab(gradingPolicyTab, gradingPolicyTabBtn));
+
             // --- Elements (Combined) --- //
             const getEl = (id) => document.getElementById(id);
             const body = document.body;
@@ -904,7 +1117,9 @@
                 }
                 notification.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5"></i><span>${message}</span>`;
                 container.appendChild(notification);
-                lucide.createIcons();
+                if (lucide && typeof lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
                 setTimeout(() => notification.classList.add('show'), 10);
                 setTimeout(() => {
                     notification.classList.remove('show');
@@ -923,7 +1138,9 @@
                     '<i data-lucide="moon" class="w-5 h-5 text-blue-300"></i>' :
                     '<i data-lucide="sun" class="w-5 h-5 text-yellow-500"></i>';
                 if (themeIcon) themeIcon.innerHTML = iconHtml;
-                lucide.createIcons();
+                if (lucide && typeof lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
             };
 
             const initializeTheme = () => {
@@ -1039,7 +1256,9 @@
                     courseEl.innerHTML = courseHTML + `<button class="remove-btn text-red-400 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 p-2 rounded-full transition-colors" data-index="${index}"><i data-lucide="trash-2" class="w-5 h-5"></i></button>`;
                     courseListContainer.appendChild(courseEl);
                 });
-                lucide.createIcons();
+                if (lucide && typeof lucide.createIcons === 'function') {
+                    lucide.createIcons();
+                }
             };
 
             const hideResults = () => {
@@ -1063,13 +1282,18 @@
                 const initialEarnedCredits = parseFloat(initialEarnedCreditsVal);
                 const hasInitialStandingAttempt = currentCgpaVal !== '' || initialAttemptedCreditsVal !== '' || initialEarnedCreditsVal !== '';
                 const isInitialStandingComplete = currentCgpaVal !== '' && !isNaN(currentCgpa) && currentCgpa >= 0 && currentCgpa <= 4.0 && initialAttemptedCreditsVal !== '' && !isNaN(initialAttemptedCredits) && initialAttemptedCredits >= 0 && initialEarnedCreditsVal !== '' && !isNaN(initialEarnedCredits) && initialEarnedCredits >= 0;
+                
                 if (hasInitialStandingAttempt && !isInitialStandingComplete) {
                     if (currentCgpaVal === '') { cgpaErrorEl.textContent = "Required."; cgpaErrorEl.classList.add('visible'); hasError = true; }
                     else if (isNaN(currentCgpa) || currentCgpa < 0 || currentCgpa > 4.0) { cgpaErrorEl.textContent = "Aeh! 🙂"; cgpaErrorEl.classList.add('visible'); hasError = true; }
                     if (initialAttemptedCreditsVal === '' || isNaN(initialAttemptedCredits) || initialAttemptedCredits < 0) { if(attemptedCreditsErrorEl){ attemptedCreditsErrorEl.textContent = "Required & >= 0."; attemptedCreditsErrorEl.classList.add('visible');} hasError = true; }
                     if (initialEarnedCreditsVal === '' || isNaN(initialEarnedCredits) || initialEarnedCredits < 0) { if(earnedCreditsErrorEl){ earnedCreditsErrorEl.textContent = "Required & >= 0."; earnedCreditsErrorEl.classList.add('visible');} hasError = true; }
-                    if (!hasError && isInitialStandingComplete && initialEarnedCredits > initialAttemptedCredits) { creditsErrorEl.textContent = "Earned cannot be > attempted."; creditsErrorEl.classList.remove('hidden'); hasError = true; }
-                } else if (isInitialStandingComplete && initialEarnedCredits > initialAttemptedCredits) { creditsErrorEl.textContent = "Earned cannot be > attempted."; creditsErrorEl.classList.remove('hidden'); hasError = true; }
+                } else if (isInitialStandingComplete && initialEarnedCredits > initialAttemptedCredits) {
+                    creditsErrorEl.textContent = "Earned credits cannot be greater than attempted credits.";
+                    creditsErrorEl.classList.remove('hidden');
+                    hasError = true;
+                }
+                
                 if (courses.length === 0) { if (!hasError) { calcErrorEl.textContent = "Please add at least one course."; calcErrorEl.classList.remove('hidden'); } hasError = true; }
                 const trimesterCredits = courses.reduce((total, course) => total + course.credit, 0);
                 if (!hasError && courses.length > 0 && trimesterCredits < 6) { calcErrorEl.textContent = "Minimum 6 trimester credits required."; calcErrorEl.classList.remove('hidden'); hasError = true; }
@@ -1099,21 +1323,24 @@
                     if (course.type === 'new') {
                         const grade = course.grade;
                         trimesterPoints += credit * grade;
-                        if (hasInitialStanding) { totalPoints += credit * grade; totalGpaCredits += credit; }
-                        else { totalPoints += credit * grade; totalGpaCredits += credit; }
+                        totalPoints += credit * grade; 
+                        totalGpaCredits += credit;
                         if (grade > 0) { trimesterCompletedCredits += credit; totalCompletedCredits += credit; }
                     } else { // Retake
                         const oldGrade = course.oldGrade, newGrade = course.newGrade;
                         trimesterPoints += credit * newGrade;
-                        if (newGrade > 0) { trimesterCompletedCredits += credit; }
+                        
+                        // This logic is for *trimester* completed credits, which only increments if retaking an F
+                        if (oldGrade === 0 && newGrade > 0) { 
+                            trimesterCompletedCredits += credit;
+                        }
+
                         if (hasInitialStanding) {
                             totalPoints = totalPoints - (oldGrade * credit) + (newGrade * credit);
                             if (oldGrade === 0 && newGrade > 0) { totalCompletedCredits += credit; }
                             else if (oldGrade > 0 && newGrade === 0) { totalCompletedCredits -= credit; }
-                        } else {
-                            totalPoints += credit * newGrade; totalGpaCredits += credit;
-                            if (newGrade > 0) { totalCompletedCredits += credit; }
-                        }
+                        } 
+                        // No 'else' here, because retakes without initial standing are blocked by handleCalculation
                     }
                 });
                 const finalCgpa = totalGpaCredits > 0 ? totalPoints / totalGpaCredits : 0;
@@ -1238,7 +1465,7 @@
             const memoryAllEmojis = ['🎓', '💻', '📚', '💡', '🧪', '📈', '🚀', '🧠', '🧩', '🏆'];
             const memoryDifficultySettings = { easy: { pairs: 6, cols: 4 }, medium: { pairs: 8, cols: 4 }, hard: { pairs: 10, cols: 5 } };
             let currentMemoryDifficulty = 'easy', memoryCards, flippedCards, matchedPairs, memoryMoves, canFlip;
-            const startMemoryGame = () => { const settings = memoryDifficultySettings[currentMemoryDifficulty]; const emojis = memoryAllEmojis.slice(0, settings.pairs); memoryCards = shuffle([...emojis, ...emojis]); flippedCards = []; matchedPairs = 0; memoryMoves = 0; canFlip = true; memoryStatus.textContent = "Moves: 0"; memoryBoard.innerHTML = ''; memoryBoard.style.gridTemplateColumns = `repeat(${settings.cols}, 1fr)`; memoryCards.forEach((emoji, index) => { const card = document.createElement('div'); card.className = 'memory-card'; card.dataset.index = index; card.innerHTML = `<div class="memory-card-face memory-card-front">${emoji}</div><div class="memory-card-face memory-card-back"><i data-lucide="help-circle"></i></div>`; card.addEventListener('click', () => flipMemoryCard(card, emoji)); memoryBoard.appendChild(card); }); lucide.createIcons(); };
+            const startMemoryGame = () => { const settings = memoryDifficultySettings[currentMemoryDifficulty]; const emojis = memoryAllEmojis.slice(0, settings.pairs); memoryCards = shuffle([...emojis, ...emojis]); flippedCards = []; matchedPairs = 0; memoryMoves = 0; canFlip = true; memoryStatus.textContent = "Moves: 0"; memoryBoard.innerHTML = ''; memoryBoard.style.gridTemplateColumns = `repeat(${settings.cols}, 1fr)`; memoryCards.forEach((emoji, index) => { const card = document.createElement('div'); card.className = 'memory-card'; card.dataset.index = index; card.innerHTML = `<div class="memory-card-face memory-card-front">${emoji}</div><div class="memory-card-face memory-card-back"><i data-lucide="help-circle"></i></div>`; card.addEventListener('click', () => flipMemoryCard(card, emoji)); memoryBoard.appendChild(card); }); if (lucide && typeof lucide.createIcons === 'function') { lucide.createIcons(); } };
             const flipMemoryCard = (card, emoji) => { if (!canFlip || card.classList.contains('is-flipped') || card.classList.contains('is-matched')) return; card.classList.add('is-flipped'); flippedCards.push({ card, emoji }); if (flippedCards.length === 2) { canFlip = false; memoryMoves++; memoryStatus.textContent = `Moves: ${memoryMoves}`; checkForMemoryMatch(); } };
             const checkForMemoryMatch = () => { const [first, second] = flippedCards; if (first.emoji === second.emoji) disableMemoryCards(first.card, second.card); else unflipMemoryCards(first.card, second.card); };
             const disableMemoryCards = (c1, c2) => { c1.classList.add('is-matched'); c2.classList.add('is-matched'); matchedPairs++; flippedCards = []; canFlip = true; if (matchedPairs === memoryDifficultySettings[currentMemoryDifficulty].pairs) setTimeout(() => memoryStatus.textContent = `You won in ${memoryMoves} moves! 🎉`, 500); };
@@ -1262,9 +1489,9 @@
             // Whac-A-Mole
             const wamBoard = getEl('wam-board'), wamStatus = getEl('game-status-wam'), wamTimer = getEl('game-status-timer-wam'), wamStartBtn = getEl('wam-start-btn');
             let wamScore, wamTimeLeft, wamHoles = [];
-            const initializeWamGame = () => { wamBoard.innerHTML = ''; wamHoles = []; for (let i = 0; i < 9; i++) { const hole = document.createElement('div'); hole.className = 'wam-hole'; const mole = document.createElement('div'); mole.className = 'wam-mole'; mole.textContent = '😵'; hole.appendChild(mole); wamBoard.appendChild(hole); wamHoles.push(mole); } wamStartBtn.addEventListener('click', startWamGame); wamBoard.addEventListener('click', whackMole); wamStatus.textContent = '0'; wamTimer.textContent = 'Time: 30s'; wamStartBtn.disabled = false; wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed'); wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game'; lucide.createIcons(); };
-            const startWamGame = () => { if (wamGameActive) return; wamScore = 0; wamTimeLeft = 30; wamGameActive = true; wamStatus.textContent = wamScore; wamTimer.textContent = `Time: ${wamTimeLeft}s`; wamStartBtn.disabled = true; wamStartBtn.classList.add('opacity-50', 'cursor-not-allowed'); wamStartBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Playing...'; lucide.createIcons(); wamGameTimer = setInterval(() => { wamTimeLeft--; wamTimer.textContent = `Time: ${wamTimeLeft}s`; if (wamTimeLeft <= 0) stopWamGame(); }, 1000); popMole(); };
-            const stopWamGame = () => { wamGameActive = false; if (wamGameTimer) clearInterval(wamGameTimer); if (wamMoleTimer) clearTimeout(wamMoleTimer); wamGameTimer = null; wamMoleTimer = null; wamTimer.textContent = `Game Over! Final Score: ${wamScore}`; wamStartBtn.disabled = false; wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed'); wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game'; lucide.createIcons(); wamHoles.forEach(mole => mole.classList.remove('up')); };
+            const initializeWamGame = () => { wamBoard.innerHTML = ''; wamHoles = []; for (let i = 0; i < 9; i++) { const hole = document.createElement('div'); hole.className = 'wam-hole'; const mole = document.createElement('div'); mole.className = 'wam-mole'; mole.textContent = '😵'; hole.appendChild(mole); wamBoard.appendChild(hole); wamHoles.push(mole); } wamStartBtn.addEventListener('click', startWamGame); wamBoard.addEventListener('click', whackMole); wamStatus.textContent = '0'; wamTimer.textContent = 'Time: 30s'; wamStartBtn.disabled = false; wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed'); wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game'; if (lucide && typeof lucide.createIcons === 'function') { lucide.createIcons(); } };
+            const startWamGame = () => { if (wamGameActive) return; wamScore = 0; wamTimeLeft = 30; wamGameActive = true; wamStatus.textContent = wamScore; wamTimer.textContent = `Time: ${wamTimeLeft}s`; wamStartBtn.disabled = true; wamStartBtn.classList.add('opacity-50', 'cursor-not-allowed'); wamStartBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>Playing...'; if (lucide && typeof lucide.createIcons === 'function') { lucide.createIcons(); } wamGameTimer = setInterval(() => { wamTimeLeft--; wamTimer.textContent = `Time: ${wamTimeLeft}s`; if (wamTimeLeft <= 0) stopWamGame(); }, 1000); popMole(); };
+            const stopWamGame = () => { wamGameActive = false; if (wamGameTimer) clearInterval(wamGameTimer); if (wamMoleTimer) clearTimeout(wamMoleTimer); wamGameTimer = null; wamMoleTimer = null; wamTimer.textContent = `Game Over! Final Score: ${wamScore}`; wamStartBtn.disabled = false; wamStartBtn.classList.remove('opacity-50', 'cursor-not-allowed'); wamStartBtn.innerHTML = '<i data-lucide="play" class="w-5 h-5"></i>Start Game'; if (lucide && typeof lucide.createIcons === 'function') { lucide.createIcons(); } wamHoles.forEach(mole => mole.classList.remove('up')); };
             const popMole = () => { if (!wamGameActive) return; wamHoles.forEach(mole => mole.classList.remove('up')); const randomHole = wamHoles[Math.floor(Math.random() * wamHoles.length)]; randomHole.classList.add('up'); const upTime = Math.random() * (1000 - 400) + 400; setTimeout(() => { if(wamGameActive) randomHole.classList.remove('up'); }, upTime); const nextPopTime = Math.random() * (1000 - 300) + 300; wamMoleTimer = setTimeout(() => { if (wamGameActive) popMole(); }, nextPopTime); };
             const whackMole = (e) => { if (!wamGameActive) return; const hole = e.target.closest('.wam-hole'); if (!hole) return; const mole = hole.querySelector('.wam-mole'); if (mole && mole.classList.contains('up')) { wamScore++; wamStatus.textContent = wamScore; mole.classList.remove('up'); } };
             
@@ -1300,7 +1527,9 @@
 
             // --- Event Listeners (Combined) --- //
             // Calculator Listeners
-            themeToggle.addEventListener('change', () => updateTheme(themeToggle.checked));
+            if (themeToggle) {
+                themeToggle.addEventListener('change', () => updateTheme(themeToggle.checked));
+            }
             [currentCgpaInput, completedCreditsInput, completedEarnedCreditsInput].forEach(el => el.addEventListener('input', saveState));
             addCourseForm.addEventListener('submit', (e) => { e.preventDefault(); const c = courseCreditEl.value, g = courseGradeEl.value; if (!c || !g) { showNotification("Please select both credit and grade.", 'error'); return; } courses.push({ type: 'new', credit: parseFloat(c), grade: parseFloat(g) }); renderCourses(); hideResults(); saveState(); showNotification('Course added!'); courseCreditEl.value = ""; courseGradeEl.value = ""; });
             addRetakeForm.addEventListener('submit', (e) => { e.preventDefault(); const c = retakeCreditEl.value, oG = retakeOldGradeEl.value, nG = retakeNewGradeEl.value; if (!c || !oG || !nG) { showNotification("Please select all retake fields.", 'error'); return; } const credit = parseFloat(c), oldGrade = parseFloat(oG), newGrade = parseFloat(nG); if (oldGrade >= newGrade) { showNotification("New grade must be higher.", 'error'); return; } const hasInitial = (parseFloat(completedCreditsInput.value) || 0) > 0 && currentCgpaInput.value.trim() !== '' && (parseFloat(completedEarnedCreditsInput.value) || 0) >= 0 && completedEarnedCreditsInput.value.trim() !== ''; showNotification(hasInitial ? 'Retake course added!' : "Retake added. Enter Full Current Standing for best results.", hasInitial ? 'success' : 'warning'); courses.push({ type: 'retake', credit, oldGrade, newGrade }); renderCourses(); hideResults(); saveState(); retakeCreditEl.value = ""; retakeOldGradeEl.value = ""; retakeNewGradeEl.value = ""; });
@@ -1312,7 +1541,7 @@
             ['good', 'mid'].forEach(s => { const tc = getEl(`target-cgpa-${s}`), tcr = getEl(`target-credits-${s}`); [tc, tcr].forEach(el => el.addEventListener('input', () => handleTargetCalculation(tc, tcr, getEl(`target-result-${s}`), getEl(`required-gpa-${s}`), getEl(`target-credits-${s}-error`)))); });
             
             // Game Modal Listeners
-            openGameModalBtn.addEventListener('click', () => { gameModal.classList.add('show'); if (window.innerWidth < 1024) showNotification("Enjoy the games! (Best experience on PC)", "info"); lucide.createIcons(); });
+            openGameModalBtn.addEventListener('click', () => { gameModal.classList.add('show'); if (window.innerWidth < 1024) showNotification("Enjoy the games! (Best experience on PC)", "info"); if (lucide && typeof lucide.createIcons === 'function') { lucide.createIcons(); } });
             closeGameModalBtn.addEventListener('click', () => { gameModal.classList.remove('show'); if (isSnakeGameActive) stopSnakeGame(); if (wamGameActive) stopWamGame(); if (isBreakoutGameActive) stopBreakoutGame(); });
             gameSelection.addEventListener('click', (e) => { const btn = e.target.closest('.game-select-btn'); if (btn && btn.dataset.game) selectGame(btn.dataset.game); });
 
@@ -1326,8 +1555,11 @@
             initializeWordGuessGame();
             initializeBreakoutGame();
             selectGame('tic-tac-toe'); // Set default game
-            lucide.createIcons();
+            if (lucide && typeof lucide.createIcons === 'function') {
+                lucide.createIcons();
+            }
         });
     </script>
 </body>
 </html>
+
