@@ -975,8 +975,8 @@
                 const ctInputContainer = document.createElement('div');
                 ctInputContainer.className = 'flex items-center gap-2';
                 ctInputContainer.innerHTML = `
-                    <label for="ct-mark-${newIndex}" class="block text-sm font-medium text-tertiary-color text-center">CT ${newIndex + 1} (20)</label>
-                    <input type="number" id="ct-mark-${newIndex}" step="0.1" min="0" max="20" class="w-full form-input ct-mark-input" placeholder="<=20">
+                    <label for="ct-mark-${newIndex}" class="block text-sm font-medium text-tertiary-color text-center">CT ${newIndex + 1}<br>(out of 20)</label>
+                    <input type="number" id="ct-mark-${newIndex}" step="0.1" min="0" max="20" class="w-full form-input ct-mark-input" placeholder="e.g., 18">
                      <button class="remove-ct-btn text-red-400 hover:text-red-600 p-2 rounded-full transition-colors"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
                 `;
                 ctMarksContainer.appendChild(ctInputContainer);
@@ -995,7 +995,7 @@
                     // Re-label inputs
                     const remainingInputs = ctMarksContainer.querySelectorAll('.flex');
                     remainingInputs.forEach((container, index) => {
-                         container.querySelector('label').textContent = `CT ${index + 1} (20)`;
+                         container.querySelector('label').textContent = `CT ${index + 1} (out of 20)`;
                          container.querySelector('label').setAttribute('for', `ct-mark-${index}`);
                          container.querySelector('input').setAttribute('id', `ct-mark-${index}`);
                     });
