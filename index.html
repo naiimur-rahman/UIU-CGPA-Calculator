@@ -938,10 +938,41 @@
 
             let ctScores = [];
 
+            // --- Course Grade: Input clamping helpers (prevent values over max) --- //
+            const clamp = (value, min, max) => {
+                const n = typeof value === 'number' ? value : parseFloat(value);
+                if (isNaN(n)) return min;
+                return Math.min(Math.max(n, min), max);
+            };
+
+            const assignmentInput = document.getElementById('assignment-marks');
+            const attendanceInput = document.getElementById('attendance-marks');
+            const midtermInput = document.getElementById('midterm-marks');
+            const finalInput = document.getElementById('final-marks');
+
+            const setClampListener = (el, min, max) => {
+                if (!el) return;
+                el.addEventListener('input', () => {
+                    const val = parseFloat(el.value);
+                    if (isNaN(val)) return;
+                    const clamped = clamp(val, min, max);
+                    if (clamped !== val) el.value = clamped;
+                });
+            };
+
+            // Clamp as user types
+            setClampListener(assignmentInput, 0, 5);
+            setClampListener(attendanceInput, 0, 5);
+            setClampListener(midtermInput, 0, 30);
+            setClampListener(finalInput, 0, 40);
+
             const calculateTargetCt = () => {
                 const enteredScores = Array.from(ctScoresContainer.querySelectorAll('input')).map(input => {
                     const val = parseFloat(input.value);
-                    return isNaN(val) ? null : val;
+                    if (isNaN(val)) return null;
+                    const clampedVal = clamp(val, 0, 20);
+                    if (clampedVal !== val) input.value = clampedVal;
+                    return clampedVal;
                 });
                 const validScores = enteredScores.filter(s => s !== null);
 
@@ -953,12 +984,13 @@
                 const sortedScores = [...validScores].sort((a, b) => b - a);
                 const bestThree = sortedScores.slice(0, 3);
                 const currentCtMarks = bestThree.reduce((a, b) => a + b, 0) / 3;
+                const currentCtAvg = Math.min(20, currentCtMarks);
 
                 targetCtResultEl.classList.remove('hidden');
                 if (validScores.length === 3) {
-                     requiredCtMarksEl.textContent = `Current Best 3 Avg: ${currentCtMarks.toFixed(2)} / 20`;
+                     requiredCtMarksEl.textContent = `Current Best 3 Avg: ${currentCtAvg.toFixed(2)} / 20`;
                 } else if (validScores.length === 4) {
-                    requiredCtMarksEl.textContent = `Final CT Mark (Best 3): ${currentCtMarks.toFixed(2)} / 20`;
+                    requiredCtMarksEl.textContent = `Final CT Mark (Best 3): ${currentCtAvg.toFixed(2)} / 20`;
                 }
             };
 
@@ -981,7 +1013,15 @@
                     lucide.createIcons();
                 }
 
-                ctInputContainer.querySelector('.ct-score-input').addEventListener('input', calculateTargetCt);
+                const ctInputEl = ctInputContainer.querySelector('.ct-score-input');
+                ctInputEl.addEventListener('input', () => {
+                    const val = parseFloat(ctInputEl.value);
+                    if (!isNaN(val)) {
+                        const clamped = clamp(val, 0, 20);
+                        if (clamped !== val) ctInputEl.value = clamped;
+                    }
+                    calculateTargetCt();
+                });
                  ctInputContainer.querySelector('.remove-ct-btn').addEventListener('click', () => {
                     ctInputContainer.remove();
                     // Re-label inputs
@@ -997,12 +1037,24 @@
             });
 
             calculateCourseGradeBtn.addEventListener('click', () => {
-                const assignment = parseFloat(document.getElementById('assignment-marks').value) || 0;
-                const attendance = parseFloat(document.getElementById('attendance-marks').value) || 0;
-                const midterm = parseFloat(document.getElementById('midterm-marks').value) || 0;
-                const final = parseFloat(document.getElementById('final-marks').value) || 0;
+                // Clamp all inputs to their valid ranges before calculating
+                const assignmentEl = document.getElementById('assignment-marks');
+                const attendanceEl = document.getElementById('attendance-marks');
+                const midtermEl = document.getElementById('midterm-marks');
+                const finalEl = document.getElementById('final-marks');
+
+                const assignment = clamp(parseFloat(assignmentEl.value) || 0, 0, 5); assignmentEl.value = assignment;
+                const attendance = clamp(parseFloat(attendanceEl.value) || 0, 0, 5); attendanceEl.value = attendance;
+                const midterm = clamp(parseFloat(midtermEl.value) || 0, 0, 30); midtermEl.value = midterm;
+                const final = clamp(parseFloat(finalEl.value) || 0, 0, 40); finalEl.value = final;
+
                 const ctInputs = Array.from(ctScoresContainer.querySelectorAll('.ct-score-input'));
-                const ctScores = ctInputs.map(input => parseFloat(input.value) || 0);
+                const ctScores = ctInputs.map(input => {
+                    const raw = parseFloat(input.value) || 0;
+                    const clamped = clamp(raw, 0, 20);
+                    if (input.value !== '' && raw !== clamped) input.value = clamped;
+                    return clamped;
+                });
 
                 if (ctScores.length < 3) {
                     showNotification("Please enter at least 3 CT scores.", "error");
@@ -1011,9 +1063,10 @@
 
                 const sortedScores = [...ctScores].sort((a, b) => b - a);
                 const bestThreeScores = sortedScores.slice(0, 3);
-                const avgCtScore = bestThreeScores.reduce((a, b) => a + b, 0) / 3;
+                const avgCtScore = bestThreeScores.reduce((a, b) => a + b, 0) / 3; // already <= 20
 
-                const totalMarks = assignment + attendance + midterm + final + avgCtScore;
+                const rawTotal = assignment + attendance + midterm + final + avgCtScore;
+                const totalMarks = Math.min(100, rawTotal);
 
                 let grade = '', points = 0.00;
                 if (totalMarks >= 90) { grade = 'A'; points = 4.00; }
