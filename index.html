@@ -485,6 +485,7 @@
             <div class="mb-8 flex justify-center border-b border-gray-200 dark:border-gray-700">
                 <button id="cgpa-tab-btn" class="px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500">CGPA Calculator</button>
                 <button id="course-grade-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Course Grade</button>
+                <button id="credit-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Credit</button>
                 <button id="grading-policy-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Grading Policy</button>
             </div>
 
@@ -617,6 +618,25 @@
                                 <p id="tgpa-good" class="text-4xl sm:text-5xl md:text-6xl font-bold text-green-700 my-2">0.00</p>
                                 <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-good">0</span></p> 
                                 <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-good">0</span></p>
+                </div>
+            </div>
+            <div id="credit-tab" style="display: none;">
+                <div class="form-section">
+                    <h2 class="text-xl font-bold text-primary-color mb-4 text-center">CSE Credit Tracker</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+                        <div>
+                            <label for="completed-credit-input" class="block text-sm font-medium text-tertiary-color mb-2">Completed Credits</label>
+                            <input type="number" id="completed-credit-input" min="0" class="w-full form-input" placeholder="e.g., 50">
+                        </div>
+                        <div>
+                            <label for="trimester-completed-input" class="block text-sm font-medium text-tertiary-color mb-2">Trimester Completed</label>
+                            <input type="number" id="trimester-completed-input" min="0" class="w-full form-input" placeholder="e.g., 5">
+                        </div>
+                    </div>
+                    <button id="calculate-credit-btn" class="w-full btn btn-main-calc mt-4"><i data-lucide="calculator" class="w-6 h-6"></i>Calculate</button>
+                    <div id="credit-result-section" class="mt-6 text-center" style="display: none;">
+                        <p id="credit-result-message" class="text-lg font-semibold"></p>
+                    </div>
                             </div>
                         </div>
                     </div>
@@ -1091,14 +1111,16 @@
             // --- Tab Switching Logic --- //
             const cgpaTabBtn = document.getElementById('cgpa-tab-btn');
             const courseGradeTabBtn = document.getElementById('course-grade-tab-btn');
+            const creditTabBtn = document.getElementById('credit-tab-btn');
             const gradingPolicyTabBtn = document.getElementById('grading-policy-tab-btn');
 
             const cgpaCalculatorTab = document.getElementById('cgpa-calculator-tab');
             const courseGradeTab = document.getElementById('course-grade-tab');
+            const creditTab = document.getElementById('credit-tab');
             const gradingPolicyTab = document.getElementById('grading-policy-tab');
 
-            const allTabs = [cgpaCalculatorTab, courseGradeTab, gradingPolicyTab];
-            const allTabBtns = [cgpaTabBtn, courseGradeTabBtn, gradingPolicyTabBtn];
+            const allTabs = [cgpaCalculatorTab, courseGradeTab, creditTab, gradingPolicyTab];
+            const allTabBtns = [cgpaTabBtn, courseGradeTabBtn, creditTabBtn, gradingPolicyTabBtn];
 
             const switchTab = (tabToShow, btnToActivate) => {
                 allTabs.forEach(tab => tab.style.display = 'none');
@@ -1114,6 +1136,7 @@
 
             cgpaTabBtn.addEventListener('click', () => switchTab(cgpaCalculatorTab, cgpaTabBtn));
             courseGradeTabBtn.addEventListener('click', () => switchTab(courseGradeTab, courseGradeTabBtn));
+            creditTabBtn.addEventListener('click', () => switchTab(creditTab, creditTabBtn));
             gradingPolicyTabBtn.addEventListener('click', () => switchTab(gradingPolicyTab, gradingPolicyTabBtn));
 
             // --- Elements (Combined) --- //
@@ -1620,6 +1643,51 @@
             if (lucide && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
+
+            // --- Credit Calculator Logic --- //
+            const calculateCreditBtn = document.getElementById('calculate-credit-btn');
+            calculateCreditBtn.addEventListener('click', () => {
+                const completedCreditInput = document.getElementById('completed-credit-input');
+                const trimesterCompletedInput = document.getElementById('trimester-completed-input');
+                const creditResultSection = document.getElementById('credit-result-section');
+                const creditResultMessage = document.getElementById('credit-result-message');
+
+                const completedCredits = parseFloat(completedCreditInput.value);
+                const trimesterCompleted = parseInt(trimesterCompletedInput.value);
+
+                if (isNaN(completedCredits) || completedCredits < 0 || isNaN(trimesterCompleted) || trimesterCompleted < 0) {
+                    showNotification("Please enter valid positive numbers for credits and trimesters.", "error");
+                    return;
+                }
+
+                const creditSchedule = [9, 10, 11, 11, 13, 11, 11, 12, 13, 12, 14, 11];
+                let expectedCredits = 0;
+
+                if (trimesterCompleted <= 12) {
+                    for (let i = 0; i < trimesterCompleted; i++) {
+                        expectedCredits += creditSchedule[i];
+                    }
+                } else {
+                    expectedCredits = creditSchedule.reduce((a, b) => a + b, 0);
+                    const remainingTrimesters = trimesterCompleted - 12;
+                    const averageCredits = expectedCredits / 12;
+                    expectedCredits += remainingTrimesters * averageCredits;
+                }
+
+                const difference = completedCredits - expectedCredits;
+                creditResultSection.style.display = 'block';
+
+                if (difference > 0) {
+                    creditResultMessage.textContent = `You are ${difference.toFixed(2)} credits ahead of schedule.`;
+                    creditResultMessage.className = 'text-lg font-semibold text-green-500';
+                } else if (difference < 0) {
+                    creditResultMessage.textContent = `You are ${Math.abs(difference).toFixed(2)} credits behind schedule.`;
+                    creditResultMessage.className = 'text-lg font-semibold text-red-500';
+                } else {
+                    creditResultMessage.textContent = "You are right on schedule.";
+                    creditResultMessage.className = 'text-lg font-semibold text-primary-color';
+                }
+            });
         });
     </script>
 </body>
