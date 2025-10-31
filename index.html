@@ -618,8 +618,9 @@
                                 <p id="tgpa-good" class="text-4xl sm:text-5xl md:text-6xl font-bold text-green-700 my-2">0.00</p>
                                 <p class="text-sm text-secondary-color">Attempted Credit: <span id="trimester-credits-good">0</span></p> 
                                 <p class="text-sm text-secondary-color">Completed Credit: <span id="trimester-earned-credits-good">0</span></p>
-                </div>
-            </div>
+                            </div>
+                        </div>
+                    </div>
             <div id="credit-tab" style="display: none;">
                 <div class="form-section">
                     <h2 class="text-xl font-bold text-primary-color mb-4 text-center">CSE Credit Tracker</h2>
@@ -637,9 +638,8 @@
                     <div id="credit-result-section" class="mt-6 text-center" style="display: none;">
                         <p id="credit-result-message" class="text-lg font-semibold"></p>
                     </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
                      <div class="mt-6 w-full planner-good p-4 rounded-lg border">
                         <h4 class="text-lg font-semibold text-primary-color text-center">Target CGPA Planner</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-start">
@@ -1661,31 +1661,38 @@
                 }
 
                 const creditSchedule = [9, 10, 11, 11, 13, 11, 11, 12, 13, 12, 14, 11];
-                let expectedCredits = 0;
+                creditResultSection.style.display = 'block';
 
                 if (trimesterCompleted <= 12) {
+                    let expectedCredits = 0;
                     for (let i = 0; i < trimesterCompleted; i++) {
                         expectedCredits += creditSchedule[i];
                     }
-                } else {
-                    expectedCredits = creditSchedule.reduce((a, b) => a + b, 0);
-                    const remainingTrimesters = trimesterCompleted - 12;
-                    const averageCredits = expectedCredits / 12;
-                    expectedCredits += remainingTrimesters * averageCredits;
-                }
+                    const difference = completedCredits - expectedCredits;
 
-                const difference = completedCredits - expectedCredits;
-                creditResultSection.style.display = 'block';
-
-                if (difference > 0) {
-                    creditResultMessage.textContent = `You are ${difference.toFixed(2)} credits ahead of schedule.`;
-                    creditResultMessage.className = 'text-lg font-semibold text-green-500';
-                } else if (difference < 0) {
-                    creditResultMessage.textContent = `You are ${Math.abs(difference).toFixed(2)} credits behind schedule.`;
-                    creditResultMessage.className = 'text-lg font-semibold text-red-500';
+                    if (difference > 0) {
+                        creditResultMessage.textContent = `You are ${difference.toFixed(2)} credits ahead of schedule.`;
+                        creditResultMessage.className = 'text-lg font-semibold text-green-500';
+                    } else if (difference < 0) {
+                        creditResultMessage.textContent = `You are ${Math.abs(difference).toFixed(2)} credits behind schedule.`;
+                        creditResultMessage.className = 'text-lg font-semibold text-red-500';
+                    } else {
+                        creditResultMessage.textContent = "You are right on schedule.";
+                        creditResultMessage.className = 'text-lg font-semibold text-primary-color';
+                    }
                 } else {
-                    creditResultMessage.textContent = "You are right on schedule.";
-                    creditResultMessage.className = 'text-lg font-semibold text-primary-color';
+                    const totalDegreeCredits = creditSchedule.reduce((a, b) => a + b, 0); // 138
+                    const remainingCredits = totalDegreeCredits - completedCredits;
+
+                    if (remainingCredits <= 0) {
+                        creditResultMessage.textContent = "Congratulations! You have completed all required credits.";
+                        creditResultMessage.className = 'text-lg font-semibold text-green-500';
+                    } else {
+                        const averageCreditsPerTrimester = totalDegreeCredits / 12; // 11.5
+                        const trimestersNeeded = Math.ceil(remainingCredits / averageCreditsPerTrimester);
+                        creditResultMessage.textContent = `You need approximately ${trimestersNeeded} more trimester(s) to complete your degree.`;
+                        creditResultMessage.className = 'text-lg font-semibold text-blue-500';
+                    }
                 }
             });
         });
