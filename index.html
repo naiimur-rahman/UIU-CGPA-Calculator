@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -484,6 +485,7 @@
             <div class="mb-8 flex justify-center border-b border-gray-200 dark:border-gray-700">
                 <button id="cgpa-tab-btn" class="px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500">CGPA Calculator</button>
                 <button id="course-grade-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Course Grade</button>
+                <button id="credit-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Credit</button>
                 <button id="grading-policy-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Grading Policy</button>
             </div>
 
@@ -619,6 +621,25 @@
                             </div>
                         </div>
                     </div>
+            <div id="credit-tab" style="display: none;">
+                <div class="form-section">
+                    <h2 class="text-xl font-bold text-primary-color mb-4 text-center">CSE Credit Tracker</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+                        <div>
+                            <label for="completed-credit-input" class="block text-sm font-medium text-tertiary-color mb-2">Completed Credits</label>
+                            <input type="number" id="completed-credit-input" min="0" class="w-full form-input" placeholder="e.g., 50">
+                        </div>
+                        <div>
+                            <label for="trimester-completed-input" class="block text-sm font-medium text-tertiary-color mb-2">Trimester Completed</label>
+                            <input type="number" id="trimester-completed-input" min="0" class="w-full form-input" placeholder="e.g., 5">
+                        </div>
+                    </div>
+                    <button id="calculate-credit-btn" class="w-full btn btn-main-calc mt-4"><i data-lucide="calculator" class="w-6 h-6"></i>Calculate</button>
+                    <div id="credit-result-section" class="mt-6 text-center" style="display: none;">
+                        <p id="credit-result-message" class="text-lg font-semibold"></p>
+                    </div>
+                </div>
+            </div>
                      <div class="mt-6 w-full planner-good p-4 rounded-lg border">
                         <h4 class="text-lg font-semibold text-primary-color text-center">Target CGPA Planner</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-start">
@@ -990,7 +1011,7 @@
                 if (validScores.length === 3) {
                      requiredCtMarksEl.textContent = `Current Best 3 Avg: ${currentCtAvg.toFixed(2)} / 20`;
                 } else if (validScores.length === 4) {
-                    requiredCtMarksEl.textContent = `Final CT Mark (Best 3): ${currentCtAvg.toFixed(2)} / 20`;
+                     requiredCtMarksEl.textContent = `Final CT Mark (Best 3): ${currentCtAvg.toFixed(2)} / 20`;
                 }
             };
 
@@ -1027,9 +1048,9 @@
                     // Re-label inputs
                     const remainingInputs = ctScoresContainer.querySelectorAll('.flex');
                     remainingInputs.forEach((container, index) => {
-                         container.querySelector('label').textContent = `CT ${index + 1} (20)`;
-                         container.querySelector('label').setAttribute('for', `ct-score-${index}`);
-                         container.querySelector('input').setAttribute('id', `ct-score-${index}`);
+                        container.querySelector('label').textContent = `CT ${index + 1} (20)`;
+                        container.querySelector('label').setAttribute('for', `ct-score-${index}`);
+                        container.querySelector('input').setAttribute('id', `ct-score-${index}`);
                     });
                     calculateTargetCt();
                 });
@@ -1090,14 +1111,16 @@
             // --- Tab Switching Logic --- //
             const cgpaTabBtn = document.getElementById('cgpa-tab-btn');
             const courseGradeTabBtn = document.getElementById('course-grade-tab-btn');
+            const creditTabBtn = document.getElementById('credit-tab-btn');
             const gradingPolicyTabBtn = document.getElementById('grading-policy-tab-btn');
 
             const cgpaCalculatorTab = document.getElementById('cgpa-calculator-tab');
             const courseGradeTab = document.getElementById('course-grade-tab');
+            const creditTab = document.getElementById('credit-tab');
             const gradingPolicyTab = document.getElementById('grading-policy-tab');
 
-            const allTabs = [cgpaCalculatorTab, courseGradeTab, gradingPolicyTab];
-            const allTabBtns = [cgpaTabBtn, courseGradeTabBtn, gradingPolicyTabBtn];
+            const allTabs = [cgpaCalculatorTab, courseGradeTab, creditTab, gradingPolicyTab];
+            const allTabBtns = [cgpaTabBtn, courseGradeTabBtn, creditTabBtn, gradingPolicyTabBtn];
 
             const switchTab = (tabToShow, btnToActivate) => {
                 allTabs.forEach(tab => tab.style.display = 'none');
@@ -1113,6 +1136,7 @@
 
             cgpaTabBtn.addEventListener('click', () => switchTab(cgpaCalculatorTab, cgpaTabBtn));
             courseGradeTabBtn.addEventListener('click', () => switchTab(courseGradeTab, courseGradeTabBtn));
+            creditTabBtn.addEventListener('click', () => switchTab(creditTab, creditTabBtn));
             gradingPolicyTabBtn.addEventListener('click', () => switchTab(gradingPolicyTab, gradingPolicyTabBtn));
 
             // --- Elements (Combined) --- //
@@ -1349,7 +1373,15 @@
                 
                 if (courses.length === 0) { if (!hasError) { calcErrorEl.textContent = "Please add at least one course."; calcErrorEl.classList.remove('hidden'); } hasError = true; }
                 const trimesterCredits = courses.reduce((total, course) => total + course.credit, 0);
-                if (!hasError && courses.length > 0 && trimesterCredits < 6) { calcErrorEl.textContent = "Minimum 6 trimester credits required."; calcErrorEl.classList.remove('hidden'); hasError = true; }
+
+                // --- MODIFIED CODE BLOCK ---
+                // This block now shows a warning instead of stopping the calculation.
+                if (!hasError && courses.length > 0 && trimesterCredits < 6) {
+                    showNotification("Trimester has less than 6 credits.", 'warning');
+                    // We no longer set hasError = true, which allows the calculation to proceed.
+                }
+                // --- END OF MODIFICATION ---
+
                 const hasRetakes = courses.some(c => c.type === 'retake');
                 if (!hasError && hasRetakes && !isInitialStandingComplete) {
                     calcErrorEl.textContent = hasInitialStandingAttempt ? "Enter complete & valid Current Standing for retakes." : "Enter Current Standing to add retake courses.";
@@ -1611,7 +1643,60 @@
             if (lucide && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
+
+            // --- Credit Calculator Logic --- //
+            const calculateCreditBtn = document.getElementById('calculate-credit-btn');
+            calculateCreditBtn.addEventListener('click', () => {
+                const completedCreditInput = document.getElementById('completed-credit-input');
+                const trimesterCompletedInput = document.getElementById('trimester-completed-input');
+                const creditResultSection = document.getElementById('credit-result-section');
+                const creditResultMessage = document.getElementById('credit-result-message');
+
+                const completedCredits = parseFloat(completedCreditInput.value);
+                const trimesterCompleted = parseInt(trimesterCompletedInput.value);
+
+                if (isNaN(completedCredits) || completedCredits < 0 || isNaN(trimesterCompleted) || trimesterCompleted < 0) {
+                    showNotification("Please enter valid positive numbers for credits and trimesters.", "error");
+                    return;
+                }
+
+                const creditSchedule = [9, 10, 11, 11, 13, 11, 11, 12, 13, 12, 14, 11];
+                creditResultSection.style.display = 'block';
+
+                if (trimesterCompleted <= 12) {
+                    let expectedCredits = 0;
+                    for (let i = 0; i < trimesterCompleted; i++) {
+                        expectedCredits += creditSchedule[i];
+                    }
+                    const difference = completedCredits - expectedCredits;
+
+                    if (difference > 0) {
+                        creditResultMessage.textContent = `You are ${difference.toFixed(2)} credits ahead of schedule.`;
+                        creditResultMessage.className = 'text-lg font-semibold text-green-500';
+                    } else if (difference < 0) {
+                        creditResultMessage.textContent = `You are ${Math.abs(difference).toFixed(2)} credits behind schedule.`;
+                        creditResultMessage.className = 'text-lg font-semibold text-red-500';
+                    } else {
+                        creditResultMessage.textContent = "You are right on schedule.";
+                        creditResultMessage.className = 'text-lg font-semibold text-primary-color';
+                    }
+                } else {
+                    const totalDegreeCredits = creditSchedule.reduce((a, b) => a + b, 0); // 138
+                    const remainingCredits = totalDegreeCredits - completedCredits;
+
+                    if (remainingCredits <= 0) {
+                        creditResultMessage.textContent = "Congratulations! You have completed all required credits.";
+                        creditResultMessage.className = 'text-lg font-semibold text-green-500';
+                    } else {
+                        const averageCreditsPerTrimester = totalDegreeCredits / 12; // 11.5
+                        const trimestersNeeded = Math.ceil(remainingCredits / averageCreditsPerTrimester);
+                        creditResultMessage.textContent = `You need approximately ${trimestersNeeded} more trimester(s) to complete your degree.`;
+                        creditResultMessage.className = 'text-lg font-semibold text-blue-500';
+                    }
+                }
+            });
         });
     </script>
 </body>
 </html>
+
