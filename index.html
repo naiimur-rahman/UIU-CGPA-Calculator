@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -621,26 +620,7 @@
                             </div>
                         </div>
                     </div>
-            <div id="credit-tab" style="display: none;">
-                <div class="form-section">
-                    <h2 class="text-xl font-bold text-primary-color mb-4 text-center">CSE Credit Tracker</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
-                        <div>
-                            <label for="completed-credit-input" class="block text-sm font-medium text-tertiary-color mb-2">Completed Credits</label>
-                            <input type="number" id="completed-credit-input" min="0" class="w-full form-input" placeholder="e.g., 50">
-                        </div>
-                        <div>
-                            <label for="trimester-completed-input" class="block text-sm font-medium text-tertiary-color mb-2">Trimester Completed</label>
-                            <input type="number" id="trimester-completed-input" min="0" class="w-full form-input" placeholder="e.g., 5">
-                        </div>
-                    </div>
-                    <button id="calculate-credit-btn" class="w-full btn btn-main-calc mt-4"><i data-lucide="calculator" class="w-6 h-6"></i>Calculate</button>
-                    <div id="credit-result-section" class="mt-6 text-center" style="display: none;">
-                        <p id="credit-result-message" class="text-lg font-semibold"></p>
-                    </div>
-                </div>
-            </div>
-                     <div class="mt-6 w-full planner-good p-4 rounded-lg border">
+                    <div class="mt-6 w-full planner-good p-4 rounded-lg border">
                         <h4 class="text-lg font-semibold text-primary-color text-center">Target CGPA Planner</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-start">
                             <div>
@@ -735,6 +715,7 @@
                 </div>
             </div>
             </div>
+            
             <div id="course-grade-tab" style="display: none;">
                 <div class="form-section">
                     <h2 class="text-xl font-bold text-primary-color mb-4">Course Grade Calculator</h2>
@@ -774,6 +755,27 @@
                     <p class="text-sm text-red-500 mt-2">Without Grace Mark</p>
                 </div>
             </div>
+            
+            <div id="credit-tab" style="display: none;">
+                <div class="form-section">
+                    <h2 class="text-xl font-bold text-primary-color mb-4 text-center">CSE Credit Tracker</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+                        <div>
+                            <label for="completed-credit-input" class="block text-sm font-medium text-tertiary-color mb-2">Completed Credits</label>
+                            <input type="number" id="completed-credit-input" min="0" class="w-full form-input" placeholder="e.g., 50">
+                        </div>
+                        <div>
+                            <label for="trimester-completed-input" class="block text-sm font-medium text-tertiary-color mb-2">Trimester Completed</label>
+                            <input type="number" id="trimester-completed-input" min="0" class="w-full form-input" placeholder="e.g., 5">
+                        </div>
+                    </div>
+                    <button id="calculate-credit-btn" class="w-full btn btn-main-calc mt-4"><i data-lucide="calculator" class="w-6 h-6"></i>Calculate</button>
+                    <div id="credit-result-section" class="mt-6 text-center" style="display: none;">
+                        <p id="credit-result-message" class="text-lg font-semibold"></p>
+                    </div>
+                </div>
+            </div>
+            
             <div id="grading-policy-tab" style="display: none;">
                 <div class="form-section">
                     <h2 class="text-xl font-bold text-primary-color mb-4 text-center">UIU Grading Policy</h2>
@@ -1699,4 +1701,3 @@
     </script>
 </body>
 </html>
-
