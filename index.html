@@ -763,6 +763,7 @@
                         <div>
                             <label for="completed-credit-input" class="block text-sm font-medium text-tertiary-color mb-2">Completed Credits</label>
                             <input type="number" id="completed-credit-input" min="0" class="w-full form-input" placeholder="e.g., 50">
+                            <p id="completed-credit-error" class="text-red-500 text-sm error-placeholder"></p>
                         </div>
                         <div>
                             <label for="trimester-completed-input" class="block text-sm font-medium text-tertiary-color mb-2">Trimester Completed</label>
@@ -1347,7 +1348,54 @@
                 calcErrorEl.classList.add('hidden'); creditsErrorEl.classList.add('hidden');
             };
 
+            const validateAcademicStanding = () => {
+                const cgpa = parseFloat(currentCgpaInput.value);
+                const attempted = parseFloat(completedCreditsInput.value);
+                const earned = parseFloat(completedEarnedCreditsInput.value);
+
+                let isEarnedInvalid = false;
+                if (!isNaN(earned) && !isNaN(attempted) && earned > attempted) {
+                    isEarnedInvalid = true;
+                }
+
+                let isCgpaInvalid = false;
+                if (!isNaN(cgpa) && !isNaN(attempted) && !isNaN(earned)) {
+                    if ((cgpa * attempted) > (earned * 4.0)) {
+                        isCgpaInvalid = true;
+                    }
+                }
+
+                if (isEarnedInvalid) {
+                    earnedCreditsErrorEl.textContent = "Aeh! 🙂";
+                    earnedCreditsErrorEl.classList.add('visible');
+                } else {
+                    earnedCreditsErrorEl.textContent = "";
+                    earnedCreditsErrorEl.classList.remove('visible');
+                }
+
+                if (isCgpaInvalid) {
+                    cgpaErrorEl.textContent = "Aeh! 🙂";
+                    cgpaErrorEl.classList.add('visible');
+                } else {
+                    cgpaErrorEl.textContent = "";
+                    cgpaErrorEl.classList.remove('visible');
+                }
+
+                const isInvalid = isEarnedInvalid || isCgpaInvalid;
+
+                calculateBtn.disabled = isInvalid;
+                if (isInvalid) {
+                    calculateBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    calculateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                return !isInvalid;
+            };
+
             const handleCalculation = () => {
+                if (!validateAcademicStanding()) {
+                    return;
+                }
                 hideResults();
                 let hasError = false;
                 const currentCgpaVal = currentCgpaInput.value.trim();
@@ -1617,7 +1665,12 @@
             if (themeToggle) {
                 themeToggle.addEventListener('change', () => updateTheme(themeToggle.checked));
             }
-            [currentCgpaInput, completedCreditsInput, completedEarnedCreditsInput].forEach(el => el.addEventListener('input', saveState));
+            [currentCgpaInput, completedCreditsInput, completedEarnedCreditsInput].forEach(el => {
+                el.addEventListener('input', () => {
+                    validateAcademicStanding();
+                    saveState();
+                });
+            });
             addCourseForm.addEventListener('submit', (e) => { e.preventDefault(); const c = courseCreditEl.value, g = courseGradeEl.value; if (!c || !g) { showNotification("Please select both credit and grade.", 'error'); return; } courses.push({ type: 'new', credit: parseFloat(c), grade: parseFloat(g) }); renderCourses(); hideResults(); saveState(); showNotification('Course added!'); courseCreditEl.value = ""; courseGradeEl.value = ""; });
             addRetakeForm.addEventListener('submit', (e) => { e.preventDefault(); const c = retakeCreditEl.value, oG = retakeOldGradeEl.value, nG = retakeNewGradeEl.value; if (!c || !oG || !nG) { showNotification("Please select all retake fields.", 'error'); return; } const credit = parseFloat(c), oldGrade = parseFloat(oG), newGrade = parseFloat(nG); if (oldGrade >= newGrade) { showNotification("New grade must be higher.", 'error'); return; } const hasInitial = (parseFloat(completedCreditsInput.value) || 0) > 0 && currentCgpaInput.value.trim() !== '' && (parseFloat(completedEarnedCreditsInput.value) || 0) >= 0 && completedEarnedCreditsInput.value.trim() !== ''; showNotification(hasInitial ? 'Retake course added!' : "Retake added. Enter Full Current Standing for best results.", hasInitial ? 'success' : 'warning'); courses.push({ type: 'retake', credit, oldGrade, newGrade }); renderCourses(); hideResults(); saveState(); retakeCreditEl.value = ""; retakeOldGradeEl.value = ""; retakeNewGradeEl.value = ""; });
             courseListContainer.addEventListener('click', (e) => { const removeBtn = e.target.closest('.remove-btn'); if (removeBtn) { courses.splice(parseInt(removeBtn.dataset.index), 1); renderCourses(); hideResults(); saveState(); } });
@@ -1648,9 +1701,40 @@
 
             // --- Credit Calculator Logic --- //
             const calculateCreditBtn = document.getElementById('calculate-credit-btn');
+            const completedCreditInput = document.getElementById('completed-credit-input');
+            const trimesterCompletedInput = document.getElementById('trimester-completed-input');
+
+            const validateCreditTab = () => {
+                const completedCreditErrorEl = document.getElementById('completed-credit-error');
+                const completedCredits = parseFloat(completedCreditInput.value);
+                let isInvalid = false;
+                if (!isNaN(completedCredits) && completedCredits > 138) {
+                    isInvalid = true;
+                }
+
+                if (isInvalid) {
+                    completedCreditErrorEl.textContent = "Aeh! 🙂";
+                    completedCreditErrorEl.classList.add('visible');
+                } else {
+                    completedCreditErrorEl.textContent = "";
+                    completedCreditErrorEl.classList.remove('visible');
+                }
+
+                calculateCreditBtn.disabled = isInvalid;
+                if (isInvalid) {
+                    calculateCreditBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    calculateCreditBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                return !isInvalid;
+            };
+
+            completedCreditInput.addEventListener('input', validateCreditTab);
+
             calculateCreditBtn.addEventListener('click', () => {
-                const completedCreditInput = document.getElementById('completed-credit-input');
-                const trimesterCompletedInput = document.getElementById('trimester-completed-input');
+                if (!validateCreditTab()) {
+                    return;
+                }
                 const creditResultSection = document.getElementById('credit-result-section');
                 const creditResultMessage = document.getElementById('credit-result-message');
 
