@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -262,6 +261,23 @@
         }
         .error-placeholder.visible { visibility: visible; }
         
+        /* --- Tab Animation Styles --- */
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .tab-content.exiting {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
         /* --- Game Styles --- */
         #open-game-modal {
             position: fixed;
@@ -485,25 +501,26 @@
             <div class="mb-8 flex justify-center border-b border-gray-200 dark:border-gray-700">
                 <button id="cgpa-tab-btn" class="px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500">CGPA Calculator</button>
                 <button id="course-grade-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Course Grade</button>
+                <button id="credit-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Credit</button>
                 <button id="grading-policy-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Grading Policy</button>
             </div>
 
-            <div id="cgpa-calculator-tab">
+            <div id="cgpa-calculator-tab" class="tab-content active">
                 <div class="form-section">
                     <h2 class="text-xl font-bold text-primary-color mb-4">Current Academic Standing <span class="text-sm font-normal text-secondary-color">(Optional)</span></h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"> 
                     <div>
-                        <label for="current-cgpa" class="block text-sm font-medium text-tertiary-color mb-2">Current CGPA</label>
-                        <input type="number" id="current-cgpa" step="0.01" min="0.00" max="4.00" class="w-full form-input" placeholder="e.g., 3.50">
+                        <label for="current-cgpa" class="block text-sm font-medium text-tertiary-color mb-2">CGPA</label>
+                        <input type="number" id="current-cgpa" step="0.01" min="0.00" max="4.00" class="w-full form-input" placeholder="<=4">
                         <p id="cgpa-error" class="text-red-500 text-sm error-placeholder"></p>
                     </div>
                     <div>
-                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Credits Attempted<br>(Incl. F grades)</label>
-                        <input type="number" id="completed-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 90">
+                        <label for="completed-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Att. Credits</label>
+                        <input type="number" id="completed-credits" step="0.5" min="0" class="w-full form-input" placeholder="Incl. F grades">
                         <p id="attempted-credits-error" class="error-placeholder text-red-500 text-sm"></p>
                     </div>
                     <div>
-                        <label for="completed-earned-credits" class="block text-sm font-medium text-tertiary-color mb-2">Total Credits Earned<br>(Before this Tri.)</label>
+                        <label for="completed-earned-credits" class="block text-sm font-medium text-tertiary-color mb-2">Completed Credits</label>
                         <input type="number" id="completed-earned-credits" step="0.5" min="0" class="w-full form-input" placeholder="e.g., 85">
                         <p id="earned-credits-error" class="error-placeholder text-red-500 text-sm"></p>
                     </div>
@@ -620,7 +637,7 @@
                             </div>
                         </div>
                     </div>
-                     <div class="mt-6 w-full planner-good p-4 rounded-lg border">
+                    <div class="mt-6 w-full planner-good p-4 rounded-lg border">
                         <h4 class="text-lg font-semibold text-primary-color text-center">Target CGPA Planner</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-start">
                             <div>
@@ -715,32 +732,33 @@
                 </div>
             </div>
             </div>
-            <div id="course-grade-tab" style="display: none;">
+            
+            <div id="course-grade-tab" class="tab-content">
                 <div class="form-section">
                     <h2 class="text-xl font-bold text-primary-color mb-4">Course Grade Calculator</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
                         <div>
-                            <label for="assignment-marks" class="block text-sm font-medium text-tertiary-color mb-2">Assignment (out of 5)</label>
-                            <input type="number" id="assignment-marks" step="0.1" min="0" max="5" class="w-full form-input" placeholder="e.g., 4.5">
+                            <label for="assignment-marks" class="block text-sm font-medium text-tertiary-color mb-2">Assignment</label>
+                            <input type="number" id="assignment-marks" step="0.1" min="0" max="5" class="w-full form-input" placeholder="out of 5">
                         </div>
                         <div>
-                            <label for="attendance-marks" class="block text-sm font-medium text-tertiary-color mb-2">Attendance (out of 5)</label>
-                            <input type="number" id="attendance-marks" step="0.1" min="0" max="5" class="w-full form-input" placeholder="e.g., 5">
+                            <label for="attendance-marks" class="block text-sm font-medium text-tertiary-color mb-2">Attendance</label>
+                            <input type="number" id="attendance-marks" step="0.1" min="0" max="5" class="w-full form-input" placeholder="out of 5">
                         </div>
                         <div>
-                            <label for="midterm-marks" class="block text-sm font-medium text-tertiary-color mb-2">Midterm (out of 30)</label>
-                            <input type="number" id="midterm-marks" step="0.1" min="0" max="30" class="w-full form-input" placeholder="e.g., 25">
+                            <label for="midterm-marks" class="block text-sm font-medium text-tertiary-color mb-2">Midterm</label>
+                            <input type="number" id="midterm-marks" step="0.1" min="0" max="30" class="w-full form-input" placeholder="out of 30">
                         </div>
                         <div>
-                            <label for="final-marks" class="block text-sm font-medium text-tertiary-color mb-2">Final (out of 40)</label>
-                            <input type="number" id="final-marks" step="0.1" min="0" max="40" class="w-full form-input" placeholder="e.g., 32">
+                            <label for="final-marks" class="block text-sm font-medium text-tertiary-color mb-2">Final</label>
+                            <input type="number" id="final-marks" step="0.1" min="0" max="40" class="w-full form-input" placeholder="out of 40">
                         </div>
                     </div>
                 </div>
                 <div class="form-section">
                     <h2 class="text-xl font-bold text-primary-color mb-4">CT Marks</h2>
                     <div id="ct-scores-container" class="space-y-2"></div>
-                    <button id="add-ct-score-btn" class="w-full btn btn-neutral mt-4"><i data-lucide="plus" class="w-5 h-5"></i>Add CT Score</button>
+                    <button id="add-ct-score-btn" class="w-full btn btn-neutral mt-4"><i data-lucide="plus" class="w-5 h-5"></i>Add CT Marks</button>
                     <div id="target-ct-result" class="mt-4 text-center hidden">
                         <p id="required-ct-marks" class="text-3xl font-bold text-indigo-600"></p>
                     </div>
@@ -754,7 +772,30 @@
                     <p class="text-sm text-red-500 mt-2">Without Grace Mark</p>
                 </div>
             </div>
-            <div id="grading-policy-tab" style="display: none;">
+            
+            <div id="credit-tab" class="tab-content">
+                <div class="form-section">
+                    <h2 class="text-xl font-bold text-primary-color mb-4 text-center">UG Program (B.Sc in CSE) Credit Tracker</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+                        <div>
+                            <label for="completed-credit-input" class="block text-sm font-medium text-tertiary-color mb-2">Completed Credits</label>
+                            <input type="number" id="completed-credit-input" min="0" class="w-full form-input" placeholder="e.g., 50">
+                            <p id="completed-credit-error" class="text-red-500 text-sm error-placeholder"></p>
+                        </div>
+                        <div>
+                            <label for="trimester-completed-input" class="block text-sm font-medium text-tertiary-color mb-2">Trimester Completed</label>
+                            <input type="number" id="trimester-completed-input" min="0" class="w-full form-input" placeholder="e.g., 5">
+                            <p id="trimester-completed-error" class="text-red-500 text-sm error-placeholder"></p>
+                        </div>
+                    </div>
+                    <button id="calculate-credit-btn" class="w-full btn btn-main-calc mt-4"><i data-lucide="calculator" class="w-6 h-6"></i>Calculate</button>
+                    <div id="credit-result-section" class="mt-6 text-center" style="display: none;">
+                        <p id="credit-result-message" class="text-lg font-semibold"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="grading-policy-tab" class="tab-content">
                 <div class="form-section">
                     <h2 class="text-xl font-bold text-primary-color mb-4 text-center">UIU Grading Policy</h2>
                     <div class="overflow-x-auto">
@@ -1005,8 +1046,8 @@
                 const ctInputContainer = document.createElement('div');
                 ctInputContainer.className = 'flex items-center gap-2';
                 ctInputContainer.innerHTML = `
-                    <label for="ct-score-${newIndex}" class="block text-sm font-medium text-tertiary-color">CT ${newIndex + 1} (20)</label>
-                    <input type="number" id="ct-score-${newIndex}" step="0.1" min="0" max="20" class="w-full form-input ct-score-input" placeholder="e.g., 18">
+                    <label for="ct-score-${newIndex}" class="block text-sm font-medium text-tertiary-color">CT(${newIndex + 1})</label>
+                    <input type="number" id="ct-score-${newIndex}" step="0.1" min="0" max="20" class="w-full form-input ct-score-input" placeholder="out of 20">
                      <button class="remove-ct-btn text-red-400 hover:text-red-600 p-2 rounded-full transition-colors"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
                 `;
                 ctScoresContainer.appendChild(ctInputContainer);
@@ -1088,32 +1129,56 @@
                 courseGradeResultSection.style.display = 'block';
             });
 
-            // --- Tab Switching Logic --- //
+            // --- Tab Switching Logic with Animation --- //
             const cgpaTabBtn = document.getElementById('cgpa-tab-btn');
             const courseGradeTabBtn = document.getElementById('course-grade-tab-btn');
+            const creditTabBtn = document.getElementById('credit-tab-btn');
             const gradingPolicyTabBtn = document.getElementById('grading-policy-tab-btn');
 
             const cgpaCalculatorTab = document.getElementById('cgpa-calculator-tab');
             const courseGradeTab = document.getElementById('course-grade-tab');
+            const creditTab = document.getElementById('credit-tab');
             const gradingPolicyTab = document.getElementById('grading-policy-tab');
 
-            const allTabs = [cgpaCalculatorTab, courseGradeTab, gradingPolicyTab];
-            const allTabBtns = [cgpaTabBtn, courseGradeTabBtn, gradingPolicyTabBtn];
+            const allTabs = [cgpaCalculatorTab, courseGradeTab, creditTab, gradingPolicyTab];
+            const allTabBtns = [cgpaTabBtn, courseGradeTabBtn, creditTabBtn, gradingPolicyTabBtn];
 
             const switchTab = (tabToShow, btnToActivate) => {
-                allTabs.forEach(tab => tab.style.display = 'none');
+                // First, set all tabs to inactive and add exiting animation
+                allTabs.forEach(tab => {
+                    if (tab.classList.contains('active')) {
+                        tab.classList.add('exiting');
+                        tab.classList.remove('active');
+                        setTimeout(() => {
+                            tab.classList.remove('exiting');
+                            tab.style.display = 'none';
+                        }, 300);
+                    } else {
+                        tab.style.display = 'none';
+                    }
+                });
+                
+                // Update tab buttons
                 allTabBtns.forEach(btn => {
                     btn.classList.remove('text-indigo-600', 'dark:text-indigo-400', 'border-indigo-500');
                     btn.classList.add('text-gray-500', 'dark:text-gray-400', 'border-transparent');
                 });
 
-                tabToShow.style.display = 'block';
+                // Show the new tab with animation
+                setTimeout(() => {
+                    tabToShow.style.display = 'block';
+                    setTimeout(() => {
+                        tabToShow.classList.add('active');
+                    }, 10);
+                }, 300);
+
                 btnToActivate.classList.add('text-indigo-600', 'dark:text-indigo-400', 'border-indigo-500');
                 btnToActivate.classList.remove('text-gray-500', 'dark:text-gray-400', 'border-transparent');
             };
 
             cgpaTabBtn.addEventListener('click', () => switchTab(cgpaCalculatorTab, cgpaTabBtn));
             courseGradeTabBtn.addEventListener('click', () => switchTab(courseGradeTab, courseGradeTabBtn));
+            creditTabBtn.addEventListener('click', () => switchTab(creditTab, creditTabBtn));
             gradingPolicyTabBtn.addEventListener('click', () => switchTab(gradingPolicyTab, gradingPolicyTabBtn));
 
             // --- Elements (Combined) --- //
@@ -1322,7 +1387,54 @@
                 calcErrorEl.classList.add('hidden'); creditsErrorEl.classList.add('hidden');
             };
 
+            const validateAcademicStanding = () => {
+                const cgpa = parseFloat(currentCgpaInput.value);
+                const attempted = parseFloat(completedCreditsInput.value);
+                const earned = parseFloat(completedEarnedCreditsInput.value);
+
+                let isEarnedInvalid = false;
+                if (!isNaN(earned) && !isNaN(attempted) && earned > attempted) {
+                    isEarnedInvalid = true;
+                }
+
+                let isCgpaInvalid = false;
+                if (!isNaN(cgpa) && !isNaN(attempted) && !isNaN(earned)) {
+                    if ((cgpa * attempted) > (earned * 4.0)) {
+                        isCgpaInvalid = true;
+                    }
+                }
+
+                if (isEarnedInvalid) {
+                    earnedCreditsErrorEl.textContent = "Aeh! 🙂";
+                    earnedCreditsErrorEl.classList.add('visible');
+                } else {
+                    earnedCreditsErrorEl.textContent = "";
+                    earnedCreditsErrorEl.classList.remove('visible');
+                }
+
+                if (isCgpaInvalid) {
+                    cgpaErrorEl.textContent = "Aeh! 🙂";
+                    cgpaErrorEl.classList.add('visible');
+                } else {
+                    cgpaErrorEl.textContent = "";
+                    cgpaErrorEl.classList.remove('visible');
+                }
+
+                const isInvalid = isEarnedInvalid || isCgpaInvalid;
+
+                calculateBtn.disabled = isInvalid;
+                if (isInvalid) {
+                    calculateBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    calculateBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                return !isInvalid;
+            };
+
             const handleCalculation = () => {
+                if (!validateAcademicStanding()) {
+                    return;
+                }
                 hideResults();
                 let hasError = false;
                 const currentCgpaVal = currentCgpaInput.value.trim();
@@ -1592,9 +1704,65 @@
             if (themeToggle) {
                 themeToggle.addEventListener('change', () => updateTheme(themeToggle.checked));
             }
-            [currentCgpaInput, completedCreditsInput, completedEarnedCreditsInput].forEach(el => el.addEventListener('input', saveState));
+            [currentCgpaInput, completedCreditsInput, completedEarnedCreditsInput].forEach(el => {
+                el.addEventListener('input', () => {
+                    validateAcademicStanding();
+                    saveState();
+                });
+            });
             addCourseForm.addEventListener('submit', (e) => { e.preventDefault(); const c = courseCreditEl.value, g = courseGradeEl.value; if (!c || !g) { showNotification("Please select both credit and grade.", 'error'); return; } courses.push({ type: 'new', credit: parseFloat(c), grade: parseFloat(g) }); renderCourses(); hideResults(); saveState(); showNotification('Course added!'); courseCreditEl.value = ""; courseGradeEl.value = ""; });
-            addRetakeForm.addEventListener('submit', (e) => { e.preventDefault(); const c = retakeCreditEl.value, oG = retakeOldGradeEl.value, nG = retakeNewGradeEl.value; if (!c || !oG || !nG) { showNotification("Please select all retake fields.", 'error'); return; } const credit = parseFloat(c), oldGrade = parseFloat(oG), newGrade = parseFloat(nG); if (oldGrade >= newGrade) { showNotification("New grade must be higher.", 'error'); return; } const hasInitial = (parseFloat(completedCreditsInput.value) || 0) > 0 && currentCgpaInput.value.trim() !== '' && (parseFloat(completedEarnedCreditsInput.value) || 0) >= 0 && completedEarnedCreditsInput.value.trim() !== ''; showNotification(hasInitial ? 'Retake course added!' : "Retake added. Enter Full Current Standing for best results.", hasInitial ? 'success' : 'warning'); courses.push({ type: 'retake', credit, oldGrade, newGrade }); renderCourses(); hideResults(); saveState(); retakeCreditEl.value = ""; retakeOldGradeEl.value = ""; retakeNewGradeEl.value = ""; });
+            
+            // Enhanced Retake Course Validation
+            addRetakeForm.addEventListener('submit', (e) => { 
+                e.preventDefault(); 
+                const c = retakeCreditEl.value, oG = retakeOldGradeEl.value, nG = retakeNewGradeEl.value; 
+                if (!c || !oG || !nG) { 
+                    showNotification("Please select all retake fields.", 'error'); 
+                    return; 
+                } 
+                
+                const credit = parseFloat(c), oldGrade = parseFloat(oG), newGrade = parseFloat(nG);
+                
+                // Check if new grade is higher than old grade
+                if (oldGrade >= newGrade) { 
+                    showNotification("New grade must be higher than old grade.", 'error'); 
+                    return; 
+                }
+                
+                // Check if this is an F retake (old grade is 0.00)
+                if (oldGrade === 0.00) {
+                    // Get current academic standing values
+                    const initialAttemptedCredits = parseFloat(completedCreditsInput.value) || 0;
+                    const initialEarnedCredits = parseFloat(completedEarnedCreditsInput.value) || 0;
+                    
+                    // Calculate the difference between attempted and earned credits
+                    const failedCredits = initialAttemptedCredits - initialEarnedCredits;
+                    
+                    // Calculate total F retake credits already added
+                    const existingFRetakeCredits = courses
+                        .filter(course => course.type === 'retake' && course.oldGrade === 0.00)
+                        .reduce((total, course) => total + course.credit, 0);
+                    
+                    // Check if adding this retake would exceed available failed credits
+                    if (existingFRetakeCredits + credit > failedCredits) {
+                        showNotification(`You can only retake ${failedCredits} credits of F grades. You've already added ${existingFRetakeCredits} credits.`, 'error');
+                        return;
+                    }
+                }
+                
+                // If all validations pass, add the retake course
+                courses.push({ type: 'retake', credit, oldGrade, newGrade }); 
+                renderCourses(); 
+                hideResults(); 
+                saveState(); 
+                showNotification('Retake course added!', 'success');
+                
+                // Reset form
+                retakeCreditEl.value = ""; 
+                retakeOldGradeEl.value = ""; 
+                retakeNewGradeEl.value = ""; 
+            });
+            
             courseListContainer.addEventListener('click', (e) => { const removeBtn = e.target.closest('.remove-btn'); if (removeBtn) { courses.splice(parseInt(removeBtn.dataset.index), 1); renderCourses(); hideResults(); saveState(); } });
             calculateBtn.addEventListener('click', handleCalculation);
             resetBtn.addEventListener('click', () => { courses = []; currentCgpaInput.value = ''; completedCreditsInput.value = ''; completedEarnedCreditsInput.value = ''; renderCourses(); hideResults(); saveState(); showNotification('Calculator has been reset.', 'success'); });
@@ -1620,8 +1788,97 @@
             if (lucide && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
             }
+
+            // --- Credit Calculator Logic --- //
+            const calculateCreditBtn = document.getElementById('calculate-credit-btn');
+            const completedCreditInput = document.getElementById('completed-credit-input');
+            const trimesterCompletedInput = document.getElementById('trimester-completed-input');
+
+            const validateCreditTab = () => {
+                const completedCreditErrorEl = document.getElementById('completed-credit-error');
+                const completedCredits = parseFloat(completedCreditInput.value);
+                let isInvalid = false;
+                if (!isNaN(completedCredits) && completedCredits > 138) {
+                    isInvalid = true;
+                }
+
+                if (isInvalid) {
+                    completedCreditErrorEl.textContent = "Aeh! 🙂";
+                    completedCreditErrorEl.classList.add('visible');
+                } else {
+                    completedCreditErrorEl.textContent = "";
+                    completedCreditErrorEl.classList.remove('visible');
+                }
+
+                calculateCreditBtn.disabled = isInvalid;
+                if (isInvalid) {
+                    calculateCreditBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                } else {
+                    calculateCreditBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                return !isInvalid;
+            };
+
+            completedCreditInput.addEventListener('input', validateCreditTab);
+
+            calculateCreditBtn.addEventListener('click', () => {
+                if (!validateCreditTab()) {
+                    return;
+                }
+                const creditResultSection = document.getElementById('credit-result-section');
+                const creditResultMessage = document.getElementById('credit-result-message');
+
+                const completedCredits = parseFloat(completedCreditInput.value);
+                const trimesterCompleted = parseInt(trimesterCompletedInput.value);
+
+                if (isNaN(completedCredits) || completedCredits < 0 || isNaN(trimesterCompleted) || trimesterCompleted < 0) {
+                    showNotification("Please enter valid positive numbers for credits and trimesters.", "error");
+                    return;
+                }
+
+                const creditSchedule = [9, 10, 11, 11, 13, 11, 11, 12, 13, 12, 14, 11];
+                creditResultSection.style.display = 'block';
+
+                // Check if completed credits equal 138 (graduated)
+                if (completedCredits === 138) {
+                    creditResultMessage.textContent = "Congratulations! You have graduated! 🎓";
+                    creditResultMessage.className = 'text-lg font-semibold text-green-500';
+                    return;
+                }
+
+                if (trimesterCompleted <= 12) {
+                    let expectedCredits = 0;
+                    for (let i = 0; i < trimesterCompleted; i++) {
+                        expectedCredits += creditSchedule[i];
+                    }
+                    const difference = completedCredits - expectedCredits;
+
+                    if (difference > 0) {
+                        creditResultMessage.textContent = `You are ${difference.toFixed(2)} credits ahead of schedule.`;
+                        creditResultMessage.className = 'text-lg font-semibold text-green-500';
+                    } else if (difference < 0) {
+                        creditResultMessage.textContent = `You are ${Math.abs(difference).toFixed(2)} credits behind schedule.`;
+                        creditResultMessage.className = 'text-lg font-semibold text-red-500';
+                    } else {
+                        creditResultMessage.textContent = "You are right on schedule.";
+                        creditResultMessage.className = 'text-lg font-semibold text-primary-color';
+                    }
+                } else {
+                    const totalDegreeCredits = creditSchedule.reduce((a, b) => a + b, 0); // 138
+                    const remainingCredits = totalDegreeCredits - completedCredits;
+
+                    if (remainingCredits <= 0) {
+                        creditResultMessage.textContent = "Congratulations! You have completed all required credits.";
+                        creditResultMessage.className = 'text-lg font-semibold text-green-500';
+                    } else {
+                        const averageCreditsPerTrimester = totalDegreeCredits / 12; // 11.5
+                        const trimestersNeeded = Math.ceil(remainingCredits / averageCreditsPerTrimester);
+                        creditResultMessage.textContent = `You need approximately ${trimestersNeeded} more trimester(s) to complete your degree.`;
+                        creditResultMessage.className = 'text-lg font-semibold text-blue-500';
+                    }
+                }
+            });
         });
     </script>
 </body>
 </html>
-
