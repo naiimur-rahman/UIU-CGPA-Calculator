@@ -1506,7 +1506,7 @@
                 }
 
                 if (isEarnedInvalid) {
-                    earnedCreditsErrorEl.textContent = "Aeh! 🙂";
+                    earnedCreditsErrorEl.textContent = "Comp. credits cannot be greater than att. credits";
                     earnedCreditsErrorEl.classList.add('visible');
                 } else {
                     earnedCreditsErrorEl.textContent = "";
@@ -1514,7 +1514,7 @@
                 }
 
                 if (isCgpaInvalid) {
-                    cgpaErrorEl.textContent = "Aeh! 🙂";
+                    cgpaErrorEl.textContent = "CGPA is too high for the given credits";
                     cgpaErrorEl.classList.add('visible');
                 } else {
                     cgpaErrorEl.textContent = "";
@@ -1995,5 +1995,6 @@ addRetakeForm.addEventListener('submit', (e) => {
     </script>
 </body>
 </html>
+
 
 
