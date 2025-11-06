@@ -1065,6 +1065,16 @@
                         </div>
                     </div>
                     <div class="mt-6 w-full planner-good p-4 rounded-lg border">
+                        <div class="mb-4 text-center">
+                            <p class="text-tertiary-color">
+                                If I get
+                                <input type="number" id="future-gpa-good" class="w-20 form-input text-center mx-1" placeholder="GPA" step="0.01" min="0" max="4.00">
+                                GPA on
+                                <input type="number" id="future-credits-good" class="w-20 form-input text-center mx-1" placeholder="Credits" min="0" step="0.5">
+                                credits my CGPA will be:
+                                <span id="future-cgpa-good" class="font-bold text-green-600">__</span>
+                            </p>
+                        </div>
                         <h4 class="text-lg font-semibold text-primary-color text-center">Target CGPA Planner</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-start">
                             <div>
@@ -1104,6 +1114,16 @@
                         </div>
                     </div>
                     <div class="mt-6 w-full planner-mid p-4 rounded-lg border">
+                        <div class="mb-4 text-center">
+                            <p class="text-tertiary-color">
+                                If I get
+                                <input type="number" id="future-gpa-mid" class="w-20 form-input text-center mx-1" placeholder="GPA" step="0.01" min="0" max="4.00">
+                                GPA on
+                                <input type="number" id="future-credits-mid" class="w-20 form-input text-center mx-1" placeholder="Credits" min="0" step="0.5">
+                                credits my CGPA will be:
+                                <span id="future-cgpa-mid" class="font-bold text-orange-600">__</span>
+                            </p>
+                        </div>
                         <h4 class="text-lg font-semibold text-primary-color text-center">Target CGPA Planner</h4>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 items-start">
                             <div>
@@ -1143,6 +1163,16 @@
                        </div>
                     </div>
                     <div class="mt-6 w-full planner-low p-4 rounded-lg border">
+                        <div class="mb-4 text-center">
+                            <p class="text-tertiary-color">
+                                If I get
+                                <input type="number" id="future-gpa-low" class="w-20 form-input text-center mx-1" placeholder="GPA" step="0.01" min="0" max="4.00">
+                                GPA on
+                                <input type="number" id="future-credits-low" class="w-20 form-input text-center mx-1" placeholder="Credits" min="0" step="0.5">
+                                credits my CGPA will be:
+                                <span id="future-cgpa-low" class="font-bold text-red-600">__</span>
+                            </p>
+                        </div>
                         <h4 class="text-lg font-semibold text-primary-color text-center">Recovery Plan</h4>
                         <p class="text-center text-secondary-color mb-4">Let's find out what you need in your next trimester to reach a 2.0 CGPA.</p>
                         <div class="max-w-xs mx-auto">
@@ -2474,6 +2504,44 @@
                 card.scrollIntoView({ behavior: 'smooth', block: 'center' });
             };
 
+            const
+                handleFutureCgpaCalculation = (gpaInputId, creditsInputId, resultElId) => {
+                    const gpaInput = document.getElementById(gpaInputId);
+                    const creditsInput = document.getElementById(creditsInputId);
+                    const resultEl = document.getElementById(resultElId);
+
+                    const futureGpa = parseFloat(gpaInput.value);
+                    const futureCredits = parseFloat(creditsInput.value);
+
+                    if (isNaN(futureGpa) || futureGpa < 0 || futureGpa > 4.00 || isNaN(futureCredits) || futureCredits <= 0) {
+                        resultEl.textContent = '__';
+                        return;
+                    }
+
+                    const { finalCgpa, totalGpaCredits } = calculationCache;
+
+                    if (totalGpaCredits === 0 && courses.length === 0) {
+                         // If there's no "current" CGPA from the main calculator, we can't project.
+                         // Check if academic standing is provided.
+                        const currentCgpa = parseFloat(currentCgpaInput.value) || 0;
+                        const initialAttemptedCredits = parseFloat(completedCreditsInput.value) || 0;
+
+                        if (initialAttemptedCredits > 0) {
+                             const totalPoints = (currentCgpa * initialAttemptedCredits) + (futureGpa * futureCredits);
+                             const totalCredits = initialAttemptedCredits + futureCredits;
+                             const newCgpa = totalCredits > 0 ? totalPoints / totalCredits : 0;
+                             resultEl.textContent = newCgpa.toFixed(2);
+                        } else {
+                            resultEl.textContent = futureGpa.toFixed(2);
+                        }
+                    } else {
+                        const totalPoints = (finalCgpa * totalGpaCredits) + (futureGpa * futureCredits);
+                        const totalCredits = totalGpaCredits + futureCredits;
+                        const newCgpa = totalCredits > 0 ? totalPoints / totalCredits : 0;
+                        resultEl.textContent = newCgpa.toFixed(2);
+                    }
+                };
+
             const 
                 handleTargetCalculation = (targetCgpaInput, targetCreditsInput, resultEl, gpaEl, errorEl) => {
                 const 
@@ -3633,6 +3701,17 @@ addRetakeForm.addEventListener('submit', (e) => {
                     tcr = getEl(`target-credits-${s}`);
                 [tc, tcr].forEach(el => el.addEventListener('input', () => 
                     handleTargetCalculation(tc, tcr, getEl(`target-result-${s}`), getEl(`required-gpa-${s}`), getEl(`target-credits-${s}-error`)))); 
+            });
+
+            // Event listeners for the new future CGPA calculator
+            ['good', 'mid', 'low'].forEach(s => {
+                const gpaInput = getEl(`future-gpa-${s}`);
+                const creditsInput = getEl(`future-credits-${s}`);
+                [gpaInput, creditsInput].forEach(el => {
+                    if(el) {
+                        el.addEventListener('input', () => handleFutureCgpaCalculation(`future-gpa-${s}`, `future-credits-${s}`, `future-cgpa-${s}`));
+                    }
+                });
             });
             
             // Game Modal Listeners
