@@ -11,59 +11,80 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --body-bg: #f4f7fa;
-            --body-bg-image: none;
+            /* Enhanced glassy palette - Light Mode */
+            --body-bg: #eef2f6;
+            --body-bg-image: linear-gradient(135deg, #e0f2fe 0%, #f0fdfa 100%);
             --text-primary: #1a202c;
             --text-secondary: #4a5568;
             --text-tertiary: #718096;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --card-border: #e2e8f0;
-            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --form-bg: #fdfdff;
-            --form-border: #e2e8f0;
-            --input-bg: #ffffff;
-            --input-border: #cbd5e0;
+
+            /* Glassy Card Variables */
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --card-border: rgba(255, 255, 255, 0.6);
+            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+
+            /* Glassy Form Variables */
+            --form-bg: rgba(255, 255, 255, 0.4);
+            --form-border: rgba(255, 255, 255, 0.5);
+
+            /* Glassy Input Variables */
+            --input-bg: rgba(255, 255, 255, 0.6);
+            --input-border: rgba(203, 213, 224, 0.6);
             --input-text: #1a202c;
-            --course-item-bg: #ffffff;
-            --placeholder-bg: #f7fafc;
+
+            /* Items */
+            --course-item-bg: rgba(255, 255, 255, 0.5);
+            --placeholder-bg: rgba(247, 250, 252, 0.5);
+
             --footer-text: #718096;
-            --theme-toggle-bg: #e2e8f0;
+            --theme-toggle-bg: rgba(226, 232, 240, 0.8);
             --theme-toggle-icon: #f6ad55;
-            --btn-neutral-bg: #f3f4f6;
+
+            --btn-neutral-bg: rgba(243, 244, 246, 0.8);
             --btn-neutral-text: #374151;
-            --btn-neutral-hover: #e5e7eb;
-            --notification-success-bg: #22c55e;
-            --notification-error-bg: #ef4444;
-            --notification-info-bg: #3b82f6;
-            --notification-warning-bg: #f59e0b;
+            --btn-neutral-hover: rgba(229, 231, 235, 0.9);
+
+            --notification-success-bg: rgba(34, 197, 94, 0.9);
+            --notification-error-bg: rgba(239, 68, 68, 0.9);
+            --notification-info-bg: rgba(59, 130, 246, 0.9);
+            --notification-warning-bg: rgba(245, 158, 11, 0.9);
         }
 
         body[data-theme="dark"] {
-            --body-bg: #121212;
+            /* Enhanced glassy palette - Dark Mode */
+            --body-bg: #0f172a;
             --body-bg-image: url('https://www.uiu.ac.bd/wp-content/uploads/2022/11/UIU-Permanent-Campus-2.jpg');
-            --text-primary: #e2e8f0;
-            --text-secondary: #a0aec0;
-            --text-tertiary: #718096;
-            --card-bg: rgba(18, 18, 18, 0.7);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.6);
-            --form-bg: rgba(26, 26, 26, 0.7);
-            --form-border: rgba(255, 255, 255, 0.08);
-            --input-bg: rgba(30, 30, 30, 0.7);
-            --input-border: #4a5568;
-            --input-text: #e2e8f0;
-            --course-item-bg: rgba(45, 55, 72, 0.6);
-            --placeholder-bg: rgba(26, 32, 44, 0.8);
-            --footer-text: #a0aec0;
-            --theme-toggle-bg: #2d3748;
-            --theme-toggle-icon: #4299e1;
-            --btn-neutral-bg: #374151;
-            --btn-neutral-text: #e5e7eb;
-            --btn-neutral-hover: #4b5563;
-            --notification-success-bg: #16a34a;
-            --notification-error-bg: #dc2626;
-            --notification-info-bg: #2563eb;
-            --notification-warning-bg: #d97706;
+
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+
+            --card-bg: rgba(15, 23, 42, 0.65);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+
+            --form-bg: rgba(30, 41, 59, 0.4);
+            --form-border: rgba(255, 255, 255, 0.05);
+
+            --input-bg: rgba(15, 23, 42, 0.6);
+            --input-border: rgba(71, 85, 105, 0.5);
+            --input-text: #f1f5f9;
+
+            --course-item-bg: rgba(51, 65, 85, 0.4);
+            --placeholder-bg: rgba(30, 41, 59, 0.5);
+
+            --footer-text: #94a3b8;
+            --theme-toggle-bg: rgba(51, 65, 85, 0.8);
+            --theme-toggle-icon: #60a5fa;
+
+            --btn-neutral-bg: rgba(55, 65, 81, 0.8);
+            --btn-neutral-text: #f3f4f6;
+            --btn-neutral-hover: rgba(75, 85, 99, 0.9);
+
+            --notification-success-bg: rgba(22, 163, 74, 0.9);
+            --notification-error-bg: rgba(220, 38, 38, 0.9);
+            --notification-info-bg: rgba(37, 99, 235, 0.9);
+            --notification-warning-bg: rgba(217, 119, 6, 0.9);
         }
 
         body {
@@ -76,39 +97,63 @@
             color: var(--text-primary);
             transition: background-color 0.3s ease;
         }
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.5);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(107, 114, 128, 0.8);
+        }
+
         .card {
             background-color: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid var(--card-border);
             border-radius: 24px;
             padding: 1.5rem;
             box-shadow: var(--card-shadow);
             position: relative;
-            transition: background-color 0.3s, border-color 0.3s;
+            transition: all 0.3s ease;
         }
+
         @media (min-width: 640px) {
             .card {
                 padding: 40px;
             }
         }
+
         .form-section {
              background-color: var(--form-bg);
+             backdrop-filter: blur(12px);
+             -webkit-backdrop-filter: blur(12px);
              border: 1px solid var(--form-border);
              border-radius: 16px;
              padding: 24px;
              margin-bottom: 24px;
-             transition: background-color 0.3s, border-color 0.3s;
+             transition: all 0.3s ease;
+             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
+
         .form-input, .form-select {
             border-radius: 12px;
             border: 1px solid var(--input-border);
             padding: 10px 14px;
             transition: all 0.2s ease;
             background-color: var(--input-bg);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             color: var(--input-text);
             -webkit-appearance: none;
             appearance: none;
+            box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.02);
         }
         .form-select {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor' class='w-5 h-5'%3e%3cpath fill-rule='evenodd' d='M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z' clip-rule='evenodd' /%3e%3c/svg%3e");
@@ -902,6 +947,20 @@
                 display: none; 
             } 
         }
+
+        /* Scroll Animation Classes */
+        .scroll-hidden {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .scroll-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
     </style>
 </head>
 <body class="min-h-screen">
@@ -917,12 +976,12 @@
                 <label for="theme-toggle-checkbox" class="theme-toggle"></label>
             </div>
             
-            <div class="text-center mb-10">
+            <div class="text-center mb-10 scroll-hidden">
                 <h1 class="text-3xl md:text-4xl font-extrabold text-primary-color">UIU CGPA Calculator</h1>
                 <p class="text-secondary-color font-medium mt-2">Instantly calculate your CGPA and plan your academic future.</p>
             </div>
 
-            <div class="mb-8 flex justify-center border-b border-gray-200 dark:border-gray-700">
+            <div class="mb-8 flex justify-center border-b border-gray-200 dark:border-gray-700 scroll-hidden delay-100">
                 <button id="cgpa-tab-btn" class="px-4 py-2 text-sm font-medium text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-500">CGPA Calculator</button>
                 <button id="course-grade-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Course Grade</button>
                 <button id="credit-tab-btn" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200">Credit</button>
@@ -930,7 +989,7 @@
             </div>
 
             <div id="cgpa-calculator-tab" class="tab-content active">
-                <div class="form-section">
+                <div class="form-section scroll-hidden">
                     <h2 class="text-xl font-bold text-primary-color mb-4">Current Academic Standing <span class="text-sm font-normal text-secondary-color">(Optional)</span></h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end"> 
                     <div>
@@ -952,7 +1011,7 @@
                 <p id="credits-error" class="text-red-500 text-sm text-center hidden"></p>
             </div>
 
-            <div class="form-section">
+            <div class="form-section scroll-hidden">
                 <h2 class="text-xl font-bold text-primary-color mb-4">This Trimester's Courses</h2>
                 <form id="add-course-form" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                     <div>
@@ -985,7 +1044,7 @@
                 </form>
             </div>
 
-            <div class="form-section">
+            <div class="form-section scroll-hidden">
                 <h2 class="text-xl font-bold text-primary-color mb-4">Retake Courses <span class="text-sm font-normal text-secondary-color">(Optional)</span></h2>
                 <form id="add-retake-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                     <div>
@@ -1185,7 +1244,7 @@
             </div>
             
             <div id="course-grade-tab" class="tab-content">
-                <div class="form-section">
+                <div class="form-section scroll-hidden">
                     <h2 class="text-xl font-bold text-primary-color mb-4">Course Grade Calculator</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
                         <div>
@@ -1206,7 +1265,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-section">
+                <div class="form-section scroll-hidden">
                     <h2 class="text-xl font-bold text-primary-color mb-4">CT Marks</h2>
                     <div id="ct-scores-container" class="space-y-2"></div>
                     <button id="add-ct-score-btn" class="w-full btn btn-neutral mt-4"><i data-lucide="plus" class="w-5 h-5"></i>Add CT Marks</button>
@@ -1225,7 +1284,7 @@
             </div>
             
             <div id="credit-tab" class="tab-content">
-                <div class="form-section">
+                <div class="form-section scroll-hidden">
                     <h2 class="text-xl font-bold text-primary-color mb-4 text-center">UG Program (B.Sc in CSE) Credit Tracker</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
                         <div>
@@ -1247,7 +1306,7 @@
             </div>
             
             <div id="grading-policy-tab" class="tab-content">
-                <div class="form-section">
+                <div class="form-section scroll-hidden">
                     <h2 class="text-xl font-bold text-primary-color mb-4 text-center">UIU Grading Policy</h2>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -1572,6 +1631,24 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Scroll Triggered Animation --- //
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('scroll-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const scrollElements = document.querySelectorAll('.scroll-hidden');
+            scrollElements.forEach((el) => observer.observe(el));
+
             // --- Course Grade Calculator Elements --- //
             const 
                 addCtScoreBtn = document.getElementById('add-ct-score-btn');
